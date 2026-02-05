@@ -1,7 +1,17 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faBars } from '@fortawesome/free-solid-svg-icons'
-
+import Drawer from '@mui/material/Drawer'
+import Box from '@mui/material/Box'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import { Route, Routes } from 'react-router-dom'
+import Home from './Home'
+import About from '../About/About'
+import Contact from '../Contact/Contact'
 
 // import Logo from '../Assets/logo.svg'
 // add search bar to navbar

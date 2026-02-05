@@ -7,7 +7,9 @@ import About from './Components/About/About.jsx';
 // testing fontawesome icons
 function App() {
   return (
-    <Home />
+    <div className='App'>
+      <Home />
+    </div>
   );
 }
 
