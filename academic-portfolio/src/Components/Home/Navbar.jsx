@@ -8,10 +8,7 @@ import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import { Route, Routes } from 'react-router-dom'
-import Home from './Home'
-import About from '../About/About'
-import Contact from '../Contact/Contact'
+import { Link } from "react-router-dom";
 
 // import Logo from '../Assets/logo.svg'
 // add search bar to navbar
@@ -40,10 +37,9 @@ const Navbar = () => {
                 
             </div>
             <div className='navbar-links-container'>
-                {/*i do not know if these work as this page is currently crashing and idk why*/}
-                <a href='./Home.jsx'>Home</a>
-                <a href='../About/About.jsx'>About</a>
-                <a href='../Contact/Contact.jsx'>Contact</a>
+                <Link to='/'>Home</Link>
+                <Link to='/about'>About</Link>
+                <Link to='/contact'>Contact</Link>
                 <button className='primary-button'>Log in / Register</button>
             </div>
             <div className='navbar-menu-container'>
