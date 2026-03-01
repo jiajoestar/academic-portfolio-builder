@@ -30,7 +30,7 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json("User not found");
+    if (!user) return res.status(200).json("Invalid email or password");
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) return res.status(400).json("Invalid password");
@@ -48,21 +48,40 @@ router.post("/login", async (req, res) => {
 });
 
 //RESET PASSWORD
+const sendEmail = require("../sendEmail");
+
 router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
 
   const user = await User.findOne({ email });
-  if (!user) return res.status(400).json("User not found");
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
+  if (!user)
+    return res.status(200).json("If email exists, reset link sent");
+
+  const token = jwt.sign(
+    { id: user._id },
+    process.env.JWT_SECRET,
+    { expiresIn: "15m" }
+  );
 
   user.resetToken = token;
   user.resetTokenExpiry = Date.now() + 15 * 60 * 1000;
 
   await user.save();
 
-  res.json({ resetToken: token }); // this gets emailed
+  const resetLink = `http://localhost:5173/reset-password/${token}`;
+
+  await sendEmail(
+    email,
+    "Password Reset",
+    `
+      <h2>Password Reset Request</h2>
+      <p>Click the link below to reset your password:</p>
+      <a href="${resetLink}">${resetLink}</a>
+      <p>This link expires in 15 minutes.</p>
+    `
+  );
+
+  res.json("Reset email sent");
 });
 
-
-module.exports = router;

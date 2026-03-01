@@ -9,6 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // import Logo from '../Assets/logo.svg'
 // add search bar to navbar
@@ -30,6 +31,7 @@ const Navbar = () => {
             icon:<FontAwesomeIcon icon={faHouse} />,
         },
     ];
+    const navigate = useNavigate();
 
     return (
         <nav>
@@ -40,7 +42,7 @@ const Navbar = () => {
                 <Link to='/'>Home</Link>
                 <Link to='/about'>About</Link>
                 <Link to='/contact'>Contact</Link>
-                <button className='primary-button'>Log in / Register</button>
+                <button className='primary-button' onClick={() => navigate("/login")}>Log in / Register</button>
             </div>
             <div className='navbar-menu-container'>
                 <FontAwesomeIcon 
