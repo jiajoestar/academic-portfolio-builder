@@ -1,5 +1,6 @@
 import React from 'react'
-import AboutBackground from '../Assets/about-background.png'
+import AboutBackground from '../Assets/about-background.png';
+import Navbar from '../Home/Navbar';
 
 const About = () => {
     return (

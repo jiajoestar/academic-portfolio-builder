@@ -1,7 +1,7 @@
 import './App.css'
 import Home from './Components/Home/Home.jsx';
 import Login from './Components/LoginSignUp/Login.jsx';
-import SignUp from './Components/LoginSignUp/SignUp.jsx';
+import Register from './Components/LoginSignUp/Register.jsx';
 import About from './Components/About/About.jsx';
 import Contact from './Components/Contact/Contact.jsx';
 import ForgotPassword from './Components/LoginSignUp/ForgotPassword.jsx';
@@ -17,7 +17,7 @@ function App() {
         <Route path='/about' element={<About />} />
         <Route path='/contact' elemet={<Contact />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<SignUp />} />
+        <Route path='/register' element={<Register />} />
         <Route path='forgot-password' element={<ForgotPassword />} />
         <Route path='reset-password/:token' element={<ResetPassword />} />
       </Routes>

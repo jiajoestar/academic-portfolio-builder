@@ -1,8 +1,9 @@
-import React from 'react'
-import Navbar from './Navbar'
-import BannerBackground from '../Assets/home-banner-background.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import Navbar from './Navbar';
+import BannerBackground from '../Assets/home-banner-background.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Footer from '../Footer/Footer';
 
 const Home = () => {
     return (
@@ -20,8 +21,9 @@ const Home = () => {
                     </button>
                 </div>
             </div>
+            
         </div>
     );
-};
+}
 
 export default Home

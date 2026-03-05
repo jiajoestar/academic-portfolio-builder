@@ -9,53 +9,67 @@
     padding-bottom: 30px;
 }
 
-.header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 9px;
-    width: 100%;
-    margin-top: 30px;
+.login-container {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:calc(100vh - 80px);
 }
 
-.text {
-    color: white;
-    font-size: 48px;
-    font-weight: 700;
+.login-page {
+    min-height:100vh;
+}
+
+.login-box {
+    width:400px;
+    background:white;
+    padding:40px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(228, 163, 163, 0.2);
+}
+
+.header h2 {
+    text-align:center;
+    margin-bottom:30px;
 }
 
 .inputs {
     margin-top: 55px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
-}
-
-.input {
-    display: flex;
-    align-items: center;
-    margin: auto;
-    width: 480px;
-    height: 80px;
-    background: beige;
-    border-radius: 6px;
+    gap: 15px;
 }
 
 .input input {
-    height: 50px;
-    width: 400px;
-    background: transparent;
-    border: none;
-    outline: none;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     color: aqua;
-    font-size: 19px;
+    font-size: 16px;
+}
+
+.login-button {
+    width:100%;
+    margin-top:20px;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.login-button:hover {
+    background:#1d4ed8;
 }
 
 .forgot-password {
-    padding-left: 62px;
-    margin-top: 27px;
+    margin-top: 15px;
     color: aqua;
-    font-size: 18px;
+    font-size: 14px;
+    text-align: center;
 }
 
 .forgot-password span {
@@ -81,9 +95,4 @@
     font-size: 19px;
     font-weight: 700;
     cursor: pointer;
-}
-
-.gray {
-    background: bisque;
-    color: gray;
 }

@@ -1,22 +1,33 @@
-import React, { useState } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHouse, faBars } from '@fortawesome/free-solid-svg-icons'
-import Drawer from '@mui/material/Drawer'
-import Box from '@mui/material/Box'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse, faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
+import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 // import Logo from '../Assets/logo.svg'
-// add search bar to navbar
 
 const Navbar = () => {
 
     const [openMenu, setOpenMenu] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate();
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchTerm.trim() !== "") {
+            navigate(`/search?q=${searchTerm}`)
+            setSearchTerm("")
+        }
+    }
+
+
     const menuOptions = [
         {
             text: "Home",
@@ -31,7 +42,6 @@ const Navbar = () => {
             icon:<FontAwesomeIcon icon={faHouse} />,
         },
     ];
-    const navigate = useNavigate();
 
     return (
         <nav>
@@ -42,6 +52,10 @@ const Navbar = () => {
                 <Link to='/'>Home</Link>
                 <Link to='/about'>About</Link>
                 <Link to='/contact'>Contact</Link>
+                <form className='search-form' onSubmit={handleSearch}>
+                    <input type='text' placeholder='Search author' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='search-input'/>
+                    <button type='submit' className='search-button'><FontAwesomeIcon icon={faSearch} /></button>
+                </form>
                 <button className='primary-button' onClick={() => navigate("/login")}>Log in / Register</button>
             </div>
             <div className='navbar-menu-container'>

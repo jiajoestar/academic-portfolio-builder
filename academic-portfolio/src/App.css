@@ -28,12 +28,17 @@ nav {
   display: none;
 }
 .navbar-links-container a {
-  margin-right: 3rem;
   text-decoration: none;
   color: black;
   font-size: 1.1rem;
   font-weight: 600;
 }
+.navbar-links-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
 .primary-button {
   padding: 0.9rem 1.75rem;
   background-color: white;
@@ -176,9 +181,9 @@ nav {
   margin-right: 1.25rem;
   color: #585858;
 }
-/* .footer-section-one {
+.footer-section-one {
   border: 2px solid blue;
-} */
+} 
 .footer-section-two {
   flex: 1;
   display: flex;
@@ -193,6 +198,26 @@ nav {
   margin: 0.25rem 0rem;
   font-weight: 600;
   color: #4c4c4c;
+  cursor: pointer;
+}
+
+/* search field in navbar */
+.search-form {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 6px 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.search-button {
+  background: none;
+  border: none;
+  margin-left: 5px;
   cursor: pointer;
 }
 

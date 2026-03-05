@@ -5,7 +5,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
 import Navbar from '../Home/Navbar';
 
-const Login = () => {
+const Register = () => {
 
     return (
         <div className='login-page'>
@@ -13,9 +13,17 @@ const Login = () => {
             <div className='login-container'>
                 <div className='login-box'>
                     <div className='header'>
-                        <h2>Log In</h2>
+                        <h2>Register</h2>
                     </div>
                     <div className='inputs'>
+                        <div className='input'>
+                            {/*icon*/}
+                            <input type="text" placeholder='First name'/>
+                        </div>
+                        <div className='input'>
+                            {/*icon*/}
+                            <input type="text" placeholder='Last name'/>
+                        </div>
                         <div className='input'>
                             {/*icon*/}
                             <input type="email" placeholder='Email address'/>
@@ -25,13 +33,12 @@ const Login = () => {
                             <input type="password" placeholder='Password'/>
                         </div>
                     </div>
-                    <button className='login-button'>Log in</button>
-                    <div className='forgot-password'>Forgot your password? <span><Link to='/forgot-password'>Click here</Link></span></div>
-                    <div className='forgot-password'>Don't have an account with us? <span><Link to='/register'>Register here</Link></span></div>
+                    <button className='login-button'>Create account</button>
+                    <div className='forgot-password'>Already have an account with us? <span><Link to='/login'>Log in</Link></span></div>
                 </div>
             </div>
         </div>
     );
 }
 
-export default Login
+export default Register
