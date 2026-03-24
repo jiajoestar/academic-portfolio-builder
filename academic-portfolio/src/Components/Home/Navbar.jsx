@@ -8,8 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 
 // import Logo from '../Assets/logo.svg'
 
@@ -45,20 +44,20 @@ const Navbar = () => {
 
     return (
         <nav>
-            <div className='nav-logo-container'>
+            <div className="nav-logo-container">
                 
             </div>
-            <div className='navbar-links-container'>
+            <div className="navbar-links-container">
                 <Link to='/'>Home</Link>
                 <Link to='/about'>About</Link>
                 <Link to='/contact'>Contact</Link>
-                <form className='search-form' onSubmit={handleSearch}>
-                    <input type='text' placeholder='Search author' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className='search-input'/>
+                <form className="search-form" onSubmit={handleSearch}>
+                    <input type='text' placeholder='Search author' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-input"/>
                     <button type='submit' className='search-button'><FontAwesomeIcon icon={faSearch} /></button>
                 </form>
-                <button className='primary-button' onClick={() => navigate("/login")}>Log in / Register</button>
+                <button className="primary-button" onClick={() => navigate("/login")}>Log in / Register</button>
             </div>
-            <div className='navbar-menu-container'>
+            <div className="navbar-menu-container">
                 <FontAwesomeIcon 
                 icon={faBars} 
                 onClick={() => setOpenMenu(true)}

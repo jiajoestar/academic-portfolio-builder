@@ -111,7 +111,7 @@ nav {
   background-color: #e48f0f;
 }
 .about-section-container {
-  margin-top: 20rem;
+  margin-top: 4rem;
   position: relative;
   display: flex;
   align-items: center;
@@ -119,14 +119,20 @@ nav {
 }
 .about-background-image-container {
   position: absolute;
-  left: -150px;
+  left: -100px;
   z-index: -2;
+  max-width: 400px
 }
 .about-section-text-container {
   flex: 1;
   justify-content: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.about-section-text-container .primary-text {
+  max-width: 780px;
 }
 .primary-subheading {
   font-weight: 700;
@@ -136,69 +142,74 @@ nav {
 .about-buttons-container {
   margin-top: 2rem;
   display: flex;
+  justify-content: center;
 }
 .contact-page-wrapper h1 {
   max-width: 900px !important;
 }
 .contact-page-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: 6rem 0rem;
+  padding: 80px 20px;
 }
-.contact-form-container {
-  background-color: white;
-  max-width: 700px;
-  width: 100%;
-  margin-top: 3rem;
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  border-radius: 5rem;
-}
-.contact-form-container input {
-  flex: 1;
-  height: 100%;
-  border: none;
-  outline: none;
-  font-size: 1.3rem;
-  padding: 0.5rem 1rem;
-}
-.footer-wrapper {
-  margin: 6rem 0rem;
-  display: flex;
-  margin-top: 10rem;
-}
-.footer-logo-container {
-  max-width: 110px;
-}
-.footer-icons {
-  margin-top: 2.5rem;
-}
-.footer-icons svg {
-  font-size: 1.5rem;
-  margin-right: 1.25rem;
-  color: #585858;
-}
-.footer-section-one {
-  border: 2px solid blue;
-} 
-.footer-section-two {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-}
-.footer-section-columns {
+.contact-form {
   display: flex;
   flex-direction: column;
-  min-width: 190px;
+  gap: 20px;
+  width: 400px;
+  margin: auto;
+  padding-top: 50px;
 }
-.footer-section-columns span {
-  margin: 0.25rem 0rem;
-  font-weight: 600;
-  color: #4c4c4c;
+.contact-message {
+  height: 150px;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  resize: none;
+}
+.contact-email {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.footer{
+  padding: 60px 10%;
+}
+.footer-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 50px;
+}
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-column span {
   cursor: pointer;
+  color: black;
+}
+.footer-description {
+  font-size: 14px;
+  max-width: 250px;
+}
+.footer-socials {
+  display: flex;
+  gap: 15px;
+  font-size: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.footer-socials svg:hover {
+  color: #38bdf8;
+}
+.footer-bottom {
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+  font-size: 14px;
 }
 
 /* search field in navbar */
@@ -206,14 +217,12 @@ nav {
   display: flex;
   align-items: center;
 }
-
 .search-input {
   padding: 6px 10px;
   border-radius: 20px;
   border: 1px solid #ccc;
   outline: none;
 }
-
 .search-button {
   background: none;
   border: none;
@@ -233,6 +242,7 @@ nav {
     max-width: 600px;
   }
 }
+
 @media (max-width: 800px) {
   .nav-logo-container {
     max-width: 140px;
@@ -284,37 +294,20 @@ nav {
   .primary-subheading {
     text-align: center;
   }
-  .contact-form-container {
-    padding: 0.5rem !important;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 1rem !important;
-  }
-  .contact-form-container input {
-    font-size: 1rem !important;
-    max-width: 100%;
-    padding: 0.5rem 1rem !important;
-    margin-bottom: 0.8rem !important;
-    text-align: center;
-  }
-  .footer-wrapper {
-    flex-direction: column;
-  }
-  .footer-section-two {
-    flex-direction: column;
-    margin-top: 2rem;
-  }
-  .footer-section-columns {
-    margin: 1rem 0rem;
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
   }
   .App {
     max-width: 95vw;
   }
 }
+
 @media (max-width: 600px) {
   .home-bannerImage-container,
   .about-background-image-container {
     display: none;
+  }
+  .footer-container {
+    grid-template-columns: 1fr;
   }
 }

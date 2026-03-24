@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import './ActivityLog.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 function ActivityLog() {
 
@@ -65,17 +63,17 @@ function ActivityLog() {
     };
 
     return (
-        <div className='Activity'>
-            <div className='container'>
+        <div className="Activity">
+            <div className="container">
                 <h1>Log an activity</h1>
-                <input type='text' className='form-control' placeholder='Search...'/>
+                <input type='text' className="form-control" placeholder='Search...'/>
                 <div>
                     {visibleOptions.map((option) => (<div key={option.header.name}>
                         <h3>{option.header.name}</h3>
                         <div>
                             {option.values.map((value) => (<div key={value.name}>
-                                <ul className='list-group'>
-                                    <li className='list-group-item'>
+                                <ul className="list-group">
+                                    <li className="list-group-item">
                                         <h6>{value.name}</h6>
                                         <p>{value.description}</p>
                                     </li>
