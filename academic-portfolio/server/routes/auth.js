@@ -42,21 +42,25 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    console.log('Login attempt:', email)
+
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Invalid email or password"});
+    console.log('User found:', user)
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) return res.status(400).json({ message: "Invalid password"});
 
     const token = jwt.sign(
       { id: user._id },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET || 'fallbacksecret',
       { expiresIn: "1d" }
     );
 
     res.json({ token });
   } catch (err) {
-    res.status(500).json({ message: 'Server error'});
+    console.error('Full login error:', err)
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 

@@ -2,34 +2,48 @@ import React, { useState } from 'react';
 import './LoginSignUp.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import Navbar from '../Home/Navbar';
 
 const Login = () => {
+    const navigate = useNavigate()
+
+    const token = localStorage.getItem('token')
+
+    if (token) {
+        return <Navigate to='/dashboard' />
+    }
 
     const [form, setForm] = useState({
         email: '',
         password: ''
-    });
+    })
 
     const handleLogin = async () => {
-        const res = await fetch('http://localhost:5173/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(form)
-        });
+        try {
+            const res = await fetch('http://localhost:5000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(form)
+            })
 
-        const data = await res.json()
-        console.log(data)
+            console.log('Response status:', res.status)
+            const data = await res.json()
+            console.log('Response data:',data)
 
-        if (res.ok) {
-            alert('Log in successful')
-            localStorage.setItem('token', data.token)
-        } else {
-            alert(data.message || 'Log in unsuccessful')
-        }
+            if (res.ok) {
+                alert('Log in successful')
+                localStorage.setItem('token', data.token)
+                navigate('/dashboard')
+            } else {
+                alert(data.message || 'Log in unsuccessful')
+            }
+        } catch (err) {
+            console.error(err)
+            alert('Server error')
+        }     
     }
 
     return (
