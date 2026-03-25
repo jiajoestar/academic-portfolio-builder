@@ -6,21 +6,34 @@ const jwt = require("jsonwebtoken");
 // REGISTER
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    console.log("Incoming data:", req.body)
+
+    const { firstName, lastName, email, password } = req.body;
+
+    if (!firstName || !lastName || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" })
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+
     const user = new User({
-      name,
+      name: `${firstName} ${lastName}`,
       email,
       password: hashedPassword,
     });
 
     await user.save();
+    console.log("User saved:", user)
 
-    res.status(201).json("User created successfully");
+    res.status(201).json({ message: "User created successfully" });
   } catch (err) {
-    res.status(400).json(err);
+    console.error("Register error:", err)
+    res.status(400).json({ message: "Error creating user"});
   }
 });
 
@@ -30,10 +43,10 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(200).json("Invalid email or password");
+    if (!user) return res.status(400).json({ message: "Invalid email or password"});
 
     const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) return res.status(400).json("Invalid password");
+    if (!validPassword) return res.status(400).json({ message: "Invalid password"});
 
     const token = jwt.sign(
       { id: user._id },
@@ -43,7 +56,7 @@ router.post("/login", async (req, res) => {
 
     res.json({ token });
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ message: 'Server error'});
   }
 });
 
@@ -85,3 +98,4 @@ router.post("/forgot-password", async (req, res) => {
   res.json("Reset email sent");
 });
 
+module.exports = router
