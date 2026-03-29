@@ -1,86 +1,141 @@
 import React, { useState } from 'react';
 import './ActivityLog.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-function ActivityLog() {
-
-    const options= [
+const ActivityLog = ({ isOpen, onClose }) => {
+    const options = [
         {
-            header: {
-                name: 'Activity',
-            }, 
-
+            header: { name: 'Activity' },
             values: [
-                {
-                    name: 'activity',
-                    description: 'aidawdiajwdiw',
-                    tags: ['activity'],
-                }
+                { name: 'Consultancy', description: 'Consulting work' },
+                { name: 'Examination', description: 'Examining students' },
+                { name: 'External institutions', description: 'External roles' },
+                { name: 'Examination', description: 'Examining students' },
+                { name: 'Examination', description: 'Examining students' }
             ]
+        },
+        {
+            header: { name: 'Funding' },
+            values: []
+        },
+        {
+            header: { name: 'Impact' },
+            values: []
+        },
+        {
+            header: { name: 'Membership' },
+            values: []
         }
-
     ];
 
-    const [visibleOptions, setVisibleOptions] = useState(options);
+    const [visibleOptions, setVisibleOptions] = useState(options)
+    const [search, setSearch] = useState('')
+    const [expandedSections, setExpandedSections] = useState({Activity: true})
+    const [selectedItem, setSelectedItem] = useState(null)
+
+    if (!isOpen) return null
 
     const onChange = (e) => {
-        e.preventDefault();
-        const value = e.target.value;
+        const value = e.target.value
+        setSearch(value)
 
-        console.log('value', value);
-
-        if(value.trim().length === 0) {
+        if (value.trim() === '') {
             setVisibleOptions(options)
-            return;
-        };
+            return
+        }
 
-        const returnedItems = []
+        const filtered = options.map((option) => {
+            const foundValues = option.values.filter(item =>
+                item.name.toLowerCase().includes(value.toLowerCase()) ||
+                item.description.toLowerCase().includes(value.toLowerCase())
+            );
 
-        visibleOptions.forEach((option, index) => {
-            const foundOptions = options.values.filter(item=>{
-                {/* search through inputted string to find match in options array */}
-                return (item.name.toLowerCase().search(value.trim().toLowerCase()) !== -1 || item.description.toLowerCase().search(value.trim().toLowerCase()) !== -1);
-            });
-
-            returnedItems[index] = {
-                header:{
-                    name: option.header.name,
-                },
-                values: foundOptions,
-            };
-
-            if (option.header.name.toLowerCase().search(value.trim().toLowerCase()) !== -1) {
-                returnedItems[index] = {
-                    header:{
-                        name: option.header.name,
-                    },
-                    values: options[index].values,
-                };
+            if (option.header.name.toLowerCase().includes(value.toLowerCase())) {
+                return option
             }
 
-        });
+            return {
+                ...option,
+                values: foundValues
+            }
+        })
 
-        setVisibleOptions(returnedItems)
-    };
+        setVisibleOptions(filtered)
+    }
+
+    const toggleSection = (name) => {
+        setExpandedSections(prev => ({
+            ...prev,
+            [name]: !prev[name]
+        }))
+    }
 
     return (
-        <div className="Activity">
-            <div className="container">
-                <h1>Log an activity</h1>
-                <input type='text' className="form-control" placeholder='Search...'/>
-                <div>
-                    {visibleOptions.map((option) => (<div key={option.header.name}>
-                        <h3>{option.header.name}</h3>
-                        <div>
-                            {option.values.map((value) => (<div key={value.name}>
-                                <ul className="list-group">
-                                    <li className="list-group-item">
-                                        <h6>{value.name}</h6>
-                                        <p>{value.description}</p>
-                                    </li>
-                                </ul>
-                            </div>))}
-                        </div>
-                    </div>))}
+        <div className="overlay">
+            <div className="modal animate">
+                <div className="modal-header">
+                    <h2>Quick Add</h2>
+                    <button onClick={onClose}>✕</button>
+                </div>
+
+                <div className="modal-body">
+                    <div className="modal-left">
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            value={search}
+                            onChange={onChange}
+                            className="search-input"
+                        />
+
+                        {visibleOptions.map(option => {
+                            const name = option.header.name;
+                            const isOpen = expandedSections[name];
+
+                            return (
+                                <div key={name}>
+
+                                    {/* HEADER CLICKABLE */}
+                                    <div
+                                        className="section-header"
+                                        onClick={() => toggleSection(name)}
+                                    >
+                                        <span>{name}</span>
+                                        {isOpen ? <FontAwesomeIcon icon={faChevronDown} /> : <FontAwesomeIcon icon={faChevronRight} />}
+                                    </div>
+
+                                    {/* COLLAPSIBLE CONTENT */}
+                                    {isOpen && option.values.map(item => (
+                                        <div
+                                            key={item.name}
+                                            className={`list-item ${selectedItem?.name === item.name ? 'active' : ''}`}
+                                            onClick={() => setSelectedItem(item)}
+                                        >
+                                            <strong>{item.name}</strong>
+                                            <p>{item.description}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    <div className="modal-right">
+                        {selectedItem ? (
+                            <div>
+                                <h3>{selectedItem.name}</h3>
+                                <p>{selectedItem.description}</p>
+                                <button className="add-btn">Add</button>
+                            </div>
+                        ) : (
+                            <p>
+                                Select the activity, award/prize, funding, membership
+                                you want to add on the left-hand side.
+                            </p>
+                        )}
+                    </div>
+
                 </div>
             </div>
         </div>
