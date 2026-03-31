@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import './LoginSignUp.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import Navbar from '../Home/Navbar';
 
@@ -21,7 +19,7 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            const res = await fetch('http://localhost:5000/api/auth/login', {
+            const res = await fetch('http://localhost:5173/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -36,14 +34,27 @@ const Login = () => {
             if (res.ok) {
                 alert('Log in successful')
                 localStorage.setItem('token', data.token)
+
+                const userData = {
+                    firstName: 'Troy',
+                    lastName: 'Bolton',
+                    title: 'Student Athlete',
+                    workplace: 'East High',
+                    bio: 'Basketball captain and musical star',
+                    avatar: 'https://static.wikia.nocookie.net/hsmtmts/images/f/f4/Troy_Bolton.webp/revision/latest?cb=20250518195010'
+                }
+
+                localStorage.setItem('user', JSON.stringify(userData))
+                console.log('Saved user:', localStorage.getItem('user'))
                 navigate('/dashboard')
+
             } else {
                 alert(data.message || 'Log in unsuccessful')
             }
         } catch (err) {
             console.error(err)
             alert('Server error')
-        }     
+        }
     }
 
     return (

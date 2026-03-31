@@ -1,0 +1,68 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    
+    align-self: flex-start;
+    text-align: left;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+.form-container h3 {
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+.form-container p {
+    color: #555;
+    font-size: 14px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.form-group label {
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    padding: 10px;
+    border: 1.5px solid #000;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: none;
+}
+
+.date-group {
+    display: flex;
+    gap: 10px;
+}
+.date-group input {
+    width: 70px;
+    text-align: center;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+.form-actions button {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1.5px solid black;
+    background: white;
+    cursor: pointer;
+}
+.form-actions button:hover {
+    background: #f2f2f2;
+}

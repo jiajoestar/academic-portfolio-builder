@@ -1,7 +1,7 @@
 import React from 'react';
 import './ActivityLog.css'
 
-const ProfileCardDashboard = () => {
+const ProfileCardDashboard = ({ user }) => {
     return (
         <div className='profile-card'>
             <div className='profile-header'>
@@ -9,14 +9,14 @@ const ProfileCardDashboard = () => {
             </div>
 
             <div className='profile-main'>
-                <div className='avatar'></div>
+                <img src={user.avatar} alt='profile' className='avatar' />
                 <div>
-                    <h4>First name<br />Surname</h4>
+                    <h4>{user.firstName}<br />{user.lastName}</h4>
                 </div>
             </div>
 
-            <p>Title, workplace</p>
-            <p className='bio'>profile biography</p>
+            <p>{user.title}, {user.workplace}</p>
+            <p className='bio'>{user.bio}</p>
             <br />
 
             <h4>Actions</h4>

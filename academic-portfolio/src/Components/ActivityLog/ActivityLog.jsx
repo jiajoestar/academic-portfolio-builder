@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import './ActivityLog.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import PeerReview from '../Forms/PeerReview';
+import Prizes from '../Forms/Prizes';
+import ParticipationActivity from '../Forms/ParticipationActivity';
 
 const ActivityLog = ({ isOpen, onClose }) => {
     const options = [
@@ -185,9 +188,9 @@ const ActivityLog = ({ isOpen, onClose }) => {
                     <div className='modal-right'>
                         {selectedItem ? (
                             <div>
-                                <h3>{selectedItem.name}</h3>
-                                <p>{selectedItem.description}</p>
-                                <button className='add-btn'>Add</button>
+                                {selectedItem.name === 'Peer-review and editorial activity' && <PeerReview />}
+                                {selectedItem.name === 'Participation or Organisation for events' && <ParticipationActivity />}
+                                {selectedItem.name === 'Prizes (including medals and awards)' && <Prizes />}
                             </div>
                         ) : (
                             <p>

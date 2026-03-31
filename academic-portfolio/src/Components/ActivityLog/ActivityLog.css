@@ -39,6 +39,7 @@
     height: 70px;
     border: 2px solid black;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 .miniprofile-actions-list {

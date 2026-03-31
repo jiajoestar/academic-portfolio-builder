@@ -1,4 +1,4 @@
-import React, { Activity, useState } from 'react';
+import React, { Activity, useState, useEffect } from 'react';
 import './ActivityLog.css'
 import Navbar from './Navbar';
 import ProfileCardDashboard from './ProfileCardDashboard';
@@ -8,6 +8,17 @@ import ActivityLog from './ActivityLog';
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false)
+    const [user,setUser] = useState(null)
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user')
+        console.log('storedUser:', storedUser)
+        if (storedUser) {
+            setUser(JSON.parse(storedUser))
+        }
+    }, [])
+
+    if (!user) return <p>Loading...</p>
 
     return (
         <div>
@@ -15,7 +26,7 @@ const Dashboard = () => {
 
             <div className='dashboard-page'>
                 <div className='sidebar'>
-                    <ProfileCardDashboard />
+                    <ProfileCardDashboard user={user} />
                 </div>
                 <div className='main'>
                     <QuickAdd onOpen={() => setShowModal(true)} />
