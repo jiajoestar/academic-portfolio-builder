@@ -2,11 +2,14 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser, faCog } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css'
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+    const navigate = useNavigate()
 
     const handleLogout = () => {
         localStorage.removeItem('token')
+        localStorage.removeItem('user')
         window.location.href = '/login'
     }
 
@@ -18,9 +21,9 @@ const Navbar = () => {
             </div>
 
             <div className='navbar-right'>
-                <FontAwesomeIcon icon={faSearch} className='icon' />
-                <FontAwesomeIcon icon={faUser} className='icon' />
-                <FontAwesomeIcon icon={faCog} className='icon' />
+                <span onClick={() => navigate('/search')}><FontAwesomeIcon icon={faSearch} className='icon' /></span>
+                <span onClick={() => navigate('/profile')}><FontAwesomeIcon icon={faUser} className='icon' /></span>
+                <span onClick={() => navigate('/settings')}><FontAwesomeIcon icon={faCog} className='icon' /></span>
                 <button className='logout-button' onClick={handleLogout}>Log out</button>
             </div>
         </nav>

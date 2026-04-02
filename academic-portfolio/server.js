@@ -5,7 +5,10 @@ const cors = require("cors")
 const app = express()
 
 // middleware
-app.use(cors())
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}))
 app.use(express.json())
 
 // mongodb
@@ -18,7 +21,7 @@ const authRoutes = require("./server/routes/auth")
 app.use("/api/auth", authRoutes)
 
 // test route
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
     res.render("hello world")
 })
 
@@ -26,3 +29,7 @@ app.get('/', (req, res) => {
 app.listen(5000, () => {
     console.log("Server is running")
 })
+
+// updating profile
+const profileRoutes = require("./server/routes/profileRoutes");
+app.use("/api/profile", profileRoutes);

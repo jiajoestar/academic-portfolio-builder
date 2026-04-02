@@ -6,7 +6,7 @@ import PeerReview from '../Forms/PeerReview';
 import Prizes from '../Forms/Prizes';
 import ParticipationActivity from '../Forms/ParticipationActivity';
 
-const ActivityLog = ({ isOpen, onClose }) => {
+const ActivityLog = ({ isOpen, onClose, onSaved }) => {
     const options = [
         {
             header: { name: 'Activity' },
@@ -80,7 +80,7 @@ const ActivityLog = ({ isOpen, onClose }) => {
             ]
         },
         
-    ];
+    ]
 
     const [visibleOptions, setVisibleOptions] = useState(options)
     const [search, setSearch] = useState('')
@@ -181,16 +181,16 @@ const ActivityLog = ({ isOpen, onClose }) => {
                                         </div>
                                     ))}
                                 </div>
-                            );
+                            )
                         })}
                     </div>
 
                     <div className='modal-right'>
                         {selectedItem ? (
                             <div>
-                                {selectedItem.name === 'Peer-review and editorial activity' && <PeerReview />}
-                                {selectedItem.name === 'Participation or Organisation for events' && <ParticipationActivity />}
-                                {selectedItem.name === 'Prizes (including medals and awards)' && <Prizes />}
+                                {selectedItem.name === 'Peer-review and editorial activity' && <PeerReview onSaved={onSaved} />}
+                                {selectedItem.name === 'Participation or Organisation for events' && <ParticipationActivity onSaved={onSaved} />}
+                                {selectedItem.name === 'Prizes (including medals and awards)' && <Prizes onSaved={onSaved} />}
                             </div>
                         ) : (
                             <p>
@@ -203,7 +203,7 @@ const ActivityLog = ({ isOpen, onClose }) => {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 export default ActivityLog

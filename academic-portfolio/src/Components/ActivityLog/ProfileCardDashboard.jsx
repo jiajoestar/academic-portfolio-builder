@@ -9,14 +9,14 @@ const ProfileCardDashboard = ({ user }) => {
             </div>
 
             <div className='profile-main'>
-                <img src={user.avatar} alt='profile' className='avatar' />
+                <img src={user?.avatar} alt='profile' className='avatar' />
                 <div>
-                    <h4>{user.firstName}<br />{user.lastName}</h4>
+                    <h4>{user?.firstName}<br />{user?.lastName}</h4>
                 </div>
             </div>
 
-            <p>{user.title}, {user.workplace}</p>
-            <p className='bio'>{user.bio}</p>
+            <p>{user?.title}, {user?.workplace}</p>
+            <p className='bio'>{user?.bio}</p>
             <br />
 
             <h4>Actions</h4>

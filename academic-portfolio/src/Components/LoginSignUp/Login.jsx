@@ -19,7 +19,7 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
-            const res = await fetch('http://localhost:5173/api/auth/login', {
+            const res = await fetch('http://localhost:5000/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -28,24 +28,24 @@ const Login = () => {
             })
 
             console.log('Response status:', res.status)
-            const data = await res.json()
+            const text = await res.text()
+            let data
+
+            try {
+                data = JSON.parse(text)
+            } catch {
+                console.error("invalid JSON:", text)
+                alert("Server returned invalid response")
+                return
+            }
+
+
             console.log('Response data:',data)
 
-            if (res.ok) {
+            if (res.ok && data.user) {
                 alert('Log in successful')
                 localStorage.setItem('token', data.token)
-
-                const userData = {
-                    firstName: 'Troy',
-                    lastName: 'Bolton',
-                    title: 'Student Athlete',
-                    workplace: 'East High',
-                    bio: 'Basketball captain and musical star',
-                    avatar: 'https://static.wikia.nocookie.net/hsmtmts/images/f/f4/Troy_Bolton.webp/revision/latest?cb=20250518195010'
-                }
-
-                localStorage.setItem('user', JSON.stringify(userData))
-                console.log('Saved user:', localStorage.getItem('user'))
+                localStorage.setItem('user', JSON.stringify(data.user))
                 navigate('/dashboard')
 
             } else {
@@ -89,7 +89,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
 export default Login

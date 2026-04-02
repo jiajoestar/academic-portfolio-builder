@@ -1,4 +1,4 @@
 router.post('/', (req, res) => {
-    console.log(req.body);
+    console.log(req.body)
     res.json({ message: 'Saved!' })
 })

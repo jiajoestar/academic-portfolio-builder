@@ -3,12 +3,13 @@ import './Forms.css'
 import { useForm } from 'react-hook-form';
 import { saveActivity } from '../../Services/api';
 
-const Prizes = () => {
+const Prizes = ({ onSaved }) => {
     const { register, handleSubmit } = useForm()
     const token = localStorage.getItem('token')
 
     const onSubmit = async (data, status) => {
         await saveActivity({ ...data, type: 'award', status }, token)
+        if (onSaved) onSaved()
         alert(`Saved as ${status}`)
     }
 
