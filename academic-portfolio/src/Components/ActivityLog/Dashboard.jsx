@@ -52,8 +52,8 @@ const Dashboard = () => {
                 </div>
                 <div className='main'>
                     <QuickAdd onOpen={() => setShowModal(true)} />
-                    <h3 className='section-title'>Actions</h3>
-                    <ActionCard />
+                    <h3 className='section-title'>Your recent activity</h3>
+                    <ActionCard activities={activities}/>
                 </div>
             </div>
 

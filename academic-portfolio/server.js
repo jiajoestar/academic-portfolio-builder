@@ -17,19 +17,19 @@ mongoose.connect("mongodb+srv://xcjiaalilin_db_user:nuszar-nyBhi1-gintun@cluster
     .catch(err => console.log(err))
 
 // routes
-const authRoutes = require("./server/routes/auth")
-app.use("/api/auth", authRoutes)
+app.use("/api/auth", require("./server/routes/auth"))
+app.use("/api/profile", require("./server/routes/profileRoutes"))
+// guests search for users
+app.use("/api/search", require("./server/routes/searchRoutes"))
+// updating activity
+app.use("/api/activities", require("./server/routes/activity"))
 
 // test route
 app.get("/", (req, res) => {
-    res.render("hello world")
+    res.send("hello world")
 })
 
 // start server
 app.listen(5000, () => {
     console.log("Server is running")
 })
-
-// updating profile
-const profileRoutes = require("./server/routes/profileRoutes");
-app.use("/api/profile", profileRoutes);

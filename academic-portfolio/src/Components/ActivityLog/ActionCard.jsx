@@ -1,14 +1,26 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const ActionCard = ({ onOpen }) => {
+const ActionCard = ({ activities }) => {
+    if (!activities.length) {
+        return <p>No recent activity</p>
+    }
+
     return (
         <div className='action-card'>
             <div>
-                <h3>Download your profile</h3>
-                <p>Download your profile as a portfolio</p>
-            </div>
+                {activities.slice(0, 5).map(a => (
+                    <div key={a._id} className="action-card">
+                        <p>
+                            You added a: <strong>{a.type}</strong>
+                        </p>
 
-            <button onClick={onOpen} className='quick-add-button'>Download</button>
+                        <Link to="/profile">
+                            View this on your profile
+                        </Link>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

@@ -14,18 +14,18 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
 
-    const [openMenu, setOpenMenu] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
-    const navigate = useNavigate();
+    const [openMenu, setOpenMenu] = useState(false)
+    const [searchTerm, setSearchTerm] = useState('')
+    const navigate = useNavigate()
+    const [query, setQuery] = useState('')
+    const [results, setResults] = useState([])
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        if (searchTerm.trim() !== "") {
-            navigate(`/search?q=${searchTerm}`)
-            setSearchTerm("")
-        }
+    const handleSearch = async (value) => {
+        setQuery(value)
+
+        const res = await fetch(`http://localhost:5000/api/seearch?q=${value}`)
+        const data = await res.json()
     }
-
 
     const menuOptions = [
         {
@@ -40,24 +40,30 @@ const Navbar = () => {
             text: "Contact",
             icon:<FontAwesomeIcon icon={faHouse} />,
         },
-    ];
+    ]
 
     return (
         <nav>
-            <div className="nav-logo-container">
+            <div className='nav-logo-container'>
                 
             </div>
-            <div className="navbar-links-container">
+            <div className='navbar-links-container'>
                 <Link to='/'>Home</Link>
                 <Link to='/about'>About</Link>
                 <Link to='/contact'>Contact</Link>
-                <form className="search-form" onSubmit={handleSearch}>
-                    <input type='text' placeholder='Search author' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-input"/>
+                <form className='search-form' onSubmit={handleSearch}>
+                    <input type='text' placeholder='Search author' value={query} onChange={(e) => handleSearch(e.target.value)} className='search-input'/>
+                    {results.length === 0 && query && <p>No results</p>}
+                    {results.map(u => (
+                        <Link key={u._id} to={`/public/${u._id}`}>
+                            {u.name}
+                        </Link>
+                    ))}
                     <button type='submit' className='search-button'><FontAwesomeIcon icon={faSearch} /></button>
                 </form>
-                <button className="primary-button" onClick={() => navigate("/login")}>Log in / Register</button>
+                <button className='primary-button' onClick={() => navigate('/login')}>Log in / Register</button>
             </div>
-            <div className="navbar-menu-container">
+            <div className='navbar-menu-container'>
                 <FontAwesomeIcon 
                 icon={faBars} 
                 onClick={() => setOpenMenu(true)}
@@ -81,7 +87,7 @@ const Navbar = () => {
                 </Box>
             </Drawer>
         </nav>
-    );
+    )
 }
 
 export default Navbar

@@ -10,6 +10,9 @@ import Footer from './Components/Footer/Footer.jsx';
 import Dashboard from './Components/ActivityLog/Dashboard.jsx';
 import ProtectedRoute from './Components/ActivityLog/ProtectedRoute.jsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import UserProfile from './Components/UserProfile/UserProfie.jsx';
+import Settings from './Components/Settings/Settings.jsx';
+import SearchUser from './Components/ActivityLog/SearchUser.jsx';
 
 function App() {
   return (
@@ -24,6 +27,8 @@ function App() {
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password/:token' element={<ResetPassword />} />
         <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path='/profile' element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+        <Route path='/settings' element={<ProtectedRoute><Settings /></ProtectedRoute>} />
       </Routes>
     </Router>
     </div>

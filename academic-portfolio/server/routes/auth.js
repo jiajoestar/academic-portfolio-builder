@@ -112,10 +112,12 @@ router.post("/forgot-password", async (req, res) => {
 
 // UPDATE EMAIL IN SETTING PAGE
 router.put("/update-email", async (req, res) => {
-    const { userId, email } = req.body
+    const { email } = req.body
+    const token = req.headers.authorization.split("")[1]
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "fallbacksecret")
 
     const user = await User.findByIdAndUpdate(
-        userId,
+        decoded.id,
         { email },
         { new: true }
     )
@@ -125,11 +127,15 @@ router.put("/update-email", async (req, res) => {
 
 // CHANGE PASSWORD IN SETTINGS PAGE
 router.put("/change-password", async (req, res) => {
-    const { userId, password } = req.body
-
-    const hashed = await bcrypt.hash(password, 10)
-
-    await User.findByIdAndUpdate(userId, { password: hashed })
+    const { oldPassword, newPassword } = req.body
+    const token = req.headers.authorization.split("")[1]
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "fallbacksecret")
+    const user = await User.findById(decoded.id)
+    const valid = await bcrpyt.compare(oldPassword, user.password)
+    if (!valid) return res.status(400).json({ message: "wrong password" })
+    
+    user.password = await bcrypt.hash(newPassword, 10)
+    await user.save()
 
     res.json({ message: "Password updated" })
 })

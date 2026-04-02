@@ -1,44 +1,50 @@
 import React, { useState } from 'react';
-import './Settings.css'
-import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const Settings = () => {
-    const user = JSON.parse(localStorage.getItem("user"))
+    const [email, setEmail] = useState('')
+    const [oldPassword, setOldPassword] = useState('')
+    const [newPassword, setNewPassword] = useState('')
 
-    const [email, setEmail] = useState(user.email)
-    const [password, setPassword] = useState("")
+    const token = localStorage.getItem('token')
 
     const updateEmail = async () => {
-        await axios.put("http://localhost:5000/api/auth/update-email", {
-            userId: user.id,
-            email
+        await fetch('http://localhost:5000/api/auth/update-email', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ email })
         })
-        alert("Email updated")
+
+        alert('Email updated')
     }
 
     const changePassword = async () => {
-        await axios.put("http://localhost:5000/api/auth/change-password", {
-            userId: user.id,
-            password
+        await fetch('http://localhost:5000/api/auth/change-password', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ oldPassword, newPassword })
         })
-        alert("Password changed")
+
+        alert('Password updated')
     }
 
     return (
         <div>
             <h2>Settings</h2>
 
-            <input value={email} onChange={e => setEmail(e.target.value)} />
-            <button onClick={updateEmail}>Save Email</button>
+            <h3>Update Email</h3>
+            <input onChange={(e) => setEmail(e.target.value)} />
+            <button onClick={updateEmail}>Save</button>
 
-            <input
-                type="password"
-                placeholder="New password"
-                onChange={e => setPassword(e.target.value)}
-            />
-            <button onClick={changePassword}>Change Password</button>
+            <h3>Change Password</h3>
+            <input type="password" placeholder="Old" onChange={(e) => setOldPassword(e.target.value)} />
+            <input type="password" placeholder="New" onChange={(e) => setNewPassword(e.target.value)} />
+            <button onClick={changePassword}>Save</button>
         </div>
     )
 }

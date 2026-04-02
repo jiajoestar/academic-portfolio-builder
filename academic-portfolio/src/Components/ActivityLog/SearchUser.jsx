@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Search = () => {
+const SearchUser = () => {
     const [query, setQuery] = useState('');
     const [results, setResults] = useState([]);
 
@@ -38,4 +38,4 @@ const Search = () => {
     )
 }
 
-export default Search
+export default SearchUser

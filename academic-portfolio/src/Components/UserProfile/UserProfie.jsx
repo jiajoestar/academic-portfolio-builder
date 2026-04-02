@@ -3,22 +3,24 @@ import axios from 'axios';
 import './UserProfile.css'
 
 const UserProfile = () => {
-    const [user, setUser] = useState(null);
-    const [activities, setActivities] = useState([]);
-    const [editMode, setEditMode] = useState(false);
+    const [user, setUser] = useState(null)
+    const [activities, setActivities] = useState([])
+    const [editMode, setEditMode] = useState(false)
+
+    const shareLink = user ? `${window.location.origin}/public/${user._id}` : ``
 
     const [form, setForm] = useState({
         name: '',
         workplace: '',
         headline: '',
         avatar: ''
-    });
+    })
 
-    const [openSections, setOpenSections] = useState({});
+    const [openSections, setOpenSections] = useState({})
 
     useEffect(() => {
-        fetchProfile();
-    }, []);
+        fetchProfile()
+    }, [])
 
     const fetchProfile = async () => {
         const token = localStorage.getItem('token')
@@ -114,6 +116,8 @@ const UserProfile = () => {
                     ) : (
                         <p>{user.workplace || 'Not set'}</p>
                     )}
+
+                    <button onClick={() => navigator.clipboard.writeText(shareLink)}>Share your profile</button>
                 </div>
 
                 <div className='right'>

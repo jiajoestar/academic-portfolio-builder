@@ -37,7 +37,7 @@ router.put('/', authMiddleware, async (req, res) => {
 })
 
 // PIN ACTIVITIES
-router.put('/pin', authMiddleware, async (req, res) => {
+router.put("/pin", authMiddleware, async (req, res) => {
     const user = await User.findById(req.userId)
     user.pinnedActivities = req.body.pinned
     await user.save()
@@ -46,3 +46,19 @@ router.put('/pin', authMiddleware, async (req, res) => {
 });
 
 module.exports = router
+
+// PUBLIC PROFILE (when user creates sharable link)
+router.get("/public/:id", async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+
+        const activities = await Activity.find({
+            userId: req.params.id,
+            status: "published"
+        })
+
+        res.json({ user, activities })
+    } catch (err) {
+        res.status(500).json({ message: "Server error" })
+    }
+})
