@@ -10,7 +10,7 @@ import Footer from './Components/Footer/Footer.jsx';
 import Dashboard from './Components/ActivityLog/Dashboard.jsx';
 import ProtectedRoute from './Components/ActivityLog/ProtectedRoute.jsx';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import UserProfile from './Components/UserProfile/UserProfie.jsx';
+import UserProfile from './Components/UserProfile/UserProfile.jsx';
 import Settings from './Components/Settings/Settings.jsx';
 import SearchUser from './Components/ActivityLog/SearchUser.jsx';
 

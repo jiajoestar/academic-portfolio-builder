@@ -6,6 +6,8 @@ import QuickAdd from './QuickAdd';
 import ActionCard from './ActionCard';
 import ActivityLog from './ActivityLog';
 import { Navigate } from 'react-router-dom';
+import DraftsCard from './DraftsCard';
+import axios from 'axios';
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false)
@@ -21,26 +23,76 @@ const Dashboard = () => {
         console.log('sending token:', token)
 
         try {
-            const res = await fetch('http://localhost:5000/api/profile', {
+            const res = await axios.get('http://localhost:5000/api/profile', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
 
-            const data = await res.json()
+            const data = res.data
             console.log('Profile response:', data)
             setUser(data.user)
-            setActivities(data.activities)
+            // setActivities(data.activities)
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    const fetchActivities = async () => {
+        try {
+            const token = localStorage.getItem('token')
+
+            const res = await axios.get('http://localhost:5000/api/activities',
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+
+            console.log('Activities:', res.data)
+            setActivities(res.data.activities)
         } catch (err) {
             console.error(err)
         }
     }
 
     useEffect(() => {
+        fetchActivities(),
         fetchProfile()
     }, [])
 
     if (!user) return <p>Loading... (check console)</p>
+
+    const publishDraft = async (activity) => {
+        await axios.put(`http://localhost:5000/api/activities/${activity._id}`,
+            { status: 'published' },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        )
+        fetchActivities()
+    }
+
+    const saveDraft = async (activity) => {
+        try {
+            const token = localStorage.getItem('token')
+            await axios.put(`http://localhost:5000/api/activities/${activity._id}`,
+                { ...activity, status: 'draft' },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+            fetchActivities()
+        } catch (err) {
+            console.error(err)
+            alert('Error saving draft')
+        }
+    }
 
     return (
         <div>
@@ -54,10 +106,12 @@ const Dashboard = () => {
                     <QuickAdd onOpen={() => setShowModal(true)} />
                     <h3 className='section-title'>Your recent activity</h3>
                     <ActionCard activities={activities}/>
+                    <h3 className='section-title'>Activity drafts</h3>
+                    <DraftsCard activities={activities} saveDraft={saveDraft} onPublish={publishDraft} />
                 </div>
             </div>
 
-            <ActivityLog isOpen={showModal} onClose={() => setShowModal(false)} onSaved={fetchProfile} />
+            <ActivityLog isOpen={showModal} onClose={() => setShowModal(false)} onSaved={fetchActivities} />
         </div>
     )
 }

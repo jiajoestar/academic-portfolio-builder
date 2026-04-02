@@ -1,12 +1,14 @@
-export const saveActivity = async (data, token) => {
-    const res = await fetch('http://localhost:5000/api/activity/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(data)
-    })
+import axios from 'axios';
 
-    return res.json()
+export const saveActivity = async (data, token) => {
+    const res = await axios.post('http://localhost:5000/api/activities',
+        data,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        }
+    )
+
+    return res.data
 }

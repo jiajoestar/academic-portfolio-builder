@@ -3,9 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser, faCog } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom';
-import UserProfile from '../UserProfile/UserProfie';
-import Settings from '../Settings/Settings';
-import SearchUser from './SearchUser';
 
 const Navbar = () => {
     const navigate = useNavigate()

@@ -10,12 +10,15 @@ const activitySchema = new mongoose.Schema({
   type: String,
   title: String,
   description: String,
-  status: String,
 
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+  status: {
+    type: String,
+    enum: ['draft', 'published'],
+    default: 'draft'
+  },
+
+}, {
+  timestamps: true
 })
 
 module.exports = mongoose.model("Activity", activitySchema);

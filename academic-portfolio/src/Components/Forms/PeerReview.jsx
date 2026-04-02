@@ -3,7 +3,6 @@ import './Forms.css'
 import { useForm } from 'react-hook-form';
 import { saveActivity } from '../../Services/api';
 
-
 const PeerReview = () => {
     const { register, handleSubmit, reset } = useForm()
 
@@ -18,6 +17,7 @@ const PeerReview = () => {
 
         try {
             const res = await saveActivity(payload, token)
+            onSaved()
             console.log(res)
             alert(`Saved as ${status}`)
             reset()
@@ -55,7 +55,7 @@ const PeerReview = () => {
 
             <div className='form-actions'>
                 <button type='button' onClick={handleSubmit(data => onSubmit(data, 'draft'))}>Save</button>
-                <button type='button' onClick={handleSubmit(data => onSubmit(data, 'draft'))}>Publish</button>
+                <button type='button' onClick={handleSubmit(data => onSubmit(data, 'published'))}>Publish</button>
             </div>
         </form>
     )
