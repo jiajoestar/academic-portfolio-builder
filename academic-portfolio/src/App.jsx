@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import UserProfile from './Components/UserProfile/UserProfile.jsx';
 import Settings from './Components/Settings/Settings.jsx';
 import SearchUser from './Components/ActivityLog/SearchUser.jsx';
+import PublicProfile from './Components/UserProfile/PublicProfile.jsx';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path='/profile' element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
         <Route path='/settings' element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+        <Route path='/public/:id' element={<PublicProfile />} />
       </Routes>
     </Router>
     </div>

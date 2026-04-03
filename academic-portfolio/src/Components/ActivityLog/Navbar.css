@@ -15,6 +15,9 @@
 
 .logo {
     font-size: 24px;
+    height: 40px;
+    width: auto;
+    object-fit: contain;
 }
 
 .title {

@@ -21,7 +21,7 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
             ]
         },
         {
-            header: { name: 'Awards and prizes' },
+            header: { name: 'Awards and Prizes' },
             values: [
                 { name: 'Appointment', description: 'Examining students' },
                 { name: 'Election to earned ociety', description: 'Examining students' },

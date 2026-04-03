@@ -9,8 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { Link, useNavigate } from 'react-router-dom';
-
-// import Logo from '../Assets/logo.svg'
+import logo from '../Assets/logo.svg';
 
 const Navbar = () => {
 
@@ -45,7 +44,7 @@ const Navbar = () => {
     return (
         <nav>
             <div className='nav-logo-container'>
-                
+                <img src={logo} alt="logo" />
             </div>
             <div className='navbar-links-container'>
                 <Link to='/'>Home</Link>

@@ -7,6 +7,9 @@
 img {
   max-width: 100%;
   height: auto;
+  font-size: 24px;
+  width: auto;
+  object-fit: contain;
 }
 .App {
   min-height: 100vh;
@@ -23,6 +26,15 @@ nav {
   align-items: center;
   justify-content: space-between;
   min-height: 90px;
+}
+.nav-logo-container {
+  display: flex;
+  align-items: center;
+}
+.nav-logo-container img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
 }
 .navbar-menu-container {
   display: none;

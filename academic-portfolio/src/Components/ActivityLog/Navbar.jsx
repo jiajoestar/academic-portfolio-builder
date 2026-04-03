@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser, faCog } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css'
 import { Link, useNavigate } from 'react-router-dom';
+import logo from '../Assets/logo.svg';
 
 const Navbar = () => {
     const navigate = useNavigate()
@@ -16,7 +17,7 @@ const Navbar = () => {
     return (
         <nav className='navbar'>
             <div className='navbar-left'>
-                <div className='logo'></div>
+                <img src={logo} className='logo' alt="logo" />
                 <h2 className='title'>Portfolio Builder</h2>
             </div>
 

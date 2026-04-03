@@ -10,6 +10,11 @@ const activitySchema = new mongoose.Schema({
   type: String,
   title: String,
   description: String,
+  pinned: { type: Boolean, default: false },
+  reviewType: String,
+  day: String,
+  month: String,
+  year: String,
 
   status: {
     type: String,
