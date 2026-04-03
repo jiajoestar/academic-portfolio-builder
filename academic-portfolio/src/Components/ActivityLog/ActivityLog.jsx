@@ -5,6 +5,32 @@ import { faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import PeerReview from '../Forms/PeerReview';
 import Prizes from '../Forms/Prizes';
 import ParticipationActivity from '../Forms/ParticipationActivity';
+import Consultancy from '../Forms/Consultancy';
+import Examination from '../Forms/Examination';
+import ExternalInstitution from '../Forms/ExternalInstitution';
+import HostingVisitors from '../Forms/HostingVisitors';
+import TalksOrPresentations from '../Forms/TalksOrPresentations';
+import Appointment from '../Forms/Appointment';
+import Fellowship from '../Forms/Fellowship';
+import ElectionToEarnedSociety from '../Forms/ElectionToEarnedSociety';
+import HonoraryDegree from '../Forms/HonoraryDegree';
+import NationalHonour from '../Forms/NationalHonour';
+import MembershipOfBoard from '../Forms/MembershipOfBoard';
+import MembershipOfCommittee from '../Forms/MembershipOfCommitee';
+import MembershipOfCouncil from '../Forms/MembershipOfCouncil';
+import MembershipOfNetwork from '../Forms/MembershipOfNetwork';
+import MembershipOfExternalResearchOrg from '../Forms/MembershipOfExternalResearchOrg'
+import ResearchAndTeaching from '../Forms/ResearchAndTeaching';
+import InvitedTalks from '../Forms/InvitedTalks';
+import ContributionToCommittee from '../Forms/ContributionToCommittee';
+import AdvisoryPanel from '../Forms/AdvisoryPanel';
+import MembershipOfGovernment from '../Forms/MembershipOfGovernment';
+import HostingExternal from '../Forms/HostingExternal';
+import CPD from '../Forms/CPD';
+import SchoolsEngagement from '../Forms/SchoolsEngagement';
+import MediaArticle from '../Forms/MediaArticle';
+import Festival from '../Forms/Festival';
+import Lecture from '../Forms/Lecture';
 
 const ActivityLog = ({ isOpen, onClose, onSaved }) => {
     const options = [
@@ -24,7 +50,7 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
             header: { name: 'Awards and Prizes' },
             values: [
                 { name: 'Appointment', description: 'Examining students' },
-                { name: 'Election to earned ociety', description: 'Examining students' },
+                { name: 'Election to earned society', description: 'Examining students' },
                 { name: 'Fellowship awarded competitively', description: 'Examining students' },
                 { name: 'Honorary degree', description: 'Examining students' },
                 { name: 'National/International honour', description: 'Examining students' },
@@ -64,19 +90,19 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
         {
             header: { name: 'Business and Community' },
             values: [
-                { name: 'CPD Delivery/Organisation of Courses for Externals', description: 'Examining students' },
-                { name: 'Hosting of External, Non-Academic Vistor', description: 'Examining students' },
-                { name: 'Membership of Public/Government Advisory/Policy Group or Panel', description: 'Examining students' },
-                { name: 'Work on Advisory Panel to Industry or Government/Non-Government Organisation', description: 'Examining students' }
+                { name: 'CPD delivery/organisation of courses for externals', description: 'Examining students' },
+                { name: 'Hosting of external, non-academic visitors', description: 'Examining students' },
+                { name: 'Membership of public/government advisory/policy group or panel', description: 'Examining students' },
+                { name: 'Work on advisory panel to industry or government/non-government organisation', description: 'Examining students' }
             ]
         },
         {
             header: { name: 'Public Engagement and Outreach' },
             values: [
                 { name: 'Festival/Exhibition', description: 'Examining students' },
-                { name: 'Media Article or Participation', description: 'Examining students' },
-                { name: 'Public Lecture/Debate/Seminar', description: 'Examining students' },
-                { name: 'Schools Engagement', description: 'Examining students' }
+                { name: 'Media article or participation', description: 'Examining students' },
+                { name: 'Public lecture/debate/seminar', description: 'Examining students' },
+                { name: 'Schools engagement', description: 'Examining students' }
             ]
         },
         
@@ -191,6 +217,32 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
                                 {selectedItem.name === 'Peer-review and editorial activity' && <PeerReview onSaved={onSaved} />}
                                 {selectedItem.name === 'Participation or Organisation for events' && <ParticipationActivity onSaved={onSaved} />}
                                 {selectedItem.name === 'Prizes (including medals and awards)' && <Prizes onSaved={onSaved} />}
+                                {selectedItem.name === 'Consultancy' && <Consultancy onSaved={onSaved} />}
+                                {selectedItem.name === 'Examination' && <Examination onSaved={onSaved} />}
+                                {selectedItem.name === 'External institutions' && <ExternalInstitution onSaved={onSaved} />}
+                                {selectedItem.name === 'Hosting visitors' && <HostingVisitors onSaved={onSaved} />}
+                                {selectedItem.name === 'Talks or presentations' && <TalksOrPresentations onSaved={onSaved} />}
+                                {selectedItem.name === 'Appointment' && <Appointment onSaved={onSaved} />}
+                                {selectedItem.name === 'Fellowship awarded competitively' && <Fellowship onSaved={onSaved} />}
+                                {selectedItem.name === 'Election to earned society' && <ElectionToEarnedSociety onSaved={onSaved} />}
+                                {selectedItem.name === 'Honorary degree' && <HonoraryDegree onSaved={onSaved} />}
+                                {selectedItem.name === 'National/International honour' && <NationalHonour onSaved={onSaved} />}
+                                {selectedItem.name === 'Of board' && <MembershipOfBoard onSaved={onSaved} />}
+                                {selectedItem.name === 'Of committee' && <MembershipOfCommittee onSaved={onSaved} />}
+                                {selectedItem.name === 'Of council' && <MembershipOfCouncil onSaved={onSaved} />}
+                                {selectedItem.name === 'Of network' && <MembershipOfNetwork onSaved={onSaved} />}
+                                {selectedItem.name === 'Research and Teaching at external organisation' && <ResearchAndTeaching onSaved={onSaved} />}
+                                {selectedItem.name === 'Membership of external research organisation' && <MembershipOfExternalResearchOrg onSaved={onSaved} />}
+                                {selectedItem.name === 'Contribution to national/international committees' && <ContributionToCommittee onSaved={onSaved} />}
+                                {selectedItem.name === 'Invited talks' && <InvitedTalks onSaved={onSaved} />}
+                                {selectedItem.name === 'Work on advisory panel to industry or government/non-government organisation' && <AdvisoryPanel onSaved={onSaved} />}
+                                {selectedItem.name === 'Membership of public/government advisory/policy group or panel' && <MembershipOfGovernment onSaved={onSaved} />}
+                                {selectedItem.name === 'CPD delivery/organisation of courses for externals' && <CPD onSaved={onSaved} />}
+                                {selectedItem.name === 'Hosting of external, non-academic visitors' && <HostingExternal onSaved={onSaved} />}
+                                {selectedItem.name === 'Public lecture/debate/seminar' && <Lecture onSaved={onSaved} />}
+                                {selectedItem.name === 'Schools engagement' && <SchoolsEngagement onSaved={onSaved} />}
+                                {selectedItem.name === 'Festival/Exhibition' && <Festival onSaved={onSaved} />}
+                                {selectedItem.name === 'Media article or participation' && <MediaArticle onSaved={onSaved} />}
                             </div>
                         ) : (
                             <p>

@@ -130,6 +130,7 @@ const UserProfile = () => {
         'Awards and prizes': [],
         'Memberships': [],
         'Public engagement': [],
+        'Academic engagement': [],
         'Business and community': [],
         'Other activities': []
     }
