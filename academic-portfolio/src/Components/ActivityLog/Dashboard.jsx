@@ -32,7 +32,7 @@ const Dashboard = () => {
             const data = res.data
             console.log('Profile response:', data)
             setUser(data.user)
-            // setActivities(data.activities)
+            
         } catch (err) {
             console.error(err)
         }
@@ -58,40 +58,30 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
-        fetchActivities(),
+        fetchActivities()
         fetchProfile()
     }, [])
 
     if (!user) return <p>Loading... (check console)</p>
 
-    const publishDraft = async (activity) => {
+    const handleSave = async (activity) => {
+        const token = localStorage.getItem('token')
         await axios.put(`http://localhost:5000/api/activities/${activity._id}`,
-            { status: 'published' },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }
+            { ...activity, status: 'draft' },
+            { headers: { Authorization: `Bearer ${token}` } }
         )
         fetchActivities()
     }
 
-    const saveDraft = async (activity) => {
-        try {
-            const token = localStorage.getItem('token')
-            await axios.put(`http://localhost:5000/api/activities/${activity._id}`,
-                { ...activity, status: 'draft' },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            )
-            fetchActivities()
-        } catch (err) {
-            console.error(err)
-            alert('Error saving draft')
-        }
+    console.log('ACTIVITIES:', activities)
+
+    const handlePublish = async (activity) => {
+        const token = localStorage.getItem('token')
+        await axios.put(`http://localhost:5000/api/activities/${activity._id}`,
+            { status: 'published' },
+            { headers: { Authorization: `Bearer ${token}` } }
+        )
+        fetchActivities()
     }
 
     return (
@@ -107,7 +97,7 @@ const Dashboard = () => {
                     <h3 className='section-title'>Your recent activity</h3>
                     <ActionCard activities={activities}/>
                     <h3 className='section-title'>Activity drafts</h3>
-                    <DraftsCard activities={activities} saveDraft={saveDraft} onPublish={publishDraft} />
+                    <DraftsCard activities={activities} onPublish={handlePublish} onSave={handleSave} />
                 </div>
             </div>
 

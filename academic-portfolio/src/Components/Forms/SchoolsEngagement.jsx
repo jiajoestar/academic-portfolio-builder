@@ -30,7 +30,7 @@ const SchoolsEngagement = () => {
     return (
         <form className='form-container'>
             <h3>Schools engagement</h3>
-            <p>Log all things related to peer-reviews and editorial actvity here.</p>
+            <p>Log all things related to school engagement here.</p>
 
             <div className='form-group'>
                 <label>Type</label>

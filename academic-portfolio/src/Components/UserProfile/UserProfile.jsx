@@ -169,6 +169,15 @@ const UserProfile = () => {
                                     <p>{user.headline}</p>
                                 </>
                             )}
+                            {editMode && (
+                                <>
+                                    <input type='file' accept='image/*' onChange={handleAvatarUpload} />
+
+                                    {form.avatar && (
+                                        <button onClick={() => setForm({ ...form, avatar: '' })}>Remove avatar</button>
+                                    )}
+                                </>
+                            )}
                         </div>
                     </div>
                     

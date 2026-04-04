@@ -1,9 +1,11 @@
 import React from 'react';
 
-const DraftsCard = ({ activities, saveDraft, onPublish }) => {
+const DraftsCard = ({ activities, saveDraft, onPublish, onSave }) => {
     const drafts = activities.filter(a => a.status === 'draft')
 
     if (drafts.length === 0) return <p>No drafts yet.</p>
+
+    console.log('Drafts:', drafts)
 
     return (
         <div className='drafts-section'>
@@ -27,7 +29,7 @@ const DraftsCard = ({ activities, saveDraft, onPublish }) => {
                         <small>Last edited: {lastEdited.toLocaleString()}</small>
 
                         <div className='draft-actions'>
-                            <button onClick={() => saveDraft(a)}>Save</button>
+                            <button onClick={() => onSave(a)}>Save</button>
                             <button onClick={() => onPublish(a)}>Publish</button>
                         </div>
                     </div>

@@ -30,7 +30,7 @@ const Festival = () => {
     return (
         <form className='form-container'>
             <h3>Festival/Exhibition</h3>
-            <p>Log all things related to peer-reviews and editorial actvity here.</p>
+            <p>Log all things related to festivals and/or exhibitions here.</p>
 
             <div className='form-group'>
                 <label>Type</label>

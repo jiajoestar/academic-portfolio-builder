@@ -22,7 +22,7 @@ const Navbar = () => {
     const handleSearch = async (value) => {
         setQuery(value)
 
-        const res = await fetch(`http://localhost:5000/api/seearch?q=${value}`)
+        const res = await fetch(`http://localhost:5000/api/search?q=${value}`)
         const data = await res.json()
     }
 

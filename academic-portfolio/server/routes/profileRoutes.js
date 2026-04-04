@@ -7,10 +7,14 @@ const authMiddleware = require("../middleware/authMiddleware")
 router.get('/', authMiddleware, async (req, res) => {
     try {
         console.log("req.userId:", req.userId)
+        console.log("req userId type:", typeof req.userId)
 
         const user = await User.findById(req.userId)
+        if (!user) {
+            return res.status(404).json({ message: 'user not found' })
+        }
 
-        console.log("FOUND USER:", user)
+        console.log("found user:", user)
 
         const activities = await Activity.find({
             userId: req.userId,
@@ -45,8 +49,6 @@ router.put("/pin", authMiddleware, async (req, res) => {
     res.json(user)
 });
 
-module.exports = router
-
 // PUBLIC PROFILE (when user creates sharable link)
 router.get("/public/:id", async (req, res) => {
     try {
@@ -62,3 +64,5 @@ router.get("/public/:id", async (req, res) => {
         res.status(500).json({ message: "Server error" })
     }
 })
+
+module.exports = router

@@ -3,7 +3,7 @@ import './Forms.css'
 import { useForm } from 'react-hook-form';
 import { saveActivity } from '../../Services/api';
 
-const PeerReview = () => {
+const PeerReview = ({ onSaved }) => {
     const { register, handleSubmit, reset } = useForm()
 
     const token = localStorage.getItem('token')
@@ -11,14 +11,19 @@ const PeerReview = () => {
     const onSubmit = async (data, status) => {
         const payload = {
             ...data,
+            day: data.day || '',
+            month: data.month || '',
+            year: data.year || '',
             type: 'peer-review',
-            status // draft or published
+            status: status
         }
 
         try {
             const res = await saveActivity(payload, token)
-            onSaved()
+            if (onSaved) onSaved()
             console.log(res)
+            console.log('PAYLOAD:', payload)
+            console.log('FORM DATA:', data)
             alert(`Saved as ${status}`)
             reset()
         } catch (err) {
@@ -28,7 +33,7 @@ const PeerReview = () => {
     }
 
     return (
-        <form className='form-container'>
+        <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
             <h3>Peer-review and editorial activity</h3>
             <p>Log all things related to peer-reviews and editorial actvity here.</p>
 
@@ -54,8 +59,8 @@ const PeerReview = () => {
             </div>
 
             <div className='form-actions'>
-                <button type='button' onClick={handleSubmit(data => onSubmit(data, 'draft'))}>Save</button>
-                <button type='button' onClick={handleSubmit(data => onSubmit(data, 'published'))}>Publish</button>
+                <button type='submit'>Save</button>
+                <button type='button' onClick={handleSubmit((data) => onSubmit(data, 'published'))}>Publish</button>
             </div>
         </form>
     )

@@ -16,15 +16,21 @@ router.post('/', authMiddleware, async (req, res) => {
       res.json(activity)
     } catch (err) {
       console.error(err)
-      res.sttaus(500).json({ message: 'Error saving activity' })
+      res.status(500).json({ message: 'Error saving activity' })
     }
 })
 
 router.get('/', authMiddleware, async (req, res) => {
   try {
-    const activities = (await Activity.find({ userId: req.userId })).toSorted({ createdAt: -1 })
+    console.log("User ID:", req.userId)
+
+    const activities = await Activity.find({ userId: req.userId }).sort({ createdAt: -1 })
+
+    console.log("Activities from DB:", activities)
+
     res.json({ activities })
   } catch (err) {
+    console.error("Fetch error:", err)
     res.status(500).json({ message: 'Error fetching activities' })
   }
 })
