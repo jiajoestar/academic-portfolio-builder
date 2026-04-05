@@ -8,11 +8,14 @@ import ActivityLog from './ActivityLog';
 import { Navigate } from 'react-router-dom';
 import DraftsCard from './DraftsCard';
 import axios from 'axios';
+import DraftModal from './DraftModal';
 
 const Dashboard = () => {
     const [showModal, setShowModal] = useState(false)
     const [user, setUser] = useState(null)
     const [activities, setActivities] = useState([])
+    const [selectedDraft, setSelectedDraft] = useState(null)
+    const [showDraftModal, setShowDraftModal] = useState(false)
 
     if (!localStorage.getItem('token')) {
         return <Navigate to="/login" />
@@ -71,6 +74,13 @@ const Dashboard = () => {
             { headers: { Authorization: `Bearer ${token}` } }
         )
         fetchActivities()
+
+        await axios.post(`http://localhost:5000/api/activities`, {
+            ...activity,
+            status: 'draft'
+        }, {
+            headers: { Authorization: `Bearer ${token}` }
+        })
     }
 
     console.log('ACTIVITIES:', activities)
@@ -84,6 +94,9 @@ const Dashboard = () => {
         fetchActivities()
     }
 
+    console.log("showModal:", showModal)
+    console.log("selectedDraft:", selectedDraft)
+
     return (
         <div>
             <Navbar />
@@ -96,12 +109,26 @@ const Dashboard = () => {
                     <QuickAdd onOpen={() => setShowModal(true)} />
                     <h3 className='section-title'>Your recent activity</h3>
                     <ActionCard activities={activities}/>
-                    <h3 className='section-title'>Activity drafts</h3>
-                    <DraftsCard activities={activities} onPublish={handlePublish} onSave={handleSave} />
+                    
+                    <DraftsCard activities={activities} onPublish={handlePublish} onSave={handleSave} onEdit={(draft) => {
+                        setSelectedDraft(draft)
+                        setShowDraftModal(true)
+                    }} />
                 </div>
             </div>
 
-            <ActivityLog isOpen={showModal} onClose={() => setShowModal(false)} onSaved={fetchActivities} />
+            <ActivityLog isOpen={showModal}
+                onClose={() => setShowModal(false)}
+                onSaved={fetchActivities} />
+
+            <DraftModal draft={selectedDraft}
+                isOpen={!!selectedDraft}
+                onClose={() => {
+                    setSelectedDraft(null)
+                }}
+                onSave={handleSave}
+                onPublish={handlePublish}
+                onDelete={fetchActivities} />
         </div>
     )
 }

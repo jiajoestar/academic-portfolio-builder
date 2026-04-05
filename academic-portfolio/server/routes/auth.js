@@ -40,7 +40,12 @@ router.post("/register", async (req, res) => {
 // LOGIN
 router.post("/login", async (req, res) => {
   try {
-    const { email, password } = req.body
+    const email = req.body?.email
+    const password = req.body?.password
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Missing fields" })
+    }
 
     console.log('Login attempt:', email)
 

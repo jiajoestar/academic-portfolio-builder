@@ -2,6 +2,12 @@ const router = require("express").Router()
 const Activity = require("../models/Activity")
 const authMiddleware = require("../middleware/authMiddleware")
 
+console.log("ACTIVITY ROUTES LOADED")
+
+router.get("/test", (req,res) => {
+  res.json({ ok: true })
+})
+
 // SAVING ACTIVITY DRAFT
 router.post('/', authMiddleware, async (req, res) => {
     try {
@@ -50,6 +56,21 @@ router.put('/:id', authMiddleware, async (req, res) => {
   await activity.save()
 
   res.json(activity)
+})
+
+// DELETING AN ACTIVITY DRAFT
+router.delete('/:id', authMiddleware, async (req, res) => {
+  console.log("DELETE ROUTE HIT:", req.params.id)
+  const activity = await Activity.findOneAndDelete({
+    _id: req.params.id,
+    userId: req.userId
+  })
+
+  if (!activity) {
+    return res.status(403).json({ message: 'Not allowed' })
+  }
+
+  res.json({ message: 'Deleted' })
 })
 
 module.exports = router

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ActivityLog.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -113,8 +113,6 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
     const [expandedSections, setExpandedSections] = useState({Activity: true})
     const [selectedItem, setSelectedItem] = useState(null)
 
-    if (!isOpen) return null
-
     const onChange = (e) => {
         const value = e.target.value
         setSearch(value)
@@ -162,6 +160,8 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
             [name]: !prev[name]
         }))
     }
+
+    if (!isOpen) return null
 
     return (
         <div className='overlay'>
@@ -214,7 +214,7 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
                     <div className='modal-right'>
                         {selectedItem ? (
                             <div>
-                                {selectedItem.name === 'Peer-review and editorial activity' && <PeerReview onSaved={onSaved} />}
+                                {selectedItem.name === 'Peer-review and editorial activity' && <PeerReview onSaved={onSaved} />} {/*//existingData={activity}*/}
                                 {selectedItem.name === 'Participation or Organisation for events' && <ParticipationActivity onSaved={onSaved} />}
                                 {selectedItem.name === 'Prizes (including medals and awards)' && <Prizes onSaved={onSaved} />}
                                 {selectedItem.name === 'Consultancy' && <Consultancy onSaved={onSaved} />}

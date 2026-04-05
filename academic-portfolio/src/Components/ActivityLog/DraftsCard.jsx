@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const DraftsCard = ({ activities, saveDraft, onPublish, onSave }) => {
+const DraftsCard = ({ activities, saveDraft, onPublish, onSave, onEdit }) => {
     const drafts = activities.filter(a => a.status === 'draft')
+    const [isOpen, setIsOpen] = useState(false)
 
     if (drafts.length === 0) return <p>No drafts yet.</p>
 
@@ -9,29 +10,25 @@ const DraftsCard = ({ activities, saveDraft, onPublish, onSave }) => {
 
     return (
         <div className='drafts-section'>
-            <h3>Drafts ({drafts.length})</h3>
+            <h3 onClick={() => setIsOpen(!isOpen)} style={{ cursor: 'pointer' }}>Drafts ({drafts.length}) {isOpen ? '▲' : '▼'}</h3>
 
-            {drafts.map(a => {
+            {isOpen && drafts.map(a => {
                 const lastEdited = new Date(a.updatedAt || a.createdAt)
-                const isRecentlyEdited = Date.now() - new Date(a.updatedAt || a.createdAt) < 5 * 60 * 1000
+                const isUnsaved = a.isDirty === true
 
                 return (
-                    <div key={a._id} className='draft-card'>
+                    <div key={a._id} className='draft-card' onClick={() => {
+                        console.log('Clicked draft:', a)
+                        onEdit(a)}}>
                         <div className='draft-header'>
                             <strong>{a.title || a.type}</strong>
-                            {isRecentlyEdited && (
-                                <span className='unsaved-badge'>Unsaved changes</span>
-                            )}
+                            
                         </div>
 
-                        <p>{a.description}</p>
+                        
 
                         <small>Last edited: {lastEdited.toLocaleString()}</small>
 
-                        <div className='draft-actions'>
-                            <button onClick={() => onSave(a)}>Save</button>
-                            <button onClick={() => onPublish(a)}>Publish</button>
-                        </div>
                     </div>
                 )
             })}
