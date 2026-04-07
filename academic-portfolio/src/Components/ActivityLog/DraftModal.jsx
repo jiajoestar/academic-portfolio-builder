@@ -36,7 +36,7 @@ const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => 
                 </div>
 
                 <div className='modal-body' style={{ display: 'block' }}>
-                    <h3>{draft.type}</h3>
+                    {/*<h3>{draft.type}</h3>*/}
                     {renderForm()}
 
                     <div className='form-actions'>

@@ -7,11 +7,11 @@ import axios from 'axios';
 const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft' }) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
+            title: '',
             reviewType: '',
-            description:'',
-            day: '',
-            month: '',
-            year: ''
+            journal: '',
+            description: '',
+            date: ''
         }
     })
 
@@ -20,10 +20,14 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
     const onSubmit = async (data, status = mode) => {
         const payload = {
             ...data,
-            day: data.day || '',
-            month: data.month || '',
-            year: data.year || '',
             type: 'peer-review',
+            title: data.title,
+            description: data.description,
+            startDate: data.date,
+            details: {
+                reviewType: data.reviewType,
+                journal: data.journal
+            },
             status: status
         }
 
@@ -57,24 +61,31 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
     useEffect(() => {
         if (existingData) {
             reset({
-                reviewType: existingData.reviewType || '',
+                title: existingData.title || '',
+                reviewType: existingData.details?.reviewType || '',
+                journal: existingData.details?.journal || '',
                 description: existingData.description || '',
-                day: existingData.day || '',
-                month: existingData.month || '',
-                year: existingData.year || ''
+                date: existingData.startDate || ''
             })
         }
     }, [existingData, reset])
 
     return (
         <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
-            <h3>Peer-review and editorial activity</h3>
+            <h3>Peer review and editorial activity</h3>
             <p>Log all things related to peer-reviews and editorial actvity here.</p>
 
             <div className='form-group'>
-                <label>Type</label>
+                <label>Title</label>
+                <input {...register('title')} />
+            </div>
+
+            <div className='form-group'>
+                <label>Review type</label>
                 <select {...register('reviewType')}>
-                    <option>Funding body peer-review</option>
+                    <option>Funding body peer review</option>
+                    <option>Collaborative review</option>
+                    <option>Post-publication review</option>
                 </select>
             </div>
 
@@ -84,16 +95,24 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
             </div>
 
             <div className='form-group'>
-                <label>Date received</label>
+                <label>Journal/organisation</label>
+                <input {...register('journal')} />
+            </div>
+
+            <div className='form-group'>
+                <label>Description</label>
+                <textarea {...register('description')} />
+            </div>
+
+            <div className='form-group'>
+                <label>Date</label>
                 <div className='date-group'>
-                    <input placeholder='DD' {...register('day')} />
-                    <input placeholder='MM' {...register('month')} />
-                    <input placeholder='YYYY' {...register('year')} />
+                    <input type='date' {...register('date')} />
                 </div>
             </div>
 
             
-                <div className='form-actions'>
+            <div className='form-actions'>
                 <button type='submit' onClick={handleSubmit((data) => onSubmit(data, 'draft'))}>Save</button>
                 <button type='submit' onClick={handleSubmit((data) => onSubmit(data, 'published'))}>Publish</button>
             </div>

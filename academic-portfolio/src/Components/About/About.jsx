@@ -15,19 +15,19 @@ const About = () => {
                 </div>
                 <div className="about-section-text-container">
                     <br></br>
-                    <h1 className="primary-heading">About Portfolio..</h1>
+                    <h1 className="primary-heading">About Case</h1>
                     <p className="primary-text">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                        Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        Case Portfolio is designed to make academics' lives easier. with simple, user-friendly UI and a smart 'Quick Add' feature,
+                         making portfolios has never been so straightforward.
                     </p>
                     <p className="primary-text">
-                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-                        Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
-                        Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-                        Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                        Got a busy schedule and don't have time to sit at your desk to update your profile with lengthy descriptions of events
+                        you've attended? We got you. Our unique Quick Add feature allows for fast, easy activity logging - and if you need to leave
+                        in a hurry, easily save the activity as a draft and come back to it another time. See all your activities in your user profile, 
+                        and pin the activities that really matter to you, or ones you want to show off the most!
+                    </p>
+                    <p className="primary-text">
+                        Register an account with us today for a seamless portfolio building experience.
                     </p>
                     <div className="about-buttons-container">
                         <Link to='/login'><button className="secondary-button">Get started</button></Link>

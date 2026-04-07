@@ -42,7 +42,7 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
                 { name: 'External institutions', description: 'External roles' },
                 { name: 'Hosting visitors', description: 'Examining students' },
                 { name: 'Participation or Organisation for events', description: 'Examining students' },
-                { name: 'Peer-review and editorial activity', description: 'Examining students' },
+                { name: 'Peer review and editorial activity', description: 'Examining students' },
                 { name: 'Talks or presentations', description: 'Examining students' }
             ]
         },
@@ -214,7 +214,7 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
                     <div className='modal-right'>
                         {selectedItem ? (
                             <div>
-                                {selectedItem.name === 'Peer-review and editorial activity' && <PeerReview onSaved={onSaved} />} {/*//existingData={activity}*/}
+                                {selectedItem.name === 'Peer review and editorial activity' && <PeerReview onSaved={onSaved} />} {/*//existingData={activity}*/}
                                 {selectedItem.name === 'Participation or Organisation for events' && <ParticipationActivity onSaved={onSaved} />}
                                 {selectedItem.name === 'Prizes (including medals and awards)' && <Prizes onSaved={onSaved} />}
                                 {selectedItem.name === 'Consultancy' && <Consultancy onSaved={onSaved} />}

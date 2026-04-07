@@ -1,64 +1,73 @@
-import React, { use } from 'react';
+import React from 'react';
 import './Forms.css'
 import { useForm } from 'react-hook-form';
 import { saveActivity } from '../../Services/api';
 
-const TalksOrPresentations = () => {
-    const { register, handleSubmit, reset } = useForm()
-
+const TalksOrPresentations = ({ onSaved }) => {
+    const { register, handleSubmit } = useForm()
     const token = localStorage.getItem('token')
 
     const onSubmit = async (data, status) => {
         const payload = {
-            ...data,
-            type: 'peer-review',
-            status // draft or published
+            type: 'talk',
+            title: data.title,
+            description: data.description,
+            startDate: data.date,
+            status,
+            details: {
+                event: data.event,
+                audienceSize: Number(data.audienceSize),
+                talkType: data.talkType
+            }
         }
 
-        try {
-            const res = await saveActivity(payload, token)
-            onSaved()
-            console.log(res)
-            alert(`Saved as ${status}`)
-            reset()
-        } catch (err) {
-            console.error(err)
-            alert(`Error saving`)
-        }
+        await saveActivity(payload, token)
+        onSaved && onSaved()
     }
 
     return (
         <form className='form-container'>
-            <h3>Talks or presentations</h3>
-            <p>Log all things related to talks or presentations here.</p>
+            <h3>Talks/Presentations</h3>
+            <p>Log all things related to talks and presentations here.</p>
+
+            <div className='form-group'>
+                <label>Title</label>
+                <input placeholder='Title' {...register('title')} />
+            </div>
+
+            <div className='form-group'>
+                <label>Event</label>
+                <input placeholder='Event' {...register('event')} />
+            </div>
+
+            <div className='form-group'>
+                <label>Audience size</label>
+                <input placeholder='Audience size' type='number' {...register('audienceSize')} />
+            </div>
 
             <div className='form-group'>
                 <label>Type</label>
-                <select {...register('reviewType')}>
-                    <option>Funding body peer-review</option>
+                <select {...register('talkType')}>
+                    <option value='invited'>Invited</option>
+                    <option value='keynote'>Keynote</option>
                 </select>
             </div>
 
             <div className='form-group'>
                 <label>Description</label>
-                <textarea {...register('description', { required: true })} />
+                <textarea placeholder='Description' {...register('description')} />
             </div>
 
             <div className='form-group'>
-                <label>Date received</label>
-                <div className='date-group'>
-                    <input placeholder='DD' {...register('day')} />
-                    <input placeholder='MM' {...register('month')} />
-                    <input placeholder='YYYY' {...register('year')} />
-                </div>
+                <label>Date</label>
+                <input type='date' {...register('date')} />
             </div>
 
             <div className='form-actions'>
-                <button type='button' onClick={handleSubmit(data => onSubmit(data, 'draft'))}>Save</button>
-                <button type='button' onClick={handleSubmit(data => onSubmit(data, 'published'))}>Publish</button>
+                <button type='button' onClick={handleSubmit(d => onSubmit(d, 'draft'))}>Save</button>
+                <button type='button' onClick={handleSubmit(d => onSubmit(d, 'published'))}>Publish</button>
             </div>
         </form>
     )
 }
-
 export default TalksOrPresentations

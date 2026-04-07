@@ -1,34 +1,36 @@
 import React from 'react';
-import './Forms.css'
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import { saveActivity } from '../../Services/api';
 
-const InvitedTalks = ({ onSaved }) => {
+const Funding = ({ onSaved, existingData }) => {
     const { register, handleSubmit } = useForm()
+
     const token = localStorage.getItem('token')
 
     const onSubmit = async (data, status) => {
         const payload = {
-            type: 'talk',
+            type: 'funding',
             title: data.title,
             description: data.description,
-            startDate: data.date,
+            startDate: data.startDate,
+            endDate: data.endDate,
             status,
             details: {
-                event: data.event,
-                audienceSize: Number(data.audienceSize),
-                talkType: data.talkType
+                funder: data.funder,
+                amount: Number(data.amount),
+                role: data.role
             }
         }
 
         await saveActivity(payload, token)
-        onSaved && onSaved()
+        onsaved && onSaved()
     }
 
     return (
         <form className='form-container'>
-            <h3>Talks/Presentations</h3>
-            <p>Log all things related to talks and presentations here.</p>
+            <h3>Funding</h3>
+            <p>Log all things related to funding here.</p>
 
             <div className='form-group'>
                 <label>Title</label>
@@ -36,21 +38,12 @@ const InvitedTalks = ({ onSaved }) => {
             </div>
 
             <div className='form-group'>
-                <label>Event</label>
-                <input placeholder='Event' {...register('event')} />
-            </div>
-
-            <div className='form-group'>
-                <label>Audience size</label>
-                <input placeholder='Audience size' type='number' {...register('audienceSize')} />
-            </div>
-
-            <div className='form-group'>
-                <label>Type</label>
-                <select {...register('talkType')}>
-                    <option value='invited'>Invited</option>
-                    <option value='keynote'>Keynote</option>
-                </select>
+                <label>Funder</label>
+                <input placeholder='Funder' {...register('funder')} />
+                <label>Amount</label>
+                <input placeholder='Amount' type='number' {...register('amount')} />
+                <label>Role</label>
+                <input placeholder='Role (PI, Co-I)' {...register('role')} />
             </div>
 
             <div className='form-group'>
@@ -59,10 +52,12 @@ const InvitedTalks = ({ onSaved }) => {
             </div>
 
             <div className='form-group'>
-                <label>Date</label>
-                <input type='date' {...register('date')} />
+                <label>Start date</label>
+                <input type='date' {...register('startDate')} />
+                <label>End date</label>
+                <input type='date' {...register('endDate')} />
             </div>
-
+            
             <div className='form-actions'>
                 <button type='button' onClick={handleSubmit(d => onSubmit(d, 'draft'))}>Save</button>
                 <button type='button' onClick={handleSubmit(d => onSubmit(d, 'published'))}>Publish</button>
@@ -70,4 +65,5 @@ const InvitedTalks = ({ onSaved }) => {
         </form>
     )
 }
-export default InvitedTalks
+
+export default Funding

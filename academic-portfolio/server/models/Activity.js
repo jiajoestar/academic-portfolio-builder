@@ -7,14 +7,35 @@ const activitySchema = new mongoose.Schema({
     required: true
   },
 
-  type: String,
+  type: {
+    type: String,
+    required: true,
+    enum: [
+      'consultancy',
+      'examination',
+      'event',
+      'peer_review',
+      'talk',
+      'award',
+      'funding',
+      'impact',
+      'membership',
+      'external_engagement',
+      'business_community',
+      'public_engagement'
+    ]
+  },
+
   title: String,
   description: String,
+
+  details: {
+    type: mongoose.Schema.Types.Mixed
+  },
+
   pinned: { type: Boolean, default: false },
-  reviewType: String,
-  day: String,
-  month: String,
-  year: String,
+  startDate: Date,
+  endDate: Date,
 
   status: {
     type: String,

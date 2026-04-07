@@ -49,7 +49,7 @@ const Navbar = () => {
             <div className='navbar-links-container'>
                 <Link to='/'>Home</Link>
                 <Link to='/about'>About</Link>
-                <Link to='/contact'>Contact</Link>
+                
                 <form className='search-form' onSubmit={handleSearch}>
                     <input type='text' placeholder='Search author' value={query} onChange={(e) => handleSearch(e.target.value)} className='search-input'/>
                     {results.length === 0 && query && <p>No results</p>}
