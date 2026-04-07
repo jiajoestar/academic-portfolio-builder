@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
             process.env.JWT_SECRET || "fallbacksecret"
         );
 
-        console.log("✅ DECODED TOKEN:", decoded)
+        console.log("DECODED TOKEN:", decoded)
 
         req.userId = decoded.id || decoded.userId || decoded._id
 
