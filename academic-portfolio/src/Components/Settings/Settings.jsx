@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from '../ActivityLog/Navbar';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import './Settings.css'
 
 const Settings = () => {
@@ -42,7 +44,7 @@ const Settings = () => {
             <Navbar />
 
             <div className='settings-container'>
-                <button className='back-button' onClick={() => navigate(-1)}>← Back</button>
+                <button className='back-button' onClick={() => navigate(-1)}><FontAwesomeIcon icon={faArrowLeft} /> Back</button>
                 <h2 className='settings-header'>Settings</h2>
 
                 <div className='settings-card'>
