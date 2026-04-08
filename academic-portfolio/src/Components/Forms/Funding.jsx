@@ -24,11 +24,11 @@ const Funding = ({ onSaved, existingData }) => {
         }
 
         await saveActivity(payload, token)
-        onsaved && onSaved()
+        onSaved && onSaved()
     }
 
     return (
-        <form className='form-container'>
+        <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
             <h3>Funding</h3>
             <p>Log all things related to funding here.</p>
 
@@ -59,7 +59,7 @@ const Funding = ({ onSaved, existingData }) => {
             </div>
             
             <div className='form-actions'>
-                <button type='button' onClick={handleSubmit(d => onSubmit(d, 'draft'))}>Save</button>
+                <button type='submit'>Save</button>
                 <button type='button' onClick={handleSubmit(d => onSubmit(d, 'published'))}>Publish</button>
             </div>
         </form>

@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import Navbar from '../ActivityLog/Navbar';
+import { useNavigate } from 'react-router-dom';
+import './Settings.css'
 
 const Settings = () => {
     const [email, setEmail] = useState('')
@@ -6,6 +9,7 @@ const Settings = () => {
     const [newPassword, setNewPassword] = useState('')
 
     const token = localStorage.getItem('token')
+    const navigate = useNavigate()
 
     const updateEmail = async () => {
         await fetch('http://localhost:5000/api/auth/update-email', {
@@ -35,16 +39,29 @@ const Settings = () => {
 
     return (
         <div>
-            <h2>Settings</h2>
+            <Navbar />
 
-            <h3>Update Email</h3>
-            <input onChange={(e) => setEmail(e.target.value)} />
-            <button onClick={updateEmail}>Save</button>
+            <div className='settings-container'>
+                <button className='back-button' onClick={() => navigate(-1)}>← Back</button>
+                <h2 className='settings-header'>Settings</h2>
 
-            <h3>Change Password</h3>
-            <input type="password" placeholder="Old" onChange={(e) => setOldPassword(e.target.value)} />
-            <input type="password" placeholder="New" onChange={(e) => setNewPassword(e.target.value)} />
-            <button onClick={changePassword}>Save</button>
+                <div className='settings-card'>
+                    <h3>Update email</h3>
+                    <div className='settings-row'>
+                        <input placeholder='New email' onChange={(e) => setEmail(e.target.value)} />
+                        <button onClick={updateEmail}>Save</button>
+                    </div>
+                </div>
+
+                <div className='settings-card'>
+                    <h3>Change password</h3>
+                    <div className='settings-row'>
+                        <input type='password' placeholder='Old password' onChange={(e) => setOldPassword(e.target.value)} />
+                        <input type='password' placeholder='New password' onChange={(e) => setNewPassword(e.target.value)} />
+                        <button onClick={changePassword}>Save</button>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

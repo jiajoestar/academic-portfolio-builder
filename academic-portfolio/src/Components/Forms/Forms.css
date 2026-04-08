@@ -2,12 +2,10 @@
     display: flex;
     flex-direction: column;
     overflow: visible;
-    
-    align-self: flex-start;
-    text-align: left;
-    max-height: 80vh;
-    overflow-y: auto;
+    max-height: none;
+    width: 100%;
     padding-right: 10px;
+    flex: 0;
 }
 .form-container h3 {
     font-size: 22px;
@@ -51,10 +49,12 @@ textarea {
 }
 
 .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 20px;
+    margin-top: auto;
+    padding-top: 10px;
+    background: white;
+    bottom: 0;
+    position: sticky;
+    text-align: right;
 }
 .form-actions button {
     padding: 8px 18px;

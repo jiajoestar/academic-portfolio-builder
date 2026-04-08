@@ -43,19 +43,32 @@ router.get('/', authMiddleware, async (req, res) => {
 
 // ONLY USERS CAN UPDATE THEIR OWN ACTIVITIES
 router.put('/:id', authMiddleware, async (req, res) => {
-  const activity = await Activity.findOne({
-    _id: req.params.id,
-    userId: req.userId
-  })
+  try {
+    const activity = await Activity.findOne({
+      _id: req.params.id,
+      userId: req.userId
+    })
 
-  if (!activity) {
-    return res.status(403).json({ message: 'Not allowed' })
+    if (!activity) {
+      return res.status(403).json({ message: 'Not allowed' })
+    }
+
+    if (req.body.title !== undefined) activity.title = req.body.title
+    if (req.body.type !== undefined) activity.type = req.body.type
+    if (req.body.description !== undefined) activity.description = req.body.description
+    if (req.body.startDate !== undefined) activity.startDate = req.body.startDate
+    if (req.body.endDate !== undefined) activity.endDate = req.body.endDate
+    if (req.body.status !== undefined) activity.status = req.body.status
+    if (req.body.pinned !== undefined) activity.pinned = req.body.pinned
+    if (req.body.details !== undefined) activity.details = req.body.details
+
+    await activity.save()
+
+    res.json(activity)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ message: 'Error updating activity' })
   }
-
-  Object.assign(activity, req.body)
-  await activity.save()
-
-  res.json(activity)
 })
 
 // DELETING AN ACTIVITY DRAFT

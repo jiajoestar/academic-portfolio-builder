@@ -41,6 +41,7 @@ router.put('/', authMiddleware, async (req, res) => {
 })
 
 // PIN ACTIVITIES
+/*
 router.put("/pin", authMiddleware, async (req, res) => {
     const user = await User.findById(req.userId)
     user.pinnedActivities = req.body.pinned
@@ -48,6 +49,7 @@ router.put("/pin", authMiddleware, async (req, res) => {
 
     res.json(user)
 });
+*/
 
 // PUBLIC PROFILE (when user creates sharable link)
 router.get("/public/:id", async (req, res) => {

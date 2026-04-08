@@ -75,21 +75,36 @@ const UserProfile = () => {
     // opening activity from profile
     const openActivity = (activity) => {
         setSelectedActivity(activity)
-        setActivityForm(activity)
+        setActivityForm({
+            ...activity,
+            details: { ...(activity.details || {}) }
+        })
     }
 
     // save activity when editing activity from profile
     const saveActivity = async () => {
         const token = localStorage.getItem('token')
+
+        const payload = {
+            title: activityForm.title,
+            type: activityForm.type,
+            description: activityForm.description,
+            startDate: activityForm.startDate,
+            endDate: activityForm.endDate,
+            status: activityForm.status,
+            pinned: activityForm.pinned,
+            details: activityForm.details || {}
+        }
+
         await axios.put(`http://localhost:5000/api/activities/${selectedActivity._id}`,
-            activityForm,
+            payload,
             {
                 headers: { Authorization: `Bearer ${token}` } 
             }
         )
 
+        await fetchProfile()
         setSelectedActivity(null)
-        fetchProfile()
     }
 
     // delete activity from profile
@@ -106,13 +121,18 @@ const UserProfile = () => {
     // pin activity to profile
     const pinActivity = async () => {
         const token = localStorage.getItem('token')
+        
+        const newPinnedValue = !activityForm.pinned
+
         await axios.put(`http://localhost:5000/api/activities/${selectedActivity._id}`,
-            { pinned: true },
+            { pinned: newPinnedValue },
             { headers: { Authorization: `Bearer ${token}` } }
         )
 
-        setSelectedActivity(null)
-        fetchProfile()
+        setActivityForm(prev => ({ ...prev, pinned: newPinnedValue }))
+        setSelectedActivity(prev => ({ ...prev, pinned: newPinnedValue }))
+        await fetchProfile()
+        //setSelectedActivity(null)
     }
 
     const toggleSection = (type) => {
@@ -136,15 +156,31 @@ const UserProfile = () => {
     }
 
     const mapType = {
-        'peer-review': 'Editorial activity'
+        'peer_review': 'Editorial activity',
+        'peer-review': 'Editorial activity',
+        'peerReview': 'Editorial activity',
+        'funding': 'Funding'
     }
+
+    const safeActivities = Array.isArray(activities) ? activities : []
+    safeActivities.forEach(a => {
+        if (!a || !a.type) return
+
+        const typeKey = mapType[a.type] || a.type
+
+        if (sections[typeKey]) {
+            sections[typeKey].push(a)
+        }
+    })
     
+    /*
     activities.forEach(a => {
         const typeKey = mapType[a.type] || a.type
         if (sections[typeKey]) {
             sections[typeKey].push(a)
         }
     })
+    */
 
     if (!user) return <p>Loading...</p>;
 
@@ -193,15 +229,17 @@ const UserProfile = () => {
 
                     <div className='pinned-section'>
                         <h3>Pinned achievements</h3>
-                        {user.pinnedActivities?.length === 0 ? (
+                        {activities.filter(a => a?.pinned).length === 0 ? (
                             <p>No pinned activities</p>
                         ) : (
                             <ul>
-                                {user.pinnedActivities?.map(a => (
-                                    <li key={a._id} onClick={() => openActivity(a)}>
-                                        {a.title || a.type}
-                                    </li>
-                                ))}
+                                {activities
+                                    .filter(a => a?.pinned)
+                                    .map(a => (
+                                        <li key={a._id} onClick={() => openActivity(a)}>
+                                            {a.title || a.type}
+                                        </li>
+                                    ))}
                             </ul>
                         )}
                     </div>
@@ -257,7 +295,7 @@ const UserProfile = () => {
                         </p>
 
                         <button onClick={saveActivity}>Save</button>
-                        <button onClick={pinActivity}>📌 Pin</button>
+                        <button onClick={pinActivity}>{selectedActivity?.pinned ? 'Unpin' : '📌 Pin'}</button>
                         <button onClick={deleteActivity}>Delete</button>
                         <button onClick={() => setSelectedActivity(null)}>Close</button>
                     </div>

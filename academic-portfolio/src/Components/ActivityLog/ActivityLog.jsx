@@ -31,6 +31,7 @@ import SchoolsEngagement from '../Forms/SchoolsEngagement';
 import MediaArticle from '../Forms/MediaArticle';
 import Festival from '../Forms/Festival';
 import Lecture from '../Forms/Lecture';
+import Funding from '../Forms/Funding';
 
 const ActivityLog = ({ isOpen, onClose, onSaved }) => {
     const options = [
@@ -60,7 +61,7 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
         {
             header: { name: 'Funding' },
             values: [
-                { name: 'Hosting visitors', description: 'Examining students' },
+                { name: 'Funding', description: 'Examining students' },
             ]
         },
         {
@@ -243,6 +244,7 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
                                 {selectedItem.name === 'Schools engagement' && <SchoolsEngagement onSaved={onSaved} />}
                                 {selectedItem.name === 'Festival/Exhibition' && <Festival onSaved={onSaved} />}
                                 {selectedItem.name === 'Media article or participation' && <MediaArticle onSaved={onSaved} />}
+                                {selectedItem.name === 'Funding' && <Funding onSaved={onSaved} />}
                             </div>
                         ) : (
                             <p>

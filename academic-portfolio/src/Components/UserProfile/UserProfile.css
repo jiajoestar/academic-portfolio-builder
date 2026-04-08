@@ -81,10 +81,14 @@
     flex-direction: column;
     gap: 10px;
 }
-
 .pinned-section ul {
     padding-left: 18px;
     margin: 0;
+    list-style: disc;
+}
+.pinned-section li {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .profile-buttons {

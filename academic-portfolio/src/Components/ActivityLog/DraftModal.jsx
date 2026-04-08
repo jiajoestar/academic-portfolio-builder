@@ -7,13 +7,13 @@ const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => 
     if (!isOpen || !draft) return null
 
     const renderForm = () => {
-        switch (draft.type) {
-            case 'peer-review':
-                return <PeerReview existingData={draft} onSaved={onSave} hideButtons />
+        const type = draft.type?.toLowerCase()
 
-                default:
-                    return <>No form available for this activity type.</>
+        if (['peer_review', 'peer-review', 'peerreview'].includes(type)) {
+            return <PeerReview existingData={draft} onSaved={onSave} hideButtons />
         }
+
+        return <>No form available for this activity type.</>
     }
 
     const handleDelete = async () => {
@@ -35,9 +35,10 @@ const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => 
                     <button onClick={onClose}>✕</button>
                 </div>
 
-                <div className='modal-body' style={{ display: 'block' }}>
-                    {/*<h3>{draft.type}</h3>*/}
-                    {renderForm()}
+                <div className='modal-body'>
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+                        {renderForm()}
+                    </div>
 
                     <div className='form-actions'>
                         <button onClick={handleDelete}>Delete</button>

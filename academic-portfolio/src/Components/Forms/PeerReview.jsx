@@ -20,7 +20,7 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
     const onSubmit = async (data, status = mode) => {
         const payload = {
             ...data,
-            type: 'peer-review',
+            type: 'peer_review',
             title: data.title,
             description: data.description,
             startDate: data.date,
@@ -28,7 +28,8 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
                 reviewType: data.reviewType,
                 journal: data.journal
             },
-            status: status
+            status: status,
+            pinned: existingData?.pinned || false
         }
 
         try {
@@ -51,7 +52,7 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
             console.log('PAYLOAD:', payload)
             console.log('FORM DATA:', data)
             alert(`Saved as ${status}`)
-            reset()
+            if (!existingData) reset()
         } catch (err) {
             console.error(err)
             alert(`Error saving`)
@@ -100,11 +101,6 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
             </div>
 
             <div className='form-group'>
-                <label>Description</label>
-                <textarea {...register('description')} />
-            </div>
-
-            <div className='form-group'>
                 <label>Date</label>
                 <div className='date-group'>
                     <input type='date' {...register('date')} />
@@ -113,8 +109,8 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
 
             
             <div className='form-actions'>
-                <button type='submit' onClick={handleSubmit((data) => onSubmit(data, 'draft'))}>Save</button>
-                <button type='submit' onClick={handleSubmit((data) => onSubmit(data, 'published'))}>Publish</button>
+                <button type='submit'>Save</button>
+                <button type='button' onClick={handleSubmit((data) => onSubmit(data, 'published'))}>Publish</button>
             </div>
             
         </form>
