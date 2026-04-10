@@ -1,5 +1,6 @@
 import React from 'react';
 import './ActivityLog.css'
+import { Link } from 'react-router-dom';
 
 const ProfileCardDashboard = ({ user }) => {
     return (
@@ -25,7 +26,7 @@ const ProfileCardDashboard = ({ user }) => {
                 <li>view memberships</li>
                 <li>view funding</li>
             </ul>
-            <p className='settings'>settings</p>
+            <Link to='/settings'><p className='settings'>Settings</p></Link>
         </div>
     )
 }

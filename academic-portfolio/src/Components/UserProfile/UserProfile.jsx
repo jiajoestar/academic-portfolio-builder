@@ -212,7 +212,9 @@ const UserProfile = () => {
                     <Funding
                         existingData={selectedActivity}
                         onSaved={handleActivitySaved}
-                        //mode='published'
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
                     />
                 )
 

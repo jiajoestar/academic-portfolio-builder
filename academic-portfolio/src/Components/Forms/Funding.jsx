@@ -1,31 +1,93 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { saveActivity } from '../../Services/api';
 
-const Funding = ({ onSaved, existingData }) => {
-    const { register, handleSubmit } = useForm()
+const Funding = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
+    const { register, handleSubmit, reset } = useForm({
+        defaultValues: {
+            title: '',
+            funder: '',
+            role: '',
+            amount: '',
+            description: '',
+            startDate: '',
+            endDate: ''
+        }
+    })
 
     const token = localStorage.getItem('token')
 
-    const onSubmit = async (data, status) => {
+    const onSubmit = async (data, status = mode) => {
         const payload = {
+            ...data,
             type: 'funding',
             title: data.title,
             description: data.description,
             startDate: data.startDate,
             endDate: data.endDate,
-            status,
+            status: status,
             details: {
                 funder: data.funder,
                 amount: Number(data.amount),
                 role: data.role
-            }
+            },
+            pinned: existingData?.pinned || false
         }
 
-        await saveActivity(payload, token)
-        onSaved && onSaved()
+        try {
+            let res
+
+            if (existingData?._id) {
+            // UPDATE
+            res = await axios.put(
+                `http://localhost:5000/api/activities/${existingData._id}`,
+                payload,
+                { headers: { Authorization: `Bearer ${token}` } }
+            )
+            } else {
+            // CREATE
+            res = await saveActivity(payload, token)
+            }
+            
+            if (onSaved) await onSaved()
+            console.log(res)
+            console.log('PAYLOAD:', payload)
+            console.log('FORM DATA:', data)
+            alert(`Saved as ${status}`)
+            if (!existingData) reset()
+        } catch (err) {
+            console.error(err)
+            alert(`Error saving`)
+        }
     }
+
+    useEffect(() => {
+        if (existingData) {
+            reset({
+                title: existingData.title || '',
+                funder: existingData.details?.funder || '',
+                amount: existingData.details?.amount || '',
+                role: existingData.details?.role || '',
+                description: existingData.description || '',
+                startDate: existingData.startDate
+                    ? new Date(existingData.startDate).toISOString().split('T')[0]
+                    : '',
+                endDate: existingData.endDate
+                    ? new Date(existingData.endDate).toISOString().split('T')[0]
+                    : ''
+            })
+        }
+    }, [existingData, reset])
+
+    useEffect(() => {
+        if (externalSubmitRef) {
+            externalSubmitRef.current = {
+                save: handleSubmit((data) => onSubmit(data, mode)),
+                publish: handleSubmit((data) => onSubmit(data, 'published'))
+            }
+        }
+    }, [externalSubmitRef, handleSubmit, existingData, mode])
 
     return (
         <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
@@ -58,10 +120,17 @@ const Funding = ({ onSaved, existingData }) => {
                 <input type='date' {...register('endDate')} />
             </div>
             
-            <div className='form-actions'>
-                <button type='submit'>Save</button>
-                <button type='button' onClick={handleSubmit(d => onSubmit(d, 'published'))}>Publish</button>
-            </div>
+            {!hideButtons && (
+                <div className='form-actions'>
+                    <button type='submit'>Save</button>
+                    <button
+                        type='button'
+                        onClick={handleSubmit((data) => onSubmit(data, 'published'))}
+                    >
+                        Publish
+                    </button>
+                </div>
+            )}
         </form>
     )
 }

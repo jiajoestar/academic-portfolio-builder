@@ -3,6 +3,7 @@ import './ActivityLog.css'
 import PeerReview from '../Forms/PeerReview';
 import axios from 'axios';
 import ConfirmationModal from './ConfirmationModal';
+import Funding from '../Forms/Funding';
 
 const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => {
     if (!isOpen || !draft) return null
@@ -12,6 +13,9 @@ const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => 
 
         if (['peer_review', 'peer-review', 'peerreview'].includes(type)) {
             return <PeerReview existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
+        }
+        if (['funding'].includes(type)) {
+            return <Funding existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
 
         return <>No form available for this activity type.</>
