@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import './UserProfile.css'
 import Navbar from '../ActivityLog/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
+import PeerReview from '../Forms/PeerReview';
+import Funding from '../Forms/Funding';
+import ConfirmationModal from '../ActivityLog/ConfirmationModal';
 
 const UserProfile = () => {
     const [user, setUser] = useState(null)
@@ -10,8 +13,10 @@ const UserProfile = () => {
     const [editMode, setEditMode] = useState(false)
     const [selectedActivity, setSelectedActivity] = useState(null)
     const [showShare, setShowShare] = useState(false)
+    const [showConfirm, setShowConfirm] = useState(false)
 
     const navigate = useNavigate()
+    const submitActionsRef = useRef(null)
 
     const shareLink = user ? `${window.location.origin}/public/${user._id}` : ``
 
@@ -75,10 +80,6 @@ const UserProfile = () => {
     // opening activity from profile
     const openActivity = (activity) => {
         setSelectedActivity(activity)
-        setActivityForm({
-            ...activity,
-            details: { ...(activity.details || {}) }
-        })
     }
 
     // save activity when editing activity from profile
@@ -182,7 +183,43 @@ const UserProfile = () => {
     })
     */
 
-    if (!user) return <p>Loading...</p>;
+    if (!user) return <p>Loading...</p>
+
+    const handleActivitySaved = async () => {
+        await fetchProfile()
+        setSelectedActivity(null)
+    }
+
+    const renderActivityForm = () => {
+        if (!selectedActivity) return null
+
+        switch (selectedActivity.type) {
+            case 'peer_review':
+            case 'peer-review':
+            case 'peerReview':
+                return (
+                    <PeerReview
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'funding':
+                return (
+                    <Funding
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        //mode='published'
+                    />
+                )
+
+            default:
+                return <p>No form available for this activity type.</p>
+        }
+    }
 
     return (
         <div className='profile-page'>
@@ -281,23 +318,27 @@ const UserProfile = () => {
 
             
             {selectedActivity && (
-                <div className='modal-overlay'>
-                    <div className='modal'>
-                        <h2>{selectedActivity.type}</h2>
+                <div className='overlay'>
+                    <div className='modal animate activity-edit-modal'>
+                        <div className='modal-header'>
+                            <h2>Edit activity</h2>
+                            <button onClick={() => setSelectedActivity(null)}>✕</button>
+                        </div>
 
-                        <textarea
-                            value={activityForm.description || ''}
-                            onChange={e => setActivityForm({...activityForm, description: e.target.value})}
-                        />
+                        <div className='modal-body modal-body-single'>
+                            <div className='modal-form-scroll'>
+                                {renderActivityForm()}
+                            </div>
 
-                        <p>
-                            Date: {new Date(selectedActivity.createdAt).toLocaleDateString()}
-                        </p>
-
-                        <button onClick={saveActivity}>Save</button>
-                        <button onClick={pinActivity}>{selectedActivity?.pinned ? 'Unpin' : '📌 Pin'}</button>
-                        <button onClick={deleteActivity}>Delete</button>
-                        <button onClick={() => setSelectedActivity(null)}>Close</button>
+                            <div className='profile-activity-actions'>
+                                <button className='delete-button' onClick={() => setShowConfirm(true)}>Delete</button>
+                                <button onClick={pinActivity}>
+                                    {selectedActivity?.pinned ? 'Unpin' : '📌 Pin'}
+                                </button>
+                                <button onClick={() => submitActionsRef.current?.save?.()}>Save</button>
+                                {/*<button onClick={() => submitActionsRef.current?.publish?.()}>Publish</button>*/}
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}
@@ -311,6 +352,17 @@ const UserProfile = () => {
                         <button onClick={() => setShowShare(false)}>Close</button>
                     </div>
                 </div>
+            )}
+
+            {showConfirm && (
+                <ConfirmationModal
+                    message='Are you sure you want to delete this activity?'
+                    onCancel={() => setShowConfirm(false)}
+                    onConfirm={async () => {
+                        await deleteActivity();
+                        setShowConfirm(false);
+                    }}
+                />
             )}
         </div>
     )

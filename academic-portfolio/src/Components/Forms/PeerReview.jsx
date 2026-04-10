@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { saveActivity } from '../../Services/api';
 import axios from 'axios';
 
-const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft' }) => {
+const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             title: '',
@@ -66,13 +66,24 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
                 reviewType: existingData.details?.reviewType || '',
                 journal: existingData.details?.journal || '',
                 description: existingData.description || '',
-                date: existingData.startDate || ''
+                date: existingData.startDate
+                    ? new Date(existingData.startDate).toISOString().split('T')[0]
+                    : ''
             })
         }
     }, [existingData, reset])
 
+    useEffect(() => {
+        if (externalSubmitRef) {
+            externalSubmitRef.current = {
+                save: handleSubmit((data) => onSubmit(data, mode)),
+                publish: handleSubmit((data) => onSubmit(data, 'published'))
+            }
+        }
+    }, [externalSubmitRef, handleSubmit, existingData, mode])
+
     return (
-        <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
+        <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, mode))}>
             <h3>Peer review and editorial activity</h3>
             <p>Log all things related to peer-reviews and editorial actvity here.</p>
 
@@ -108,10 +119,17 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
             </div>
 
             
-            <div className='form-actions'>
-                <button type='submit'>Save</button>
-                <button type='button' onClick={handleSubmit((data) => onSubmit(data, 'published'))}>Publish</button>
-            </div>
+            {!hideButtons && (
+                <div className='form-actions'>
+                    <button type='submit'>Save</button>
+                    <button
+                        type='button'
+                        onClick={handleSubmit((data) => onSubmit(data, 'published'))}
+                    >
+                        Publish
+                    </button>
+                </div>
+            )}
             
         </form>
     )
