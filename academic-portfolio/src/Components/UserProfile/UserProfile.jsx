@@ -201,7 +201,6 @@ const UserProfile = () => {
         'festival': 'Public engagement',
         'honoraryDegree': 'Awards and prizes',
         'hostingExternal': 'Business and community', //
-        'hostingVisitors': 'Public engagement', //
         'lecture': 'Academic engagement',
         'mediaArticle': 'Public engagement',
         'membershipOfBoard': 'Memberships',
@@ -331,7 +330,239 @@ const UserProfile = () => {
                         hideButtons
                         externalSubmitRef={submitActionsRef}
                     />
-                )    
+                )
+            
+            case 'election':
+                return (
+                    <ElectionToEarnedSociety
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+            
+            case 'examination':
+                return (
+                    <Examination
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'external':
+                return (
+                    <ExternalInstitution
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'fellowship':
+                return (
+                    <Fellowship
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'festival':
+                return (
+                    <Festival
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'honoraryDegree':
+                return (
+                    <HonoraryDegree
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'hostingExternal':
+                return (
+                    <HostingExternal
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'lecture':
+                return (
+                    <Lecture
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'mediaArticle':
+                return (
+                    <MediaArticle
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'membershipOfBoard':
+                return (
+                    <MembershipOfBoard
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'membershipOfCommittee':
+                return (
+                    <MembershipOfCommittee
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'membershipOfCouncil':
+                return (
+                    <MembershipOfCouncil
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'membershipOfGovernment':
+                return (
+                    <MembershipOfGovernment
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'membershipOfExternalResearchOrg':
+                return (
+                    <MembershipOfExternalResearchOrg
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'membershipOfNetwork':
+                return (
+                    <MembershipOfNetwork
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'national-honour':
+            case 'national_honour':
+                return (
+                    <NationalHonour
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'participation':
+                return (
+                    <ParticipationActivity
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'prizes':
+                return (
+                    <Prizes
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'research':
+                return (
+                    <ResearchAndTeaching
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'schools':
+                return (
+                    <SchoolsEngagement
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'talksOrPresentations':
+                return (
+                    <TalksOrPresentations
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
 
             default:
                 return <p>No form available for this activity type.</p>
