@@ -113,9 +113,9 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
 
             <div className='form-group'>
                 <label>Date</label>
-                <div className='date-group'>
-                    <input type='date' {...register('date')} />
-                </div>
+                
+                <input type='date' {...register('date')} />
+                
             </div>
 
             

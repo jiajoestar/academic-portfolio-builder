@@ -276,7 +276,7 @@ const UserProfile = () => {
                 )
             
             case 'advisory-panel':
-            case 'advisry_panel':
+            case 'advisory_panel':
             case 'advisoryPanel':
                 return (
                     <AdvisoryPanel
