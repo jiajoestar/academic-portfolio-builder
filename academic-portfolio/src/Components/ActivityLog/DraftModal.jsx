@@ -4,6 +4,32 @@ import PeerReview from '../Forms/PeerReview';
 import axios from 'axios';
 import ConfirmationModal from './ConfirmationModal';
 import Funding from '../Forms/Funding';
+import AdvisoryPanel from '../Forms/AdvisoryPanel';
+import Appointment from '../Forms/Appointment';
+import Consultancy from '../Forms/Consultancy';
+import ContributionToCommittee from '../Forms/ContributionToCommittee';
+import CPD from '../Forms/CPD';
+import ElectionToEarnedSociety from '../Forms/ElectionToEarnedSociety';
+import Examination from '../Forms/Examination';
+import ExternalInstitution from '../Forms/ExternalInstitution';
+import Fellowship from '../Forms/Fellowship';
+import Festival from '../Forms/Festival';
+import HonoraryDegree from '../Forms/HonoraryDegree';
+import HostingExternal from '../Forms/HostingExternal';
+import Lecture from '../Forms/Lecture';
+import MediaArticle from '../Forms/MediaArticle';
+import MembershipOfBoard from '../Forms/MembershipOfBoard';
+import MembershipOfCommittee from '../Forms/MembershipOfCommitee';
+import MembershipOfCouncil from '../Forms/MembershipOfCouncil';
+import MembershipOfExternalResearchOrg from '../Forms/MembershipOfExternalResearchOrg';
+import MembershipOfGovernment from '../Forms/MembershipOfGovernment';
+import MembershipOfNetwork from '../Forms/MembershipOfNetwork';
+import NationalHonour from '../Forms/NationalHonour';
+import ParticipationActivity from '../Forms/ParticipationActivity';
+import Prizes from '../Forms/Prizes';
+import ResearchAndTeaching from '../Forms/ResearchAndTeaching';
+import SchoolsEngagement from '../Forms/SchoolsEngagement';
+import TalksOrPresentations from '../Forms/TalksOrPresentations';
 
 const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => {
     if (!isOpen || !draft) return null

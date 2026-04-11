@@ -6,6 +6,32 @@ import { Link, useNavigate } from 'react-router-dom';
 import PeerReview from '../Forms/PeerReview';
 import Funding from '../Forms/Funding';
 import ConfirmationModal from '../ActivityLog/ConfirmationModal';
+import AdvisoryPanel from '../Forms/AdvisoryPanel';
+import Appointment from '../Forms/Appointment';
+import Consultancy from '../Forms/Consultancy';
+import ContributionToCommittee from '../Forms/ContributionToCommittee';
+import CPD from '../Forms/CPD';
+import ElectionToEarnedSociety from '../Forms/ElectionToEarnedSociety';
+import Examination from '../Forms/Examination';
+import ExternalInstitution from '../Forms/ExternalInstitution';
+import Fellowship from '../Forms/Fellowship';
+import Festival from '../Forms/Festival';
+import HonoraryDegree from '../Forms/HonoraryDegree';
+import HostingExternal from '../Forms/HostingExternal';
+import Lecture from '../Forms/Lecture';
+import MediaArticle from '../Forms/MediaArticle';
+import MembershipOfBoard from '../Forms/MembershipOfBoard';
+import MembershipOfCommittee from '../Forms/MembershipOfCommitee';
+import MembershipOfCouncil from '../Forms/MembershipOfCouncil';
+import MembershipOfExternalResearchOrg from '../Forms/MembershipOfExternalResearchOrg';
+import MembershipOfGovernment from '../Forms/MembershipOfGovernment';
+import MembershipOfNetwork from '../Forms/MembershipOfNetwork';
+import NationalHonour from '../Forms/NationalHonour';
+import ParticipationActivity from '../Forms/ParticipationActivity';
+import Prizes from '../Forms/Prizes';
+import ResearchAndTeaching from '../Forms/ResearchAndTeaching';
+import SchoolsEngagement from '../Forms/SchoolsEngagement';
+import TalksOrPresentations from '../Forms/TalksOrPresentations';
 
 const UserProfile = () => {
     const [user, setUser] = useState(null)
@@ -160,7 +186,39 @@ const UserProfile = () => {
         'peer_review': 'Editorial activity',
         'peer-review': 'Editorial activity',
         'peerReview': 'Editorial activity',
-        'funding': 'Funding'
+        'funding': 'Funding',
+        'advisory-panel': 'Business and community',
+        'advisory_panel': 'Business and community',
+        'advisoryPanel': 'Business and community',
+        'appointment': 'Awards and prizes',
+        'consultancy': 'Other activities',
+        'contribution': 'Academic engagement',
+        'cpd': 'Business and community',
+        'election': 'Awards and prizes',
+        'examination': 'Other activities', //
+        'external': 'Other activities', //
+        'fellowship': 'Awards and prizes',
+        'festival': 'Public engagement',
+        'honoraryDegree': 'Awards and prizes',
+        'hostingExternal': 'Business and community', //
+        'hostingVisitors': 'Public engagement', //
+        'lecture': 'Academic engagement',
+        'mediaArticle': 'Public engagement',
+        'membershipOfBoard': 'Memberships',
+        'membershipOfCommittee': 'Memberships',
+        'membershipOfCouncil': 'Memberships',
+        'membershipOfNetwork': 'Memberships',
+        'membershipOfExternalResearchOrg': 'Memberships',
+        'membershipOfExternalResearchOrg': 'Academic engagement',
+        'membershipOfGovernment': 'Memberships',
+        'membershipOfGovernment': 'Business and community',
+        'national-honour': 'Awards and prizes',
+        'national_honour': 'Awards and prizes',
+        'participation': 'Other activities',
+        'prizes': 'Awards and prizes',
+        'research': 'Academic engagement',
+        'schools': 'Public engagement',
+        'talksOrPresentations': 'Academic engagement'
     }
 
     const safeActivities = Array.isArray(activities) ? activities : []
@@ -217,6 +275,63 @@ const UserProfile = () => {
                         externalSubmitRef={submitActionsRef}
                     />
                 )
+            
+            case 'advisory-panel':
+            case 'advisry_panel':
+            case 'advisoryPanel':
+                return (
+                    <AdvisoryPanel
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'appointment':
+                return (
+                    <Appointment
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'consultancy':
+                return (
+                    <Consultancy
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+
+            case 'contribution':
+                return (
+                    <ContributionToCommittee
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )
+            
+            case 'cpd':
+                return (
+                    <CPD
+                        existingData={selectedActivity}
+                        onSaved={handleActivitySaved}
+                        mode='published'
+                        hideButtons
+                        externalSubmitRef={submitActionsRef}
+                    />
+                )    
 
             default:
                 return <p>No form available for this activity type.</p>

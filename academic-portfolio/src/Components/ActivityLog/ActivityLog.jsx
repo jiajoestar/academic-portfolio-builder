@@ -8,7 +8,6 @@ import ParticipationActivity from '../Forms/ParticipationActivity';
 import Consultancy from '../Forms/Consultancy';
 import Examination from '../Forms/Examination';
 import ExternalInstitution from '../Forms/ExternalInstitution';
-import HostingVisitors from '../Forms/HostingVisitors';
 import TalksOrPresentations from '../Forms/TalksOrPresentations';
 import Appointment from '../Forms/Appointment';
 import Fellowship from '../Forms/Fellowship';
@@ -21,7 +20,6 @@ import MembershipOfCouncil from '../Forms/MembershipOfCouncil';
 import MembershipOfNetwork from '../Forms/MembershipOfNetwork';
 import MembershipOfExternalResearchOrg from '../Forms/MembershipOfExternalResearchOrg'
 import ResearchAndTeaching from '../Forms/ResearchAndTeaching';
-import InvitedTalks from '../Forms/InvitedTalks';
 import ContributionToCommittee from '../Forms/ContributionToCommittee';
 import AdvisoryPanel from '../Forms/AdvisoryPanel';
 import MembershipOfGovernment from '../Forms/MembershipOfGovernment';
@@ -36,18 +34,6 @@ import Funding from '../Forms/Funding';
 const ActivityLog = ({ isOpen, onClose, onSaved }) => {
     const options = [
         {
-            header: { name: 'Activity' },
-            values: [
-                { name: 'Consultancy', description: 'Consulting work' },
-                { name: 'Examination', description: 'Examining students' },
-                { name: 'External institutions', description: 'External roles' },
-                { name: 'Hosting visitors', description: 'Examining students' },
-                { name: 'Participation or Organisation for events', description: 'Examining students' },
-                { name: 'Peer review and editorial activity', description: 'Examining students' },
-                { name: 'Talks or presentations', description: 'Examining students' }
-            ]
-        },
-        {
             header: { name: 'Awards and Prizes' },
             values: [
                 { name: 'Appointment', description: 'Examining students' },
@@ -59,15 +45,28 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
             ] 
         },
         {
-            header: { name: 'Funding' },
+            header: { name: 'Business and Community' },
             values: [
-                { name: 'Funding', description: 'Examining students' },
+                { name: 'CPD delivery/organisation of courses for externals', description: 'Examining students' },
+                { name: 'Hosting of external, non-academic visitors', description: 'Examining students' },
+                { name: 'Membership of public/government advisory/policy group or panel', description: 'Examining students' },
+                { name: 'Work on advisory panel to industry or government/non-government organisation', description: 'Examining students' }
             ]
         },
         {
-            header: { name: 'Impact' },
+            header: { name: 'External Academic Engagement' },
             values: [
-                { name: 'Hosting visitors', description: 'Examining students' },
+                { name: 'Contribution to national/international committees', description: 'Examining students' },
+                { name: 'Membership of external research organisation', description: 'Examining students' },
+                { name: 'Research and Teaching at external organisation', description: 'Examining students' },
+                { name: 'Examiner', description: 'Examining students' },
+                { name: 'Talks or presentations', description: 'Examining students' }
+            ]
+        },
+        {
+            header: { name: 'Funding' },
+            values: [
+                { name: 'Funding', description: 'Examining students' },
             ]
         },
         {
@@ -80,21 +79,12 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
             ]
         },
         {
-            header: { name: 'External Academic Engagement' },
+            header: { name: 'Other activities' },
             values: [
-                { name: 'Contribution to national/international committees', description: 'Examining students' },
-                { name: 'Invited talks', description: 'Examining students' },
-                { name: 'Membership of external research organisation', description: 'Examining students' },
-                { name: 'Research and Teaching at external organisation', description: 'Examining students' }
-            ]
-        },
-        {
-            header: { name: 'Business and Community' },
-            values: [
-                { name: 'CPD delivery/organisation of courses for externals', description: 'Examining students' },
-                { name: 'Hosting of external, non-academic visitors', description: 'Examining students' },
-                { name: 'Membership of public/government advisory/policy group or panel', description: 'Examining students' },
-                { name: 'Work on advisory panel to industry or government/non-government organisation', description: 'Examining students' }
+                { name: 'Consultancy', description: 'Consulting work' },
+                { name: 'External institutions', description: 'External roles' },
+                { name: 'Participation or Organisation for events', description: 'Examining students' },
+                { name: 'Peer review and editorial activity', description: 'Examining students' }
             ]
         },
         {
@@ -105,8 +95,7 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
                 { name: 'Public lecture/debate/seminar', description: 'Examining students' },
                 { name: 'Schools engagement', description: 'Examining students' }
             ]
-        },
-        
+        }
     ]
 
     const [visibleOptions, setVisibleOptions] = useState(options)
@@ -219,9 +208,9 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
                                 {selectedItem.name === 'Participation or Organisation for events' && <ParticipationActivity onSaved={onSaved} />}
                                 {selectedItem.name === 'Prizes (including medals and awards)' && <Prizes onSaved={onSaved} />}
                                 {selectedItem.name === 'Consultancy' && <Consultancy onSaved={onSaved} />}
-                                {selectedItem.name === 'Examination' && <Examination onSaved={onSaved} />}
+                                {selectedItem.name === 'Examiner' && <Examination onSaved={onSaved} />}
                                 {selectedItem.name === 'External institutions' && <ExternalInstitution onSaved={onSaved} />}
-                                {selectedItem.name === 'Hosting visitors' && <HostingVisitors onSaved={onSaved} />}
+                                
                                 {selectedItem.name === 'Talks or presentations' && <TalksOrPresentations onSaved={onSaved} />}
                                 {selectedItem.name === 'Appointment' && <Appointment onSaved={onSaved} />}
                                 {selectedItem.name === 'Fellowship awarded competitively' && <Fellowship onSaved={onSaved} />}
@@ -235,7 +224,7 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
                                 {selectedItem.name === 'Research and Teaching at external organisation' && <ResearchAndTeaching onSaved={onSaved} />}
                                 {selectedItem.name === 'Membership of external research organisation' && <MembershipOfExternalResearchOrg onSaved={onSaved} />}
                                 {selectedItem.name === 'Contribution to national/international committees' && <ContributionToCommittee onSaved={onSaved} />}
-                                {selectedItem.name === 'Invited talks' && <InvitedTalks onSaved={onSaved} />}
+                                
                                 {selectedItem.name === 'Work on advisory panel to industry or government/non-government organisation' && <AdvisoryPanel onSaved={onSaved} />}
                                 {selectedItem.name === 'Membership of public/government advisory/policy group or panel' && <MembershipOfGovernment onSaved={onSaved} />}
                                 {selectedItem.name === 'CPD delivery/organisation of courses for externals' && <CPD onSaved={onSaved} />}
