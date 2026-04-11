@@ -36,64 +36,64 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
         {
             header: { name: 'Awards and Prizes' },
             values: [
-                { name: 'Appointment', description: 'Examining students' },
-                { name: 'Election to earned society', description: 'Examining students' },
-                { name: 'Fellowship awarded competitively', description: 'Examining students' },
-                { name: 'Honorary degree', description: 'Examining students' },
-                { name: 'National/International honour', description: 'Examining students' },
-                { name: 'Prizes (including medals and awards)', description: 'Examining students' }
+                { name: 'Appointment', description: 'Receiving formal appointment' },
+                { name: 'Election to earned society', description: 'Election to earned society' },
+                { name: 'Fellowship awarded competitively', description: 'Awarded fellowship' },
+                { name: 'Honorary degree', description: 'Receiving honorary degree' },
+                { name: 'National/International honour', description: 'Receiving national/international honour' },
+                { name: 'Prizes (including medals and awards)', description: 'Receiving prizes or awards' }
             ] 
         },
         {
             header: { name: 'Business and Community' },
             values: [
-                { name: 'CPD delivery/organisation of courses for externals', description: 'Examining students' },
-                { name: 'Hosting of external, non-academic visitors', description: 'Examining students' },
-                { name: 'Membership of public/government advisory/policy group or panel', description: 'Examining students' },
-                { name: 'Work on advisory panel to industry or government/non-government organisation', description: 'Examining students' }
+                { name: 'CPD delivery/organisation of courses for externals', description: 'Delivering CPD courses' },
+                { name: 'Hosting of external, non-academic visitors', description: 'Hosting external visitors' },
+                { name: 'Membership of public/government advisory/policy group or panel', description: 'Serving on policy panel' },
+                { name: 'Work on advisory panel to industry or government/non-government organisation', description: 'Advising industry or government' }
             ]
         },
         {
             header: { name: 'External Academic Engagement' },
             values: [
-                { name: 'Contribution to national/international committees', description: 'Examining students' },
-                { name: 'Membership of external research organisation', description: 'Examining students' },
-                { name: 'Research and Teaching at external organisation', description: 'Examining students' },
+                { name: 'Contribution to national/international committees', description: 'Serving on committees' },
+                { name: 'Membership of external research organisation', description: 'Member of research organisation' },
+                { name: 'Research and Teaching at external organisation', description: 'Teaching or researching externally' },
                 { name: 'Examiner', description: 'Examining students' },
-                { name: 'Talks or presentations', description: 'Examining students' }
+                { name: 'Talks or presentations', description: 'Delivering or attending talks' }
             ]
         },
         {
             header: { name: 'Funding' },
             values: [
-                { name: 'Funding', description: 'Examining students' },
+                { name: 'Funding', description: 'Securing research funding' },
             ]
         },
         {
             header: { name: 'Membership' },
             values: [
-                { name: 'Of board', description: 'Examining students' },
-                { name: 'Of committee', description: 'Examining students' },
-                { name: 'Of council', description: 'Examining students' },
-                { name: 'Of network', description: 'Examining students' }
+                { name: 'Of board', description: 'Serving on board' },
+                { name: 'Of committee', description: 'Serving on committee' },
+                { name: 'Of council', description: 'Serving on council' },
+                { name: 'Of network', description: 'Member of network' }
             ]
         },
         {
             header: { name: 'Other activities' },
             values: [
                 { name: 'Consultancy', description: 'Consulting work' },
-                { name: 'External institutions', description: 'External roles' },
-                { name: 'Participation or Organisation for events', description: 'Examining students' },
-                { name: 'Peer review and editorial activity', description: 'Examining students' }
+                { name: 'External institutions', description: 'Holding external roles' },
+                { name: 'Participation or Organisation for events', description: 'Organising or attending events' },
+                { name: 'Peer review and editorial activity', description: 'Reviewing or editing work' }
             ]
         },
         {
             header: { name: 'Public Engagement and Outreach' },
             values: [
-                { name: 'Festival/Exhibition', description: 'Examining students' },
-                { name: 'Media article or participation', description: 'Examining students' },
-                { name: 'Public lecture/debate/seminar', description: 'Examining students' },
-                { name: 'Schools engagement', description: 'Examining students' }
+                { name: 'Festival/Exhibition', description: 'Participating in festivals/exhibitions' },
+                { name: 'Media article or participation', description: 'Contributing to media' },
+                { name: 'Public lecture/debate/seminar', description: 'Delivering public lectures' },
+                { name: 'Schools engagement', description: 'Engaging with schools' }
             ]
         }
     ]
