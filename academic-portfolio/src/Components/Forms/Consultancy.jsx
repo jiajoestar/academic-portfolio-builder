@@ -1,62 +1,143 @@
-import React, { use } from 'react';
-import './Forms.css'
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 import { saveActivity } from '../../Services/api';
 
-const Consultancy = () => {
-    const { register, handleSubmit, reset } = useForm()
+const Consultancy = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
+    const { register, handleSubmit, reset } = useForm({
+        defaultValues: {
+            title: '',
+            clientOrganisation: '',
+            role: '',
+            sector: '',
+            paid: '',
+            description: '',
+            startDate: '',
+            endDate: ''
+        }
+    })
 
     const token = localStorage.getItem('token')
 
-    const onSubmit = async (data, status) => {
+    const onSubmit = async (data, status = mode) => {
         const payload = {
             ...data,
-            type: 'peer-review',
-            status // draft or published
+            type: 'consultancy',
+            title: data.title,
+            description: data.description,
+            startDate: data.startDate,
+            endDate: data.endDate,
+            status: status,
+            details: {
+                clientOrganisation: data.clientOrganisation,
+                sector: data.sector,
+                role: data.role,
+                paid: data.paid
+            },
+            pinned: existingData?.pinned || false
         }
 
         try {
-            const res = await saveActivity(payload, token)
-            onSaved()
+            let res
+
+            if (existingData?._id) {
+            // UPDATE
+            res = await axios.put(
+                `http://localhost:5000/api/activities/${existingData._id}`,
+                payload,
+                { headers: { Authorization: `Bearer ${token}` } }
+            )
+            } else {
+            // CREATE
+            res = await saveActivity(payload, token)
+            }
+            
+            if (onSaved) await onSaved()
             console.log(res)
+            console.log('PAYLOAD:', payload)
+            console.log('FORM DATA:', data)
             alert(`Saved as ${status}`)
-            reset()
+            if (!existingData) reset()
         } catch (err) {
             console.error(err)
             alert(`Error saving`)
         }
     }
 
+    useEffect(() => {
+        if (existingData) {
+            reset({
+                title: existingData.title || '',
+                clientOrganisation: existingData.details?.clientOrganisation || '',
+                sector: existingData.details?.sector || '',
+                role: existingData.details?.role || '',
+                paid: existingData.details?.paid || '',
+                description: existingData.description || '',
+                startDate: existingData.startDate
+                    ? new Date(existingData.startDate).toISOString().split('T')[0]
+                    : '',
+                endDate: existingData.endDate
+                    ? new Date(existingData.endDate).toISOString().split('T')[0]
+                    : ''
+            })
+        }
+    }, [existingData, reset])
+
+    useEffect(() => {
+        if (externalSubmitRef) {
+            externalSubmitRef.current = {
+                save: handleSubmit((data) => onSubmit(data, mode)),
+                publish: handleSubmit((data) => onSubmit(data, 'published'))
+            }
+        }
+    }, [externalSubmitRef, handleSubmit, existingData, mode])
+
     return (
-        <form className='form-container'>
+        <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
             <h3>Consultancy</h3>
-            <p>Log all things related to consultancy here.</p>
+            <p>Log all things related to consulting work here.</p>
 
             <div className='form-group'>
-                <label>Type</label>
-                <select {...register('reviewType')}>
-                    <option>Funding body peer-review</option>
-                </select>
+                <label>Title</label>
+                <input placeholder='Title' {...register('title')} />
+            </div>
+
+            <div className='form-group'>
+                <label>Client organisation</label>
+                <input placeholder='Client organisation' {...register('clientOrganisation')} />
+                <label>Sector</label>
+                {/* add sectors */}
+                <input placeholder='Amount' type='number' {...register('amount')} />
+                <label>Role</label>
+                <input placeholder='Role (PI, Co-I)' {...register('role')} />
+                <label>Paid?</label>
+                <input type='radio' name='Yes' {...register('paid')} />
+                <input type='radio' name='No' {...register('paid')} />
             </div>
 
             <div className='form-group'>
                 <label>Description</label>
-                <textarea {...register('description', { required: true })} />
+                <textarea placeholder='Description' {...register('description')} />
             </div>
 
             <div className='form-group'>
-                <label>Date received</label>
-                <div className='date-group'>
-                    <input placeholder='DD' {...register('day')} />
-                    <input placeholder='MM' {...register('month')} />
-                    <input placeholder='YYYY' {...register('year')} />
+                <label>Start date</label>
+                <input type='date' {...register('startDate')} />
+                <label>End date</label>
+                <input type='date' {...register('endDate')} />
+            </div>
+            
+            {!hideButtons && (
+                <div className='form-actions'>
+                    <button type='submit'>Save</button>
+                    <button
+                        type='button'
+                        onClick={handleSubmit((data) => onSubmit(data, 'published'))}
+                    >
+                        Publish
+                    </button>
                 </div>
-            </div>
-
-            <div className='form-actions'>
-                <button type='button' onClick={handleSubmit(data => onSubmit(data, 'draft'))}>Save</button>
-                <button type='button' onClick={handleSubmit(data => onSubmit(data, 'published'))}>Publish</button>
-            </div>
+            )}
         </form>
     )
 }
