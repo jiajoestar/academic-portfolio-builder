@@ -40,27 +40,29 @@ const Settings = () => {
     }
 
     return (
-        <div>
+        <div className='settings-page'>
             <Navbar />
 
-            <div className='settings-container'>
+            <div className='settings-shell'>
                 <button className='back-button' onClick={() => navigate(-1)}><FontAwesomeIcon icon={faArrowLeft} /> Back</button>
-                <h2 className='settings-header'>Settings</h2>
+                <div className='settings-container'>
+                    <h2 className='settings-header'>Settings</h2>
 
-                <div className='settings-card'>
-                    <h3>Update email</h3>
-                    <div className='settings-row'>
-                        <input placeholder='New email' onChange={(e) => setEmail(e.target.value)} />
-                        <button onClick={updateEmail}>Save</button>
+                    <div className='settings-card'>
+                        <h3>Update email</h3>
+                        <div className='settings-row'>
+                            <input placeholder='New email' onChange={(e) => setEmail(e.target.value)} />
+                            <button onClick={updateEmail}>Save</button>
+                        </div>
                     </div>
-                </div>
 
-                <div className='settings-card'>
-                    <h3>Change password</h3>
-                    <div className='settings-row'>
-                        <input type='password' placeholder='Old password' onChange={(e) => setOldPassword(e.target.value)} />
-                        <input type='password' placeholder='New password' onChange={(e) => setNewPassword(e.target.value)} />
-                        <button onClick={changePassword}>Save</button>
+                    <div className='settings-card'>
+                        <h3>Change password</h3>
+                        <div className='settings-row'>
+                            <input type='password' placeholder='Old password' onChange={(e) => setOldPassword(e.target.value)} />
+                            <input type='password' placeholder='New password' onChange={(e) => setNewPassword(e.target.value)} />
+                            <button onClick={changePassword}>Save</button>
+                        </div>
                     </div>
                 </div>
             </div>

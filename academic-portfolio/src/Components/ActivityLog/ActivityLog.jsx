@@ -154,56 +154,60 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
     if (!isOpen) return null
 
     return (
-        <div className='overlay'>
-            <div className='modal animate'>
+        <div className='activity-log-overlay'>
+            <div className='activity-log-modal activity-log-modal-animate'>
                 <div className='modal-header'>
                     <h2>Quick Add</h2>
-                    <button onClick={onClose}>✕</button>
+                    <button className='modal-close-button' onClick={onClose}>✕</button>
                 </div>
 
                 <div className='modal-body'>
-                    <div className='modal-left'>
+                    <aside className='modal-sidebar'>
                         <input
                             type='text'
-                            placeholder='Search...'
+                            placeholder='Search'
                             value={search}
                             onChange={onChange}
                             className='search-input'
                         />
 
-                        {visibleOptions.map(option => {
-                            const name = option.header.name;
-                            const isOpen = expandedSections[name];
+                        <div className='activity-log-groups'>
+                            {visibleOptions.map(option => {
+                                const name = option.header.name;
+                                const isOpen = expandedSections[name];
 
-                            return (
-                                <div key={name}>
+                                return (
+                                    <div key={name} className='activity-log-group'>
 
-                                    <div
-                                        className='section-header'
-                                        onClick={() => toggleSection(name)}
-                                    >
-                                        <span>{name}</span>
-                                        {isOpen ? <FontAwesomeIcon icon={faChevronDown} /> : <FontAwesomeIcon icon={faChevronRight} />}
-                                    </div>
-
-                                    {isOpen && option.values.map(item => (
-                                        <div
-                                            key={item.name}
-                                            className={`list-item ${selectedItem?.name === item.name ? 'active' : ''}`}
-                                            onClick={() => setSelectedItem(item)}
+                                        <button
+                                            type='button'
+                                            className='section-header'
+                                            onClick={() => toggleSection(name)}
                                         >
-                                            <strong>{item.name}</strong>
-                                            <p>{item.description}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            )
-                        })}
-                    </div>
+                                            <span>{name}</span>
+                                            {isOpen ? <FontAwesomeIcon icon={faChevronDown} /> : <FontAwesomeIcon icon={faChevronRight} />}
+                                        </button>
 
-                    <div className='modal-right'>
+                                        {isOpen && option.values.map(item => (
+                                            <button
+                                                type='button'
+                                                key={item.name}
+                                                className={`list-item ${selectedItem?.name === item.name ? 'active' : ''}`}
+                                                onClick={() => setSelectedItem(item)}
+                                            >
+                                                <strong>{item.name}</strong>
+                                                <p>{item.description}</p>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </aside>
+
+                    <div className='modal-content'>
                         {selectedItem ? (
-                            <div>
+                            <div className='activity-log-form-wrap'>
                                 {selectedItem.name === 'Peer review and editorial activity' && <PeerReview onSaved={onSaved} />} {/*//existingData={activity}*/}
                                 {selectedItem.name === 'Participation or Organisation for events' && <ParticipationActivity onSaved={onSaved} />}
                                 {selectedItem.name === 'Prizes (including medals and awards)' && <Prizes onSaved={onSaved} />}
@@ -236,10 +240,12 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
                                 {selectedItem.name === 'Funding' && <Funding onSaved={onSaved} />}
                             </div>
                         ) : (
-                            <p>
-                                Select the activity, award/prize, funding, membership
-                                you want to add on the left-hand side.
-                            </p>
+                            <div className='activity-log-empty-state'>
+                                <p>
+                                    Select the activity, award/prize, funding, membership
+                                    you want to add on the left-hand side.
+                                </p>
+                            </div>
                         )}
                     </div>
 

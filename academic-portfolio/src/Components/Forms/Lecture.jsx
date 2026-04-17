@@ -117,16 +117,17 @@ const Lecture = ({ onSaved, existingData, hideButtons = false, mode = 'draft', e
                 <textarea placeholder='Description' {...register('description')} />
             </div>
 
-            <div className='form-group'>
+            <div className='form-group form-group-dates'>
                 <label>Date</label>
                 <input type='date' {...register('date')} />
             </div>
             
             {!hideButtons && (
                 <div className='form-actions'>
-                    <button type='submit'>Save</button>
+                    <button type='submit' className='form-button save-button'>Save</button>
                     <button
                         type='button'
+                        className='fomr-button publish-button'
                         onClick={handleSubmit((data) => onSubmit(data, 'published'))}
                     >
                         Publish

@@ -111,7 +111,7 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
                 <input {...register('journal')} />
             </div>
 
-            <div className='form-group'>
+            <div className='form-group form-group-dates'>
                 <label>Date</label>
                 
                 <input type='date' {...register('date')} />
@@ -121,9 +121,10 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
             
             {!hideButtons && (
                 <div className='form-actions'>
-                    <button type='submit'>Save</button>
+                    <button type='submit' className='form-button save-button'>Save</button>
                     <button
                         type='button'
+                        className='form-button publish-button'
                         onClick={handleSubmit((data) => onSubmit(data, 'published'))}
                     >
                         Publish

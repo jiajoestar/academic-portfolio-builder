@@ -113,7 +113,7 @@ const MembershipOfCommittee = ({ onSaved, existingData, hideButtons = false, mod
                 <textarea placeholder='Description' {...register('description')} />
             </div>
 
-            <div className='form-group'>
+            <div className='form-group form-group-dates'>
                 <label>Start date</label>
                 <input type='date' {...register('startDate')} />
                 <label>End date</label>
@@ -122,9 +122,10 @@ const MembershipOfCommittee = ({ onSaved, existingData, hideButtons = false, mod
             
             {!hideButtons && (
                 <div className='form-actions'>
-                    <button type='submit'>Save</button>
+                    <button type='submit' className='form-button save-button'>Save</button>
                     <button
                         type='button'
+                        className='form-button publish-button'
                         onClick={handleSubmit((data) => onSubmit(data, 'published'))}
                     >
                         Publish

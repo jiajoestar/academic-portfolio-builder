@@ -1,102 +1,132 @@
 .dashboard-page {
-    display: flex;
-    gap: 24px;
-    padding: 24px;
+    display: grid;
+    gap: 28px;
+    padding: 32px;
+
+    grid-template-columns: 320px 1fr;
+    background: #f8fafc;
+    min-height: calc(100vh - 80px);
 }
 
 .sidebar {
-    width: 300px;
+    width: 100%;
 }
 
 .main {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
 }
 
 .section-title {
-    margin: 20px 0 10px;
+    margin: 6px 0 2px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.profile-card,
+.quick-add-section,
+.action-card,
+.draft-card,
+.modal {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 .profile-card {
-    border: 2px solid black;
-    border-radius: 16px;
-    padding: 20px;
+    padding: 24px;
 }
 
 .profile-header {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
 }
 
 .profile-main {
     display: flex;
     gap: 16px;
     align-items: center;
-    margin: 20px 0;
+    margin: 20px 0 24px;
 }
 
 .avatar {
-    width: 70px;
-    height: 70px;
-    border: 2px solid black;
+    width: 76px;
+    height: 76px;
+    border: 3px solid #eff6ff;
     border-radius: 50%;
     object-fit: cover;
+    background: #f1f5f9;
 }
 
 .miniprofile-actions-list {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .miniprofile-actions-list li {
-    margin: 8px 0;
+    margin: 10px 0;
+    color: #64748b;
 }
 
 .settings {
-    margin-top: 20px;
-    font-weight: bold;
+    margin-top: 10px 0;
+    color: #64748b;
 }
 
 .quick-add-section {
-    border: 2px solid black;
-    border-radius: 16px;
-    padding: 20px;
+    padding: 24px 28px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+.quick-add-section h2,
+.quick-add-section h3,
+.profile-card h3 {
+    color: #0f172a;
+    margin: 0 0 8px;
+}
 
 .quick-add-button {
-    border: 2px solid black;
-    border-radius: 12px;
-    padding: 10px 18px;
-    background: white;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 20px;
+    background: #2563eb;
     cursor: pointer;
+    color: white;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+.quick-add-button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
 }
 
 .action-card {
-    border: 2px solid black;
-    border-radius: 16px;
-    padding: 20px;
+    padding: 18px 20px;
     display: flex;
     align-items: center;
     gap: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .action-avatar {
-    width: 50px;
-    height: 50px;
-    border: 2px solid black;
+    width: 46px;
+    height: 46px;
+    border: 1px solid #e2e8f0;
     border-radius: 50%;
+    background: #eff6ff;
 }
 
-.overlay {
+.activity-log-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
+    background: rgba(15, 23, 42, 0.38);
+    backdrop-filter: blur(4px);
+    inset:0;
 
     display: flex;
     justify-content: center;
@@ -104,22 +134,22 @@
 
     z-index: 1000;
     animation: fadeIn 0.2s ease-in-out;
+    padding: 20px;
 }
 
-.modal {
-    width: 80%;
-    max-width: 1000px;
+.activity-log-modal {
+    width: min(1000px, 96vw);
+    height: min(82vh, 860px);
     background: white;
-    border-radius: 16px;
-    border: 2px solid black;
-    padding: 20px;
-    height: 80vh;
-    max-height: 80vh;
+    border-radius: 24px;
+    border: 1px solid #e2e8f0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
 }
 
-.modal.animate {
+.activity-log-modal-animate {
     animation: scaleIn 0.2s ease-in-out;
 }
 
@@ -142,66 +172,161 @@
 .modal-header {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 22px 24px 18px;
+    flex-shrink: 0;
+}
+.modal-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    line-height: 1.1;
+    color: #0f172a;
+}
+
+.modal-close-button {
+    width: 48px;
+    height: 48px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #f8fafc;
+    color: #0f172a;
+
+    display: flex;
     align-items: center;
-    border-bottom: 2px solid black;
-    padding-bottom: 10px;
+    justify-content: center;
+
+    padding: 0;
+    line-height: 1;
+    font-size: 28px;
+    font-weight: 300;
+
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: 0.2s ease;
+}
+.modal-close-button:hover {
+    background: #eef2ff;
+    border-color: #cbd5e1;
 }
 
 .modal-body {
-    display: flex;
-    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
     flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.modal-sidebar {
+    border-right: 1px solid #e2e8f0;
+    padding: 16px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    background: #fcfdff;
     min-height: 0;
 }
 
-.modal-left {
-    width: 30%;
-    border-right: 2px solid black;
-    padding-right: 15px;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-}
-
-.modal-left ul {
+.modal-sidebar ul {
     list-style: none;
     padding: 0;
 }
 
-.modal-left li {
+.modal-sidebar li {
     margin: 8px 0;
     cursor: pointer;
 }
 
-.modal-right {
-    flex: 1;
-    padding-left: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    
+.modal-content {
+    border-right: 1px solid #e2e8f0;
+    padding: 16px;
     overflow-y: auto;
+    min-height: 0;
+    background: #fcfdff;
 }
 
 .search-input {
-    margin-top: 15px;
-    border-bottom: 1px solid black;
-    padding-bottom: 5px;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #dbe3ee;
+    border-radius: 14px;
+    outline: none;
+    font-size: 15px;
+    color: #0f172a;
+    background: white;
+    margin-bottom: 16px;
+}
+.search-input:focus {
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
+.activity-log-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 16px;
+}
+.activity-log-group {
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    background: white;
+    overflow: hidden;
+}
 .section-header {
-    margin-top: 15px;
-    border-bottom: 1px solid black;
-    padding-bottom: 5px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px;
+    border: none;
+    background: white;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+.section-header:hover {
+    background: #f8fafc;
 }
 
 .list-item {
-    padding: 8px 0;
+    width: calc(100% - 24px);
+    padding: 0 12px 14px;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: left;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    margin: 0 12px 12px;
 }
-
 .list-item:hover {
     background: #f5f5f5;
+}
+
+.activity-log-form-wrap {
+    max-width: 860px;
+    width: 100%;
+    padding-bottom: 24px;
+}
+.activity-log-empty-state {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    color: #64748b;
+}
+.activity-log-empty-state p {
+    max-width: 520px;
+    line-height: 1.6;
+    margin: 0;
 }
 
 .draft-card {
@@ -310,4 +435,68 @@
 
 .confirm-actions button:hover {
     background: #f2f2f2;
+}
+
+/* monthly contribution grid css */
+.contribution-card {
+  margin-top: 16px;
+  padding-top: 8px;
+}
+
+.contribution-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.contribution-top h4 {
+  margin: 0;
+  font-size: 16px;
+  color: black;
+}
+
+.contribution-top span {
+  font-size: 13px;
+  color: black;
+}
+
+.contribution-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.contribution-cell {
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  border: 1px solid #dbe3ee;
+  background: #f8fafc;
+}
+
+.contribution-cell.level-0 {
+  background: #f8fafc;
+}
+
+.contribution-cell.level-1 {
+  background: #dbeafe;
+}
+
+.contribution-cell.level-2 {
+  background: #93c5fd;
+}
+
+.contribution-cell.level-3 {
+  background: #60a5fa;
+}
+
+.contribution-cell.level-4 {
+  background: #2563eb;
+}
+
+.contribution-caption {
+  margin-top: 12px;
+  font-size: 13px;
+  color: black;
+  line-height: 1.4;
 }

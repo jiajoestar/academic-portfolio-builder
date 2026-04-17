@@ -18,7 +18,7 @@ const Navbar = () => {
         <nav className='navbar'>
             <div className='navbar-left'>
                 <img src={logo} className='logo' alt="logo" />
-                <h2 className='title'>Portfolio Builder</h2>
+                <h2 className='title'>Case Portfolio</h2>
             </div>
 
             <div className='navbar-right'>

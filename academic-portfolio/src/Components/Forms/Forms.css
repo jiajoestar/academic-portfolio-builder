@@ -1,47 +1,66 @@
 .form-container {
     display: flex;
     flex-direction: column;
-    overflow: visible;
-    max-height: none;
+    overflow: hidden;
     width: 100%;
     padding-right: 10px;
     flex: 0;
+    height: 100%;
+    min-height: 0;
 }
 .form-container h3 {
     font-size: 22px;
     margin-bottom: 4px;
+    color: #0f172a;
 }
 .form-container p {
-    color: #555;
+    color: #64748b;
     font-size: 14px;
+    margin: 0 0 20px;
+    line-height: 1.5;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
+    margin-bottom: 18px;
 }
 .form-group label {
-    font-weight: 500;
+    font-weight: 600;
+    color: #0f172a;
+    font-size: 15px;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
-    padding: 10px;
-    border: 1.5px solid #000;
-    border-radius: 10px;
-    font-size: 14px;
+    padding: 13px 14px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 14px;
+    font-size: 15px;
+    width: 100%;
+    color: #0f172a;
+    outline: none;
+    background: white;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
 }
 
-textarea {
-    min-height: 100px;
-    resize: none;
-}
-
-.date-group {
-    display: flex;
-    gap: 10px;
+.form-group-dates {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeeat(2, minmax(0, 1fr));
 }
 .date-group input {
     width: 70px;
@@ -50,19 +69,55 @@ textarea {
 
 .form-actions {
     margin-top: auto;
-    padding-top: 10px;
     background: white;
     bottom: 0;
     position: sticky;
-    text-align: right;
+    z-index: 5;
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 0 4px;
+    gap: 12px;
+    border-top: 1px solid #e2e8f0;
+    margin-top: auto;
 }
-.form-actions button {
-    padding: 8px 18px;
-    border-radius: 20px;
-    border: 1.5px solid black;
-    background: white;
+.form-button {
+    padding: 11px 20px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
+    transition: 0.2s ease;
 }
-.form-actions button:hover {
-    background: #f2f2f2;
+.save-button {
+    border: 1px solid #cbd5e1;
+    background: white;
+    color: #0f172a;
+}
+.save-button:hover {
+    background: #f8fafc;
+    border-color: #9463eb;
+}
+.publish-button {
+    border: 1px solid #2563eb;
+    background: #2563eb;
+    color: white;
+}
+.publish-button:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+@media (max-width: 640px) {
+    .form-group-dates {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        justify-content: stretch;
+        flex-direction: column;
+    }
+
+    .form-button {
+        width: 100%;
+    }
 }
