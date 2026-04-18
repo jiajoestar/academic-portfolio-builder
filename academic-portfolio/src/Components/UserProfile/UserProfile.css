@@ -142,9 +142,8 @@
 }
 
 .activity-edit-modal {
-    width: 80%;
-    max-width: 980px;
-    height: 85vh;
+    width: min(1000px, 96vw);
+    height: min(85vh, 900px);
     max-height: 85vh;
 }
 
@@ -154,24 +153,24 @@
     flex: 1;
     min-height: 0;
     overflow: hidden;
-    margin-top: 20px;
 }
 
 .modal-form-scroll {
     flex: 1;
     min-height: 0;
     overflow-y: auto;
-    padding-right: 10px;
+    padding: 24px 32px 16px;
 }
 
 .profile-activity-actions {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    padding-top: 16px;
-    margin-top: 12px;
+    padding: 16px 32px 24px;
     background: white;
     border-top: 1px solid #ddd;
+    flex-shrink: 0;
+    margin-top: 0;
 }
 
 .profile-activity-actions button {
@@ -188,9 +187,13 @@
 
 .modal {
     background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 1000px;
+    border-radius: 24px;
+    width: min(1000px, 96vw);
+    height: min(85vh, 900px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0;
 }
 
 .modal-overlay {
@@ -203,6 +206,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.modal-header {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 24px 32px 20px;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .profile-activity-actions .delete-button {

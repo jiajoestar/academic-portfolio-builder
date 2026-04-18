@@ -139,7 +139,8 @@
 
 .activity-log-modal {
     width: min(1000px, 96vw);
-    height: min(82vh, 860px);
+    height: min(85vh, 900px);
+    max-height: 85vh;
     background: white;
     border-radius: 24px;
     border: 1px solid #e2e8f0;
@@ -174,7 +175,7 @@
     justify-content: space-between;
     align-items: flex-start;
     border-bottom: 1px solid #e2e8f0;
-    padding: 22px 24px 18px;
+    padding: 24px 32px 20px;
     flex-shrink: 0;
 }
 .modal-header h2 {
@@ -357,24 +358,24 @@
     flex: 1;
     min-height: 0;
     overflow: hidden;
-    margin-top: 20px;
 }
 
 .draft-modal-scroll {
     flex: 1;
     min-height: 0;
     overflow-y: auto;
-    padding-right: 10px;
+    padding: 24px 32px 16px;
 }
 
 .draft-modal-actions {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
-    padding-top: 16px;
-    margin-top: 12px;
+    padding: 16px 32px 24px;
     background: white;
     border-top: 1px solid #ddd;
+    flex-shrink: 0;
+    margin-top: 0;
 }
 
 .draft-modal-actions button {

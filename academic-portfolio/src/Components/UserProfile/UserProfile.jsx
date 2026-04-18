@@ -666,8 +666,8 @@ const UserProfile = () => {
 
             
             {selectedActivity && (
-                <div className='overlay'>
-                    <div className='modal animate activity-edit-modal'>
+                <div className='activity-log-overlay'>
+                    <div className='modal activity-edit-modal'>
                         <div className='modal-header'>
                             <h2>Edit activity</h2>
                             <button onClick={() => setSelectedActivity(null)}>✕</button>

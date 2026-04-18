@@ -141,11 +141,11 @@ const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => 
     const [showConfirm, setShowConfirm] = useState(false)
 
     return (
-        <div className='overlay'>
-            <div className='modal animate' style={{ maxWidth: '700px' }}>
+        <div className='activity-log-overlay'>
+            <div className='activity-log-modal activity-log-modal-animate' style={{ maxWidth: '700px' }}>
                 <div className='modal-header'>
                     <h2>Edit draft</h2>
-                    <button onClick={onClose}>✕</button>
+                    <button className='modal-close-button' onClick={onClose}>✕</button>
                 </div>
 
                 <div className='draft-modal-body'>
