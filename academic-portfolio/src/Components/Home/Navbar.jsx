@@ -34,11 +34,7 @@ const Navbar = () => {
         {
             text: "About",
             icon:<FontAwesomeIcon icon={faHouse} />,
-        },
-        {
-            text: "Contact",
-            icon:<FontAwesomeIcon icon={faHouse} />,
-        },
+        }
     ]
 
     return (
@@ -46,22 +42,33 @@ const Navbar = () => {
             <div className='nav-logo-container'>
                 <img src={logo} alt="logo" />
             </div>
+
             <div className='navbar-links-container'>
                 <Link to='/'>Home</Link>
                 <Link to='/about'>About</Link>
                 
-                <form className='search-form' onSubmit={handleSearch}>
-                    <input type='text' placeholder='Search author' value={query} onChange={(e) => handleSearch(e.target.value)} className='search-input'/>
-                    {results.length === 0 && query && <p>No results</p>}
-                    {results.map(u => (
-                        <Link key={u._id} to={`/public/${u._id}`}>
-                            {u.name}
-                        </Link>
-                    ))}
-                    <button type='submit' className='search-button'><FontAwesomeIcon icon={faSearch} /></button>
-                </form>
-                <button className='primary-button' onClick={() => navigate('/login')}>Log in / Register</button>
+
+                <div className='navbar-actions'>
+                    <form className='search-form' onSubmit={(e) => {
+                        e.preventDefault();
+                        handleSearch(query);
+                    }}>
+                        <input type='text' placeholder='Search author' value={query} onChange={(e) => handleSearch(e.target.value)} className='search-input'/>
+                        {/*
+                        {results.length === 0 && query && <p>No results</p>}
+                        {results.map(u => (
+                            <Link key={u._id} to={`/public/${u._id}`}>
+                                {u.name}
+                            </Link>
+                        ))}
+                        */}
+                        
+                        <button type='submit' className='search-button'><FontAwesomeIcon icon={faSearch} /></button>
+                    </form>
+                    <button className='primary-button' onClick={() => navigate('/login')}>Log in / Register</button>
+                </div>   
             </div>
+
             <div className='navbar-menu-container'>
                 <FontAwesomeIcon 
                 icon={faBars} 
