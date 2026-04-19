@@ -103,7 +103,7 @@ const Dashboard = () => {
 
             <div className='dashboard-page'>
                 <div className='sidebar'>
-                    <ProfileCardDashboard user={user} />
+                    <ProfileCardDashboard user={user} activities={activities} />
                 </div>
                 <div className='main'>
                     <QuickAdd onOpen={() => setShowModal(true)} />

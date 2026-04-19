@@ -1,32 +1,37 @@
 import React from 'react';
 import './ActivityLog.css'
 import { Link } from 'react-router-dom';
+import MonthlyContributionGrid from './MonthlyContributionGrid';
 
-const ProfileCardDashboard = ({ user }) => {
+const ProfileCardDashboard = ({ user, activities = [] }) => {
+    
+    const displayName = user?.name || [user?.firstName, user?.lastName].filter(Boolean).join(' ') || 'Your name'
+
+    const workplace = user?.workplace || 'No workplace set yet'
+
+    const avatarSrc = user?.avatar || 'https://via/placeholder.com/100'
+
     return (
         <div className='profile-card'>
-            <div className='profile-header'>
-                <h3>Your profile</h3>
-            </div>
+            <h3>Your profile</h3>
 
             <div className='profile-main'>
-                <img src={user?.avatar} alt='profile' className='avatar' />
-                <div>
-                    <h4>{user?.firstName}<br />{user?.lastName}</h4>
+                <img src={avatarSrc} alt='profile' className='avatar' />
+                <div className='profile-identity'>
+                    <h4 className='profile-name'>{displayName}</h4>
+                    <p className='profile-workplace'>{workplace}</p>
                 </div>
             </div>
 
-            <p>{user?.title}, {user?.workplace}</p>
-            <p className='bio'>{user?.bio}</p>
-            <br />
+            <MonthlyContributionGrid activities={activities} />
 
-            <h4>Actions</h4>
-            <ul className='miniprofile-actions-list'>
-                <li>view publications</li>
-                <li>view memberships</li>
-                <li>view funding</li>
-            </ul>
-            <Link to='/settings'><p className='settings'>Settings</p></Link>
+            <br></br>
+
+            <div className='profile-card-actions'>
+                <Link to='/profile' className='profile-link-button'>View profile</Link>
+                <br></br>
+                <Link to='/settings' className='settings'>Settings</Link>
+            </div>
         </div>
     )
 }

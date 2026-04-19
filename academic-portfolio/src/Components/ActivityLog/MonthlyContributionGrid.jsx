@@ -45,16 +45,16 @@ const MonthlyContributionGrid = ({ activities = [] }) => {
         const rawDate =
           activity.publishedAt || activity.updatedAt || activity.createdAt
 
-        if (!rawDate) return;
+        if (!rawDate) return
 
-        const date = new Date(rawDate);
+        const date = new Date(rawDate)
         if (!isSameMonth(date, year, month)) return
 
-        const key = formatKey(date);
+        const key = formatKey(date)
         counts[key] = (counts[key] || 0) + 1
       })
 
-    return counts;
+    return counts
   }, [activities, year, month])
 
   const getLevelClass = (count) => {
@@ -73,7 +73,7 @@ const MonthlyContributionGrid = ({ activities = [] }) => {
   return (
     <div className="contribution-card">
       <div className="contribution-top">
-        <h4>Publishing activity</h4>
+        <h4>Published activity log</h4>
         <span>{monthLabel}</span>
       </div>
 
