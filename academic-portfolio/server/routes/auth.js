@@ -181,17 +181,39 @@ router.put('/update-email', async (req, res) => {
 
 // CHANGE PASSWORD IN SETTINGS PAGE
 router.put('/change-password', async (req, res) => {
-    const { oldPassword, newPassword } = req.body
-    const token = req.headers.authorization.split('')[1]
+  try {
+    const { oldPassword, newPassword } = req.body;
+
+    if (!req.headers.authorization) {
+      return res.status(401).json({ message: 'No authorization header' })
+    }
+
+    const token = req.headers.authorization.split(' ')[1]
+
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided' })
+    }
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallbacksecret')
+
     const user = await User.findById(decoded.id)
-    const valid = await bcrpyt.compare(oldPassword, user.password)
-    if (!valid) return res.status(400).json({ message: 'wrong password' })
-    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
+    const valid = await bcrypt.compare(oldPassword, user.password)
+    if (!valid) {
+      return res.status(400).json({ message: 'Wrong current password' })
+    }
+
     user.password = await bcrypt.hash(newPassword, 10)
     await user.save()
 
     res.json({ message: 'Password updated' })
+  } catch (err) {
+    console.error('Change password error:', err)
+    res.status(500).json({ message: 'Failed to update password', error: err.message })
+  }
 })
 
 module.exports = router
