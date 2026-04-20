@@ -71,6 +71,7 @@ const MembershipOfGovernment = ({ onSaved, existingData, hideButtons = false, mo
                 groupName: existingData.details?.groupName || '',
                 organisationType: existingData.details?.organisationType || '',
                 role: existingData.details?.role || '',
+                country: existingData.details?.country || '',
                 description: existingData.description || '',
                 startDate: existingData.startDate
                     ? new Date(existingData.startDate).toISOString().split('T')[0]

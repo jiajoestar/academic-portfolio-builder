@@ -101,7 +101,7 @@ const Fellowship = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
             <p>Log all things related to fellowships here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

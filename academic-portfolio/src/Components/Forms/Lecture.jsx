@@ -93,7 +93,7 @@ const Lecture = ({ onSaved, existingData, hideButtons = false, mode = 'draft', e
             <p>Log all things related to public lectures, debates, and seminars here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

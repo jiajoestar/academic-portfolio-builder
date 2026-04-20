@@ -98,7 +98,7 @@ const ContributionToCommittee = ({ onSaved, existingData, hideButtons = false, m
             <p>Log all things related to contribution to national/international committees here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

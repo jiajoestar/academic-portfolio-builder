@@ -95,7 +95,7 @@ const ElectionToEarnedSociety = ({ onSaved, existingData, hideButtons = false, m
             <p>Log all things related to election to earned society here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

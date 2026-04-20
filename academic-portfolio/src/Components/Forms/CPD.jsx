@@ -101,7 +101,7 @@ const CPD = ({ onSaved, existingData, hideButtons = false, mode = 'draft', exter
             <p>Log all things related to CPD here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

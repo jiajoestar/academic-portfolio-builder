@@ -88,7 +88,7 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
             <p>Log all things related to peer-reviews and editorial actvity here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input {...register('title')} />
             </div>
 

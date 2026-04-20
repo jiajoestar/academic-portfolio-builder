@@ -98,7 +98,7 @@ const AdvisoryPanel = ({ onSaved, existingData, hideButtons = false, mode = 'dra
             <p>Log all things related to working on adivsory panels here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

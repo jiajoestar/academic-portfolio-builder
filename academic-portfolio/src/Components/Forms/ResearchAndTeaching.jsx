@@ -98,7 +98,7 @@ const ResearchAndTeaching = ({ onSaved, existingData, hideButtons = false, mode 
             <p>Log all things related to research and teaching at external organisations here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

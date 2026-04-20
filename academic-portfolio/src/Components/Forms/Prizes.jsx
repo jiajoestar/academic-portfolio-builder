@@ -96,7 +96,7 @@ const Prizes = ({ onSaved, existingData, hideButtons = false, mode = 'draft', ex
             <p>Log all things related to prizes here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

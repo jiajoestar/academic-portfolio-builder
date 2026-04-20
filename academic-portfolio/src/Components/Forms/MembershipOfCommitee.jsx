@@ -95,7 +95,7 @@ const MembershipOfCommittee = ({ onSaved, existingData, hideButtons = false, mod
             <p>Log all things related to membership of committee here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

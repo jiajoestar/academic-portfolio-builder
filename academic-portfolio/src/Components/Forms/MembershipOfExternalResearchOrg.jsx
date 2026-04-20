@@ -98,7 +98,7 @@ const MembershipOfExternalResearchOrg = ({ onSaved, existingData, hideButtons = 
             <p>Log all things related to membership of external research organisations here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

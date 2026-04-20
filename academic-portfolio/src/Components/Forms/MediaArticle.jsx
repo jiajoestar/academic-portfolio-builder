@@ -93,7 +93,7 @@ const MediaArticle = ({ onSaved, existingData, hideButtons = false, mode = 'draf
             <p>Log all things related to media here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

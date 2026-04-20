@@ -98,7 +98,7 @@ const ExternalInstitution = ({ onSaved, existingData, hideButtons = false, mode 
             <p>Log all things related to external institutions here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 

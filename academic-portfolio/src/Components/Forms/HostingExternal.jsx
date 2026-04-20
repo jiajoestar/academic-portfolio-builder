@@ -101,7 +101,7 @@ const HostingExternal = ({ onSaved, existingData, hideButtons = false, mode = 'd
             <p>Log all things related to hosting visitors here.</p>
 
             <div className='form-group'>
-                <label>Title</label>
+                <label>Activity title</label>
                 <input placeholder='Title' {...register('title')} />
             </div>
 
