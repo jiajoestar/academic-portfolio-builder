@@ -35,9 +35,10 @@ const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => 
     if (!isOpen || !draft) return null
 
     const renderForm = () => {
-        const type = draft.type?.toLowerCase()
+        const rawType = draft.type || ''
+        const type = rawType.toLowerCase().replace(/[-_\s]/g, '')
 
-        if (['peer_review', 'peer-review', 'peerreview'].includes(type)) {
+        if (['peerreview'].includes(type)) {
             return <PeerReview existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
         if (['funding'].includes(type)) {
@@ -46,7 +47,7 @@ const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => 
         if (['examination'].includes(type)) {
             return <Examination existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['advisory-panel', 'advisory_panel', 'advisoryPanel'].includes(type)) {
+        if (['advisorypanel'].includes(type)) {
             return <AdvisoryPanel existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
         if (['appointment'].includes(type)) {
@@ -70,28 +71,28 @@ const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => 
         if (['participation'].includes(type)) {
             return <ParticipationActivity existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['national-honour', 'national_honour'].includes(type)) {
+        if (['nationalhonour'].includes(type)) {
             return <NationalHonour existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['talksOrPresentations'].includes(type)) {
+        if (['talksorpresentations'].includes(type)) {
             return <TalksOrPresentations existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['membershipOfBoard'].includes(type)) {
+        if (['membershipofboard'].includes(type)) {
             return <MembershipOfBoard existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['membershipOfCommittee'].includes(type)) {
+        if (['membershipofcommittee'].includes(type)) {
             return <MembershipOfCommittee existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['membershipOfCouncil'].includes(type)) {
+        if (['membershipofcouncil'].includes(type)) {
             return <MembershipOfCouncil existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['membershipOfNetwork'].includes(type)) {
+        if (['membershipofnetwork'].includes(type)) {
             return <MembershipOfNetwork existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['membershipOfGovernment'].includes(type)) {
+        if (['membershipofgovernment'].includes(type)) {
             return <MembershipOfGovernment existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['membershipOfExternalResearchOrg'].includes(type)) {
+        if (['membershipofexternalresearchorg'].includes(type)) {
             return <MembershipOfExternalResearchOrg existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
         if (['research'].includes(type)) {
@@ -103,7 +104,7 @@ const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => 
         if (['festival'].includes(type)) {
             return <Festival existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['mediaArticle'].includes(type)) {
+        if (['mediaarticle'].includes(type)) {
             return <MediaArticle existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
         if (['schools'].includes(type)) {
@@ -115,10 +116,10 @@ const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => 
         if (['external'].includes(type)) {
             return <ExternalInstitution existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['honoraryDegree'].includes(type)) {
+        if (['honorarydegree'].includes(type)) {
             return <HonoraryDegree existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
-        if (['hostingExternal'].includes(type)) {
+        if (['hostingexternal'].includes(type)) {
             return <HostingExternal existingData={draft} onSaved={onSave} hideButtons mode='draft' externalSubmitRef={submitActionsRef} />
         }
 

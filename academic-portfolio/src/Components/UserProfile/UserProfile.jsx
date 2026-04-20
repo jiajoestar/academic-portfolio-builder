@@ -195,7 +195,7 @@ const UserProfile = () => {
         'contribution': 'Academic engagement',
         'cpd': 'Business and community',
         'election': 'Awards and prizes',
-        'examination': 'Other activities', //
+        'examination': 'Academic engagement',
         'external': 'Other activities', //
         'fellowship': 'Awards and prizes',
         'festival': 'Public engagement',
@@ -207,9 +207,8 @@ const UserProfile = () => {
         'membershipOfCommittee': 'Memberships',
         'membershipOfCouncil': 'Memberships',
         'membershipOfNetwork': 'Memberships',
-        'membershipOfExternalResearchOrg': 'Memberships',
         'membershipOfExternalResearchOrg': 'Academic engagement',
-        'membershipOfGovernment': 'Memberships',
+        
         'membershipOfGovernment': 'Business and community',
         'national-honour': 'Awards and prizes',
         'national_honour': 'Awards and prizes',
@@ -250,10 +249,10 @@ const UserProfile = () => {
     const renderActivityForm = () => {
         if (!selectedActivity) return null
 
-        switch (selectedActivity.type) {
-            case 'peer_review':
-            case 'peer-review':
-            case 'peerReview':
+        const type = (selectedActivity.type || '').toLowerCase().replace(/[-_\s]/g, '')
+
+        switch (type) {
+            case 'peerreview':
                 return (
                     <PeerReview
                         existingData={selectedActivity}
@@ -275,9 +274,7 @@ const UserProfile = () => {
                     />
                 )
             
-            case 'advisory-panel':
-            case 'advisory_panel':
-            case 'advisoryPanel':
+            case 'advisorypanel':
                 return (
                     <AdvisoryPanel
                         existingData={selectedActivity}
@@ -387,7 +384,7 @@ const UserProfile = () => {
                     />
                 )
 
-            case 'honoraryDegree':
+            case 'honorarydegree':
                 return (
                     <HonoraryDegree
                         existingData={selectedActivity}
@@ -398,7 +395,7 @@ const UserProfile = () => {
                     />
                 )
 
-            case 'hostingExternal':
+            case 'hostingexternal':
                 return (
                     <HostingExternal
                         existingData={selectedActivity}
@@ -420,7 +417,7 @@ const UserProfile = () => {
                     />
                 )
 
-            case 'mediaArticle':
+            case 'mediaarticle':
                 return (
                     <MediaArticle
                         existingData={selectedActivity}
@@ -431,7 +428,7 @@ const UserProfile = () => {
                     />
                 )
 
-            case 'membershipOfBoard':
+            case 'membershipofboard':
                 return (
                     <MembershipOfBoard
                         existingData={selectedActivity}
@@ -442,7 +439,7 @@ const UserProfile = () => {
                     />
                 )
 
-            case 'membershipOfCommittee':
+            case 'membershipofcommittee':
                 return (
                     <MembershipOfCommittee
                         existingData={selectedActivity}
@@ -453,7 +450,7 @@ const UserProfile = () => {
                     />
                 )
 
-            case 'membershipOfCouncil':
+            case 'membershipofcouncil':
                 return (
                     <MembershipOfCouncil
                         existingData={selectedActivity}
@@ -464,7 +461,7 @@ const UserProfile = () => {
                     />
                 )
 
-            case 'membershipOfGovernment':
+            case 'membershipofgovernment':
                 return (
                     <MembershipOfGovernment
                         existingData={selectedActivity}
@@ -475,7 +472,7 @@ const UserProfile = () => {
                     />
                 )
 
-            case 'membershipOfExternalResearchOrg':
+            case 'membershipofexternalresearchorg':
                 return (
                     <MembershipOfExternalResearchOrg
                         existingData={selectedActivity}
@@ -486,7 +483,7 @@ const UserProfile = () => {
                     />
                 )
 
-            case 'membershipOfNetwork':
+            case 'membershipofnetwork':
                 return (
                     <MembershipOfNetwork
                         existingData={selectedActivity}
@@ -497,8 +494,7 @@ const UserProfile = () => {
                     />
                 )
 
-            case 'national-honour':
-            case 'national_honour':
+            case 'nationalhonour':
                 return (
                     <NationalHonour
                         existingData={selectedActivity}
@@ -553,7 +549,7 @@ const UserProfile = () => {
                     />
                 )
 
-            case 'talksOrPresentations':
+            case 'talksorpresentations':
                 return (
                     <TalksOrPresentations
                         existingData={selectedActivity}

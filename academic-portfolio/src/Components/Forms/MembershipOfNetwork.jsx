@@ -57,8 +57,11 @@ const MembershipOfNetwork = ({ onSaved, existingData, hideButtons = false, mode 
             alert(`Saved as ${status}`)
             if (!existingData) reset()
         } catch (err) {
-            console.error(err)
-            alert(`Error saving`)
+            console.error('Save error:', err)
+            console.error('Response data:', err.response?.data)
+            console.error('Status:', err.response?.status)
+            console.error('Payload:', payload)
+            alert(err.response?.data?.message || 'Error saving')
         }
     }
 

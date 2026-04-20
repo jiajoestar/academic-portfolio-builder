@@ -30,7 +30,7 @@ const ExternalInstitution = ({ onSaved, existingData, hideButtons = false, mode 
             status: status,
             details: {
                 institution: data.institution,
-                country: country,
+                country: data.country,
                 role: data.role,
                 activityType: data.activityType
             },
