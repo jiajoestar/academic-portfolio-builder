@@ -128,13 +128,13 @@ const ContributionToCommittee = ({ onSaved, existingData, hideButtons = false, m
             
             {!hideButtons && (
                 <div className='form-actions'>
-                    <button type='submit' className='form-button save-button'>Save</button>
+                    <button type='submit' className='form-button save-button'>Save as draft</button>
                     <button
                         type='button'
                         className='form-button publish-button'
                         onClick={handleSubmit((data) => onSubmit(data, 'published'))}
                     >
-                        Publish
+                        Publish to profile
                     </button>
                 </div>
             )}
