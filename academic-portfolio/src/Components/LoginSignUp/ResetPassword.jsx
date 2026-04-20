@@ -1,22 +1,35 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import './LoginSignUp.css'
 
 const ResetPassword = () => {
-  const { token } = useParams();
-  const [password, setPassword] = useState("");
+  const { token } = useParams()
+  const navigate = useNavigate()
+  const [password, setPassword] = useState('')
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    await fetch(`http://localhost:5000/api/auth/reset-password/${token}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    });
+    try {
+      const res = await fetch(`http://localhost:5000/api/auth/reset-password/${token}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      })
 
-    alert("Password successfully reset!");
-  };
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to reset password");
+      }
+
+      alert('Password successfully reset!')
+      navigate('/login')
+    } catch (err) {
+      console.error('Reset password error:', err)
+      alert(err.message)
+    }
+  }
 
   return (
     <div className='login-page'>
@@ -30,7 +43,8 @@ const ResetPassword = () => {
             <div className='input'>
               <input
                 type='password'
-                placeholder="New password"
+                placeholder='New password'
+                value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />

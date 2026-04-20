@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './LoginSignUp.css'
 import { Link } from 'react-router-dom';
+import Navbar from '../Home/Navbar';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,7 @@ const ForgotPassword = () => {
 
   return (
     <div className='login-page'>
+      <Navbar />
       <div className='login-container'>
         <div className='login-box'>
           <div className='header'>

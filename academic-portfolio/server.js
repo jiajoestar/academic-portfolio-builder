@@ -1,3 +1,14 @@
+const path = require('path')
+const dotenv = require('dotenv')
+const result = dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+console.log('dotenv error:', result.error || 'none');
+console.log('env path:', path.resolve(__dirname, '.env'));
+console.log('EMAIL_USER:', process.env.EMAIL_USER);
+console.log('EMAIL_PASS exists?', !!process.env.EMAIL_PASS);
+console.log('JWT_SECRET exists?', !!process.env.JWT_SECRET);
+console.log('MONGO_URI exists?', !!process.env.MONGO_URI);
+
 require('dotenv').config()
 const express = require("express")
 const mongoose = require("mongoose")
@@ -42,7 +53,7 @@ app.get("/", (req, res) => {
 })
 
 // mongodb
-mongoose.connect("mongodb+srv://xcjiaalilin_db_user:nuszar-nyBhi1-gintun@cluster0.sttsczj.mongodb.net/?appName=Cluster0")
+mongoose.connect('mongodb+srv://xcjiaalilin_db_user:uwBMTHDEdN.W5rj@cluster0.sttsczj.mongodb.net/?appName=Cluster0')
     .then(() => console.log("MongoDB connected"))
     .catch(err => console.log(err))
 

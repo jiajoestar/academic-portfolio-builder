@@ -1,24 +1,25 @@
-const router = require("express").Router()
-const User = require("../models/User")
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
+const router = require('express').Router()
+const User = require('../models/User')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const sendEmail = require('../sendEmail')
 
 // REGISTER
-router.post("/register", async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
-    console.log("Incoming data:", req.body)
+    console.log('Incoming data:', req.body)
 
     const { firstName, lastName, email, password } = req.body;
 
     if (!firstName || !lastName || !email || !password) {
-      return res.status(400).json({ message: "All fields are required" })
+      return res.status(400).json({ message: 'All fields are required' })
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
 
     const existingUser = await User.findOne({ email })
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists" })
+      return res.status(400).json({ message: 'User already exists' })
     }
 
     const user = new User({
@@ -28,38 +29,38 @@ router.post("/register", async (req, res) => {
     })
 
     await user.save();
-    console.log("User saved:", user)
+    console.log('User saved:', user)
 
-    res.status(201).json({ message: "User created successfully" })
+    res.status(201).json({ message: 'User created successfully' })
   } catch (err) {
-    console.error("Register error:", err)
-    res.status(400).json({ message: "Error creating user"})
+    console.error('Register error:', err)
+    res.status(400).json({ message: 'Error creating user'})
   }
 })
 
 // LOGIN
-router.post("/login", async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const email = req.body?.email
     const password = req.body?.password
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Missing fields" })
+      return res.status(400).json({ message: 'Missing fields' })
     }
 
     console.log('Login attempt:', email)
 
     const user = await User.findOne({ email })
-    if (!user) return res.status(400).json({ message: "Invalid email or password"})
+    if (!user) return res.status(400).json({ message: 'Invalid email or password'})
     console.log('User found:', user)
 
     const validPassword = await bcrypt.compare(password, user.password)
-    if (!validPassword) return res.status(400).json({ message: "Invalid password"})
+    if (!validPassword) return res.status(400).json({ message: 'Invalid password'})
 
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET || 'fallbacksecret',
-      { expiresIn: "1d" }
+      { expiresIn: '1d' }
     )
 
     res.json({ 
@@ -68,7 +69,7 @@ router.post("/login", async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        workplace: user.workplace || ""
+        workplace: user.workplace || ''
       }
      })
   } catch (err) {
@@ -77,49 +78,97 @@ router.post("/login", async (req, res) => {
   }
 })
 
+// FORGOT PASSWORD AT LOGIN
+
+router.post('/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email is required' })
+    }
+
+    const user = await User.findOne({ email })
+
+    if (!user) {
+      return res.status(200).json({ message: 'If email exists, reset link sent'})
+    }
+
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET || 'fallbacksecret',
+      { expiresIn: '15m' }
+    )
+
+    user.resetToken = token
+    user.resetTokenExpiry = Date.now() + 15 * 60 * 1000
+    await user.save()
+
+    const resetLink = `http://localhost:5173/reset-password/${token}`
+
+    await sendEmail(
+      email,
+      'Password Reset',
+      `
+        <h2>Password Reset Request</h2>
+        <p>Click the link below to reset your password:</p>
+        <a href='${resetLink}'>${resetLink}</a>
+        <p>This link expires in 15 minutes.</p>
+      `
+    )
+    
+    return res.status(200).json({ message: 'If email exists, reset link sent' })
+  } catch (err) {
+    console.error('Forgot password error:', err)
+    return res.status(500).json({ message: 'Failed to send reset email:', error: err.message})
+  }
+})
+
 // RESET PASSWORD AT LOGIN
-const sendEmail = require("../sendEmail");
+router.post('/reset-password/:token', async (req, res) => {
+  try {
+    const { token } = req.params
+    const { password } = req.body
 
-router.post("/forgot-password", async (req, res) => {
-  const { email } = req.body
+    if (!password) {
+      return res.status(400).json({ message: 'Password is required' })
+    }
 
-  const user = await User.findOne({ email })
+    let decoded
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallbacksecret')
+    } catch (err) {
+      return res.status(400).json({ message: 'Invalid or expired token' })
+    }
 
-  if (!user)
-    return res.status(200).json("If email exists, reset link sent")
+    const user = await User.findOne({
+      _id: decoded.id,
+      resetToken: token,
+      resetTokenExpiry: { $gt: Date.now() }
+    })
 
-  const token = jwt.sign(
-    { id: user._id },
-    process.env.JWT_SECRET,
-    { expiresIn: "15m" }
-  )
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired token' })
+    }
 
-  user.resetToken = token;
-  user.resetTokenExpiry = Date.now() + 15 * 60 * 1000
+    user.password = await bcrypt.hash(password, 10)
+    user.resetToken = undefined
+    user.resetTokenExpiry = undefined
 
-  await user.save()
+    await user.save()
 
-  const resetLink = `http://localhost:5173/reset-password/${token}`
-
-  await sendEmail(
-    email,
-    "Password Reset",
-    `
-      <h2>Password Reset Request</h2>
-      <p>Click the link below to reset your password:</p>
-      <a href="${resetLink}">${resetLink}</a>
-      <p>This link expires in 15 minutes.</p>
-    `
-  )
-
-  res.json("Reset email sent")
+    return res.status(200).json({ message: 'Password reset successful' })
+  } catch (err) {
+    console.error('Reset password error:', err)
+    return res.status(500).json({ message: 'Server error', error: err.message })
+  }
 })
 
 // UPDATE EMAIL IN SETTING PAGE
-router.put("/update-email", async (req, res) => {
+router.put('/update-email', async (req, res) => {
     const { email } = req.body
-    const token = req.headers.authorization.split("")[1]
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "fallbacksecret")
+    const token = req.headers.authorization.split(' ')[1]
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallbacksecret')
 
     const user = await User.findByIdAndUpdate(
         decoded.id,
@@ -131,18 +180,18 @@ router.put("/update-email", async (req, res) => {
 })
 
 // CHANGE PASSWORD IN SETTINGS PAGE
-router.put("/change-password", async (req, res) => {
+router.put('/change-password', async (req, res) => {
     const { oldPassword, newPassword } = req.body
-    const token = req.headers.authorization.split("")[1]
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || "fallbacksecret")
+    const token = req.headers.authorization.split('')[1]
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallbacksecret')
     const user = await User.findById(decoded.id)
     const valid = await bcrpyt.compare(oldPassword, user.password)
-    if (!valid) return res.status(400).json({ message: "wrong password" })
+    if (!valid) return res.status(400).json({ message: 'wrong password' })
     
     user.password = await bcrypt.hash(newPassword, 10)
     await user.save()
 
-    res.json({ message: "Password updated" })
+    res.json({ message: 'Password updated' })
 })
 
 module.exports = router
