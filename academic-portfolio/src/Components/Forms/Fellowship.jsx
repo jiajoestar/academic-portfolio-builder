@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { saveActivity } from '../../Services/api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Fellowship = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
     const { register, handleSubmit, reset } = useForm({
@@ -58,11 +60,11 @@ const Fellowship = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
             console.log(res)
             console.log('PAYLOAD:', payload)
             console.log('FORM DATA:', data)
-            alert(`Saved as ${status}`)
+            toast.success(`Saved as ${status}`)
             if (!existingData) reset()
         } catch (err) {
             console.error(err)
-            alert(`Error saving`)
+            toast.error(`Error saving`)
         }
     }
 
@@ -96,54 +98,57 @@ const Fellowship = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
     }, [externalSubmitRef, handleSubmit, existingData, mode])
 
     return (
-        <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
-            <h3>Fellowship awarded competitively</h3>
-            <p>Log all things related to fellowships here.</p>
+        <>
+            <ToastContainer />
+            <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
+                <h3>Fellowship awarded competitively</h3>
+                <p>Log all things related to fellowships here.</p>
 
-            <div className='form-group'>
-                <label>Activity title</label>
-                <input placeholder='Title' {...register('title')} />
-            </div>
-
-            <div className='form-group'>
-                <label>Fellowship name</label>
-                <input placeholder='Fellowship name' {...register('fellowshipName')} />
-                <label>Awarding body</label>
-                <input placeholder='Awarding body' {...register('awardingBody')} />
-                <label>Competitive?</label>
-                <label><input type='radio' {...register('competitive')} />Yes</label>
-                <label><input type='radio' {...register('competitive')} />No</label>
-                <label>Value</label>
-                <input type='number' placeholder='Value' {...register('value')} />
-                <label>Duration</label>
-                <input placeholder='Duration' {...register('duration')} />
-            </div>
-
-            <div className='form-group'>
-                <label>Description</label>
-                <textarea placeholder='Description' {...register('description')} />
-            </div>
-
-            <div className='form-group form-group-dates'>
-                <label>Start date</label>
-                <input type='date' {...register('startDate')} />
-                <label>End date</label>
-                <input type='date' {...register('endDate')} />
-            </div>
-            
-            {!hideButtons && (
-                <div className='form-actions'>
-                    <button type='submit' className='form-button save-button'>Save as draft</button>
-                    <button
-                        type='button'
-                        className='form-button publish-button'
-                        onClick={handleSubmit((data) => onSubmit(data, 'published'))}
-                    >
-                        Publish to profile
-                    </button>
+                <div className='form-group'>
+                    <label>Activity title</label>
+                    <input placeholder='Title' {...register('title')} />
                 </div>
-            )}
-        </form>
+
+                <div className='form-group'>
+                    <label>Fellowship name</label>
+                    <input placeholder='Fellowship name' {...register('fellowshipName')} />
+                    <label>Awarding body</label>
+                    <input placeholder='Awarding body' {...register('awardingBody')} />
+                    <label>Competitive?</label>
+                    <label><input type='radio' {...register('competitive')} />Yes</label>
+                    <label><input type='radio' {...register('competitive')} />No</label>
+                    <label>Value</label>
+                    <input type='number' placeholder='Value' {...register('value')} />
+                    <label>Duration</label>
+                    <input placeholder='Duration' {...register('duration')} />
+                </div>
+
+                <div className='form-group'>
+                    <label>Description</label>
+                    <textarea placeholder='Description' {...register('description')} />
+                </div>
+
+                <div className='form-group form-group-dates'>
+                    <label>Start date</label>
+                    <input type='date' {...register('startDate')} />
+                    <label>End date</label>
+                    <input type='date' {...register('endDate')} />
+                </div>
+                
+                {!hideButtons && (
+                    <div className='form-actions'>
+                        <button type='submit' className='form-button save-button'>Save as draft</button>
+                        <button
+                            type='button'
+                            className='form-button publish-button'
+                            onClick={handleSubmit((data) => onSubmit(data, 'published'))}
+                        >
+                            Publish to profile
+                        </button>
+                    </div>
+                )}
+            </form>
+        </>
     )
 }
 

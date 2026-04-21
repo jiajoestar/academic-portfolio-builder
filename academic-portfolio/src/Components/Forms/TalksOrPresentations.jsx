@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { saveActivity } from '../../Services/api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const TalksOrPresentations = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
     const { register, handleSubmit, reset } = useForm({
@@ -58,11 +60,11 @@ const TalksOrPresentations = ({ onSaved, existingData, hideButtons = false, mode
             console.log(res)
             console.log('PAYLOAD:', payload)
             console.log('FORM DATA:', data)
-            alert(`Saved as ${status}`)
+            toast.success(`Saved as ${status}`)
             if (!existingData) reset()
         } catch (err) {
             console.error(err)
-            alert(`Error saving`)
+            toast.error(`Error saving`)
         }
     }
 
@@ -94,64 +96,67 @@ const TalksOrPresentations = ({ onSaved, existingData, hideButtons = false, mode
     }, [externalSubmitRef, handleSubmit, existingData, mode])
 
     return (
-        <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
-            <h3>Talks or presentations</h3>
-            <p>Log all things related to talks or presentations here.</p>
+        <>
+            <ToastContainer />
+            <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
+                <h3>Talks or presentations</h3>
+                <p>Log all things related to talks or presentations here.</p>
 
-            <div className='form-group'>
-                <label>Activity title</label>
-                <input placeholder='Title' {...register('title')} />
-            </div>
-
-            <div className='form-group'>
-                <label>Event name</label>
-                <input placeholder='Event name' {...register('funder')} />
-                <label>Host organisation</label>
-                <input placeholder='Host organisation' {...register('hostOrganisation')} />
-                <label>Invited?</label>
-                <input type='radio' name='Yes' {...register('invited')} />
-                <input type='radio' name='No' {...register('invited')} />
-            </div>
-
-            <div className='form-group'>
-                <label>Talk type</label>
-                <select {...register('talkType')}>
-                    <option>Keynote</option>
-                    <option>Conference</option>
-                    <option>Seminar</option>
-                </select>
-            </div>
-
-            <div className='form-group'>
-                <label>Location</label>
-                <input placeholder='Location' {...register('location')} />
-                <label>Audience type</label>
-                <input placeholder='Audience type' {...register('audienceType')} />
-            </div>
-
-            <div className='form-group'>
-                <label>Description</label>
-                <textarea placeholder='Description' {...register('description')} />
-            </div>
-
-            <div className='form-group form-group-dates'>
-                <label>Date</label>
-                <input type='date' {...register('date')} />
-            </div>
-            
-            {!hideButtons && (
-                <div className='form-actions'>
-                    <button type='submit' className='form-button save-button'>Save as draft</button>
-                    <button
-                        type='button'
-                        className='form-button publish-button'
-                        onClick={handleSubmit((data) => onSubmit(data, 'published'))}
-                    >
-                        Publish to profile
-                    </button>
+                <div className='form-group'>
+                    <label>Activity title</label>
+                    <input placeholder='Title' {...register('title')} />
                 </div>
-            )}
-        </form>
+
+                <div className='form-group'>
+                    <label>Event name</label>
+                    <input placeholder='Event name' {...register('funder')} />
+                    <label>Host organisation</label>
+                    <input placeholder='Host organisation' {...register('hostOrganisation')} />
+                    <label>Invited?</label>
+                    <input type='radio' name='Yes' {...register('invited')} />
+                    <input type='radio' name='No' {...register('invited')} />
+                </div>
+
+                <div className='form-group'>
+                    <label>Talk type</label>
+                    <select {...register('talkType')}>
+                        <option>Keynote</option>
+                        <option>Conference</option>
+                        <option>Seminar</option>
+                    </select>
+                </div>
+
+                <div className='form-group'>
+                    <label>Location</label>
+                    <input placeholder='Location' {...register('location')} />
+                    <label>Audience type</label>
+                    <input placeholder='Audience type' {...register('audienceType')} />
+                </div>
+
+                <div className='form-group'>
+                    <label>Description</label>
+                    <textarea placeholder='Description' {...register('description')} />
+                </div>
+
+                <div className='form-group form-group-dates'>
+                    <label>Date</label>
+                    <input type='date' {...register('date')} />
+                </div>
+                
+                {!hideButtons && (
+                    <div className='form-actions'>
+                        <button type='submit' className='form-button save-button'>Save as draft</button>
+                        <button
+                            type='button'
+                            className='form-button publish-button'
+                            onClick={handleSubmit((data) => onSubmit(data, 'published'))}
+                        >
+                            Publish to profile
+                        </button>
+                    </div>
+                )}
+            </form>
+        </>
     )
 }
 

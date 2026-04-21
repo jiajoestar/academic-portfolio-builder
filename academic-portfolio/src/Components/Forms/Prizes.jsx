@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { saveActivity } from '../../Services/api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Prizes = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
     const { register, handleSubmit, reset } = useForm({
@@ -56,11 +58,11 @@ const Prizes = ({ onSaved, existingData, hideButtons = false, mode = 'draft', ex
             console.log(res)
             console.log('PAYLOAD:', payload)
             console.log('FORM DATA:', data)
-            alert(`Saved as ${status}`)
+            toast.success(`Saved as ${status}`)
             if (!existingData) reset()
         } catch (err) {
             console.error(err)
-            alert(`Error saving`)
+            toast.error(`Error saving`)
         }
     }
 
@@ -91,51 +93,54 @@ const Prizes = ({ onSaved, existingData, hideButtons = false, mode = 'draft', ex
     }, [externalSubmitRef, handleSubmit, existingData, mode])
 
     return (
-        <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
-            <h3>Prizes (including medals and awards)</h3>
-            <p>Log all things related to prizes here.</p>
+        <>
+            <ToastContainer />
+            <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
+                <h3>Prizes (including medals and awards)</h3>
+                <p>Log all things related to prizes here.</p>
 
-            <div className='form-group'>
-                <label>Activity title</label>
-                <input placeholder='Title' {...register('title')} />
-            </div>
-
-            <div className='form-group'>
-                <label>Prize name</label>
-                <input placeholder='Prize name' {...register('prizeName')} />
-                <label>Awarding body</label>
-                <input placeholder='Awarding body' {...register('awardingBody')} />
-                <label>Category</label>
-                <input placeholder='Category' {...register('category')} />
-                <label>Result</label>
-                <input placeholder='Result' {...register('result')} />
-                <label>Value</label>
-                <input placeholder='Value' type='number' {...register('value')} />
-            </div>
-
-            <div className='form-group'>
-                <label>Description</label>
-                <textarea placeholder='Description' {...register('description')} />
-            </div>
-
-            <div className='form-group form-group-dates'>
-                <label>Date</label>
-                <input type='date' {...register('date')} />
-            </div>
-            
-            {!hideButtons && (
-                <div className='form-actions'>
-                    <button type='submit' className='form-button save-button'>Save as draft</button>
-                    <button
-                        type='button'
-                        className='form-button publish-button'
-                        onClick={handleSubmit((data) => onSubmit(data, 'published'))}
-                    >
-                        Publish to profile
-                    </button>
+                <div className='form-group'>
+                    <label>Activity title</label>
+                    <input placeholder='Title' {...register('title')} />
                 </div>
-            )}
-        </form>
+
+                <div className='form-group'>
+                    <label>Prize name</label>
+                    <input placeholder='Prize name' {...register('prizeName')} />
+                    <label>Awarding body</label>
+                    <input placeholder='Awarding body' {...register('awardingBody')} />
+                    <label>Category</label>
+                    <input placeholder='Category' {...register('category')} />
+                    <label>Result</label>
+                    <input placeholder='Result' {...register('result')} />
+                    <label>Value</label>
+                    <input placeholder='Value' type='number' {...register('value')} />
+                </div>
+
+                <div className='form-group'>
+                    <label>Description</label>
+                    <textarea placeholder='Description' {...register('description')} />
+                </div>
+
+                <div className='form-group form-group-dates'>
+                    <label>Date</label>
+                    <input type='date' {...register('date')} />
+                </div>
+                
+                {!hideButtons && (
+                    <div className='form-actions'>
+                        <button type='submit' className='form-button save-button'>Save as draft</button>
+                        <button
+                            type='button'
+                            className='form-button publish-button'
+                            onClick={handleSubmit((data) => onSubmit(data, 'published'))}
+                        >
+                            Publish to profile
+                        </button>
+                    </div>
+                )}
+            </form>
+        </>
     )
 }
 

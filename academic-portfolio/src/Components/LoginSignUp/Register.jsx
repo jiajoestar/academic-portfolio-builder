@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Home/Navbar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Register = () => {
     const navigate = useNavigate()
@@ -24,7 +26,7 @@ const Register = () => {
         console.log("Register clicked")
 
         if (!validatePassword(form.password)) {
-            alert('Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.')
+            toast.error('Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.')
         }
         
         try {
@@ -40,10 +42,10 @@ const Register = () => {
             console.log(data)
 
             if (res.ok) {
-                alert('Account created')
+                toast.success('Account created!')
                 navigate("/login")
             } else {
-                alert(data.message || "Registration failed")
+                toast.error(data.message || "Registration failed")
             }
         } catch (err) {
             console.error(err)
@@ -53,44 +55,47 @@ const Register = () => {
     }
 
     return (
-        <div className="login-page">
-            <Navbar />
-            <div className="login-container">
-                <div className="login-box">
-                    <div className="header">
-                        <h2>Register</h2>
-                    </div>
-
-                    <form onSubmit={(e) => {
-                        e.preventDefault()
-                        handleRegister()
-                    }}
-                    >
-                        <div className="inputs">
-                            <div className="input">
-                                {/*icon*/}
-                                <input type="text" placeholder='First name' onChange={(e) => setForm({...form, firstName: e.target.value})}/>
-                            </div>
-                            <div className="input">
-                                {/*icon*/}
-                                <input type="text" placeholder='Last name' onChange={(e) => setForm({...form, lastName: e.target.value})}/>
-                            </div>
-                            <div className="input">
-                                {/*icon*/}
-                                <input type="email" placeholder='Email address' onChange={(e) => setForm({...form, email: e.target.value})}/>
-                            </div>
-                            <div className="input">
-                                {/*icon*/}
-                                <input type="password" placeholder='Password' onChange={(e) => setForm({...form, password: e.target.value})}/>
-                            </div>
+        <>
+            <ToastContainer />
+            <div className="login-page">
+                <Navbar />
+                <div className="login-container">
+                    <div className="login-box">
+                        <div className="header">
+                            <h2>Register</h2>
                         </div>
-                        <button className="login-button" type='submit'>Create account</button>
-                    </form>
 
-                    <div className="forgot-password">Already have an account with us? <span><Link to='/login'>Log in</Link></span></div>
+                        <form onSubmit={(e) => {
+                            e.preventDefault()
+                            handleRegister()
+                        }}
+                        >
+                            <div className="inputs">
+                                <div className="input">
+                                    {/*icon*/}
+                                    <input type="text" placeholder='First name' onChange={(e) => setForm({...form, firstName: e.target.value})}/>
+                                </div>
+                                <div className="input">
+                                    {/*icon*/}
+                                    <input type="text" placeholder='Last name' onChange={(e) => setForm({...form, lastName: e.target.value})}/>
+                                </div>
+                                <div className="input">
+                                    {/*icon*/}
+                                    <input type="email" placeholder='Email address' onChange={(e) => setForm({...form, email: e.target.value})}/>
+                                </div>
+                                <div className="input">
+                                    {/*icon*/}
+                                    <input type="password" placeholder='Password' onChange={(e) => setForm({...form, password: e.target.value})}/>
+                                </div>
+                            </div>
+                            <button className="login-button" type='submit'>Create account</button>
+                        </form>
+
+                        <div className="forgot-password">Already have an account with us? <span><Link to='/login'>Log in</Link></span></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
