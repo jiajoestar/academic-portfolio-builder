@@ -6,17 +6,27 @@ import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../Home/Navbar';
 
 const Register = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const [form, setForm] = useState({
         firstName: '',
         lastName: '',
         email: '',
         password: ''
-    });
+    })
+
+    const validatePassword = (password) => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/
+        return regex.test(password)
+    }
 
     const handleRegister = async () => {
         console.log("Register clicked")
+
+        if (!validatePassword(form.password)) {
+            alert('Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.')
+        }
+        
         try {
             const res = await fetch('http://localhost:5000/api/auth/register', {
                 method: 'POST',
@@ -24,7 +34,7 @@ const Register = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(form)
-            });
+            })
 
             const data = await res.json()
             console.log(data)

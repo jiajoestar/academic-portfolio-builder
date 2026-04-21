@@ -3,7 +3,16 @@ const mongoose = require("mongoose")
 const userSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true },
-  password: String,
+  password: { 
+    type: String,
+    required: true, 
+    validate: {
+      validator: function(value) {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/.test(value)
+      },
+      message: 'Password must be at least 8 characters long and include one uppercase letter, one lowercase letter, one number, and one special character.'
+    }
+  },
   workplace: String,
   headline: String,
   avatar: String,
