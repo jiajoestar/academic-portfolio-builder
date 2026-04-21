@@ -9,10 +9,10 @@ const ActionCard = ({ activities }) => {
     return (
         <div className='action-card'>
             <div>
-                {activities.slice(0, 5).map(a => (
+                {activities.slice(0, 3).map(a => (
                     <div key={a._id} className="action-card">
                         <p>
-                            You added a: <strong>{a.type}</strong>
+                            You added: <strong>{a.title}</strong>
                         </p>
 
                         <Link to="/profile">

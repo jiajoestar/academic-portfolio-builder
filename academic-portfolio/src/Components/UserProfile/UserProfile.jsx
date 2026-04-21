@@ -648,7 +648,7 @@ const UserProfile = () => {
                                     ) : (
                                         items.map(a => (
                                             <div key={a._id} className='activity-item' onClick={() => openActivity(a)}>
-                                                <strong>{a.type}</strong>
+                                                <strong>{a.title}</strong>
                                                 <p>{a.description}</p>
                                             </div>
                                         ))
