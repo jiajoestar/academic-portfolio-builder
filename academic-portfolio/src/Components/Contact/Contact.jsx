@@ -1,11 +1,11 @@
 import React from 'react';
 import Footer from '../Footer/Footer';
-import Navbar from '../Home/Navbar';
+import PublicNavbar from '../Home/PublicNavbar';
 
 const Contact = () => {
     return (
         <div className='marketing-page contact-page'>
-            <Navbar />
+            <PublicNavbar />
 
             <section className='contact-page-wrapper'>
                 <div className='contact-page-inner'>

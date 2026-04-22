@@ -52,6 +52,7 @@ router.put("/pin", authMiddleware, async (req, res) => {
 */
 
 // PUBLIC PROFILE (when user creates sharable link)
+/*
 router.get("/public/:id", async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
@@ -66,5 +67,6 @@ router.get("/public/:id", async (req, res) => {
         res.status(500).json({ message: "Server error" })
     }
 })
+*/
 
 module.exports = router

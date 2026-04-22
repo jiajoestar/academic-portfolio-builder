@@ -16,10 +16,10 @@ const Navbar = () => {
 
     return (
         <nav className='navbar'>
-            <div className='navbar-left'>
+            <Link to='/dashboard' className='navbar-left'>
                 <img src={logo} className='logo' alt="logo" />
                 <h2 className='title'>Case Portfolio</h2>
-            </div>
+            </Link>
 
             <div className='navbar-right'>
                 <Link to='/search'><FontAwesomeIcon icon={faSearch} className='icon' /></Link>

@@ -5,7 +5,7 @@ import { saveActivity } from '../../Services/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
-const Festival = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
+const Festival = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef, readOnly = false }) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             title: '',
@@ -21,6 +21,8 @@ const Festival = ({ onSaved, existingData, hideButtons = false, mode = 'draft', 
     const token = localStorage.getItem('token')
 
     const onSubmit = async (data, status = mode) => {
+        if (readOnly) return
+
         const payload = {
             ...data,
             type: 'festival',
@@ -81,48 +83,50 @@ const Festival = ({ onSaved, existingData, hideButtons = false, mode = 'draft', 
     }, [existingData, reset])
 
     useEffect(() => {
-        if (externalSubmitRef) {
-            externalSubmitRef.current = {
-                save: handleSubmit((data) => onSubmit(data, mode)),
-                publish: handleSubmit((data) => onSubmit(data, 'published'))
-            }
+        if (!externalSubmitRef || readOnly) return
+
+        externalSubmitRef.current = {
+            save: handleSubmit((data) => onSubmit(data, mode)),
+            publish: handleSubmit((data) => onSubmit(data, 'published'))
         }
-    }, [externalSubmitRef, handleSubmit, existingData, mode])
+    }, [externalSubmitRef, handleSubmit, existingData, mode, readOnly])
 
     return (
         <>
-            <ToastContainer />
+            {!readOnly && <ToastContainer />}
             <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
-                <h3>Festival/exhibition</h3>
-                <p>Log all things related to funding here.</p>
+                <fieldset disabled={readOnly} style={{ border: 'none', padding: 0, margin: 0 }}>
+                    <h3>Festival/exhibition</h3>
+                    <p>Log all things related to funding here.</p>
 
-                <div className='form-group'>
-                    <label>Activity title</label>
-                    <input placeholder='Title' {...register('title')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Activity title</label>
+                        <input placeholder='Title' {...register('title')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Festival/exhibition name</label>
-                    <input placeholder='Festival/exhibition name' {...register('festivalName')} />
-                    <label>Host organisation</label>
-                    <input placeholder='Host organisation' {...register('hostOrganisation')} />
-                    <label>Role</label>
-                    <input placeholder='Role (PI, Co-I)' {...register('role')} />
-                    <label>Location</label>
-                    <input placeholder='Location' {...register('location')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Festival/exhibition name</label>
+                        <input placeholder='Festival/exhibition name' {...register('festivalName')} />
+                        <label>Host organisation</label>
+                        <input placeholder='Host organisation' {...register('hostOrganisation')} />
+                        <label>Role</label>
+                        <input placeholder='Role (PI, Co-I)' {...register('role')} />
+                        <label>Location</label>
+                        <input placeholder='Location' {...register('location')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Description</label>
-                    <textarea placeholder='Description' {...register('description')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Description</label>
+                        <textarea placeholder='Description' {...register('description')} />
+                    </div>
 
-                <div className='form-group form-group-dates'>
-                    <label>Start date</label>
-                    <input type='date' {...register('startDate')} />
-                    <label>End date</label>
-                    <input type='date' {...register('endDate')} />
-                </div>
+                    <div className='form-group form-group-dates'>
+                        <label>Start date</label>
+                        <input type='date' {...register('startDate')} />
+                        <label>End date</label>
+                        <input type='date' {...register('endDate')} />
+                    </div>
+                </fieldset>
                 
                 {!hideButtons && (
                     <div className='form-actions'>

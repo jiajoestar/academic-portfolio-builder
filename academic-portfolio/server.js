@@ -42,7 +42,8 @@ app.use("/api/activities", activityRoutes)
 app.use("/api/auth", require("./server/routes/auth"))
 app.use("/api/profile", require("./server/routes/profileRoutes"))
 // guests search for users
-app.use("/api/search", require("./server/routes/searchRoutes"))
+//app.use("/api/search", require("./server/routes/searchRoutes"))
+app.use("/api/users", require("./server/routes/userRoutes"))
 // updating activity
 console.log("REGISTERING ACTIVITY ROUTES")
 // app.use("/api/activities", require("./server/routes/activity"))

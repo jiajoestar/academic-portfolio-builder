@@ -1,13 +1,13 @@
 import React from 'react';
 import AboutBackground from '../Assets/about-background.png';
-import Navbar from '../Home/Navbar';
+import PublicNavbar from '../Home/PublicNavbar';
 import Footer from '../Footer/Footer';
 import { Link } from 'react-router-dom';
 
 const About = () => {
     return (
         <div className='marketing-page about-page'>
-            <Navbar />
+            <PublicNavbar />
 
             <section className='about-page-section'>
                 <div className='about-background-image-container'>

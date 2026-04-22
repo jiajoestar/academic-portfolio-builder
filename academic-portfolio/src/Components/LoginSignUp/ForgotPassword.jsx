@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LoginSignUp.css'
 import { Link } from 'react-router-dom';
-import Navbar from '../Home/Navbar';
+import PublicNavbar from '../Home/PublicNavbar';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ const ForgotPassword = () => {
 
   return (
     <div className='login-page'>
-      <Navbar />
+      <PublicNavbar />
       <div className='login-container'>
         <div className='login-box'>
           <div className='header'>

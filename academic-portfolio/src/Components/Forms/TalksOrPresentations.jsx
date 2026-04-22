@@ -5,7 +5,7 @@ import { saveActivity } from '../../Services/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
-const TalksOrPresentations = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
+const TalksOrPresentations = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef, readOnly = false }) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             title: '',
@@ -23,6 +23,8 @@ const TalksOrPresentations = ({ onSaved, existingData, hideButtons = false, mode
     const token = localStorage.getItem('token')
 
     const onSubmit = async (data, status = mode) => {
+        if (readOnly) return
+
         const payload = {
             ...data,
             type: 'talksOrPresentations',
@@ -87,61 +89,63 @@ const TalksOrPresentations = ({ onSaved, existingData, hideButtons = false, mode
     }, [existingData, reset])
 
     useEffect(() => {
-        if (externalSubmitRef) {
-            externalSubmitRef.current = {
-                save: handleSubmit((data) => onSubmit(data, mode)),
-                publish: handleSubmit((data) => onSubmit(data, 'published'))
-            }
+        if (!externalSubmitRef || readOnly) return
+
+        externalSubmitRef.current = {
+            save: handleSubmit((data) => onSubmit(data, mode)),
+            publish: handleSubmit((data) => onSubmit(data, 'published'))
         }
-    }, [externalSubmitRef, handleSubmit, existingData, mode])
+    }, [externalSubmitRef, handleSubmit, existingData, mode, readOnly])
 
     return (
         <>
-            <ToastContainer />
+            {!readOnly && <ToastContainer />}
             <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
-                <h3>Talks or presentations</h3>
-                <p>Log all things related to talks or presentations here.</p>
+                <fieldset disabled={readOnly} style={{ border: 'none', padding: 0, margin: 0 }}>
+                    <h3>Talks or presentations</h3>
+                    <p>Log all things related to talks or presentations here.</p>
 
-                <div className='form-group'>
-                    <label>Activity title</label>
-                    <input placeholder='Title' {...register('title')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Activity title</label>
+                        <input placeholder='Title' {...register('title')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Event name</label>
-                    <input placeholder='Event name' {...register('funder')} />
-                    <label>Host organisation</label>
-                    <input placeholder='Host organisation' {...register('hostOrganisation')} />
-                    <label>Invited?</label>
-                    <input type='radio' name='Yes' {...register('invited')} />
-                    <input type='radio' name='No' {...register('invited')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Event name</label>
+                        <input placeholder='Event name' {...register('funder')} />
+                        <label>Host organisation</label>
+                        <input placeholder='Host organisation' {...register('hostOrganisation')} />
+                        <label>Invited?</label>
+                        <input type='radio' name='Yes' {...register('invited')} />
+                        <input type='radio' name='No' {...register('invited')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Talk type</label>
-                    <select {...register('talkType')}>
-                        <option>Keynote</option>
-                        <option>Conference</option>
-                        <option>Seminar</option>
-                    </select>
-                </div>
+                    <div className='form-group'>
+                        <label>Talk type</label>
+                        <select {...register('talkType')}>
+                            <option>Keynote</option>
+                            <option>Conference</option>
+                            <option>Seminar</option>
+                        </select>
+                    </div>
 
-                <div className='form-group'>
-                    <label>Location</label>
-                    <input placeholder='Location' {...register('location')} />
-                    <label>Audience type</label>
-                    <input placeholder='Audience type' {...register('audienceType')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Location</label>
+                        <input placeholder='Location' {...register('location')} />
+                        <label>Audience type</label>
+                        <input placeholder='Audience type' {...register('audienceType')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Description</label>
-                    <textarea placeholder='Description' {...register('description')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Description</label>
+                        <textarea placeholder='Description' {...register('description')} />
+                    </div>
 
-                <div className='form-group form-group-dates'>
-                    <label>Date</label>
-                    <input type='date' {...register('date')} />
-                </div>
+                    <div className='form-group form-group-dates'>
+                        <label>Date</label>
+                        <input type='date' {...register('date')} />
+                    </div>
+                </fieldset>
                 
                 {!hideButtons && (
                     <div className='form-actions'>

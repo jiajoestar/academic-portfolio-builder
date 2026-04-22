@@ -5,7 +5,7 @@ import { saveActivity } from '../../Services/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
-const Prizes = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
+const Prizes = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef, readOnly = false }) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             title: '',
@@ -22,6 +22,8 @@ const Prizes = ({ onSaved, existingData, hideButtons = false, mode = 'draft', ex
     const token = localStorage.getItem('token')
 
     const onSubmit = async (data, status = mode) => {
+        if (readOnly) return
+
         const payload = {
             ...data,
             type: 'prizes',
@@ -84,48 +86,50 @@ const Prizes = ({ onSaved, existingData, hideButtons = false, mode = 'draft', ex
     }, [existingData, reset])
 
     useEffect(() => {
-        if (externalSubmitRef) {
-            externalSubmitRef.current = {
-                save: handleSubmit((data) => onSubmit(data, mode)),
-                publish: handleSubmit((data) => onSubmit(data, 'published'))
-            }
+        if (!externalSubmitRef || readOnly) return
+
+        externalSubmitRef.current = {
+            save: handleSubmit((data) => onSubmit(data, mode)),
+            publish: handleSubmit((data) => onSubmit(data, 'published'))
         }
-    }, [externalSubmitRef, handleSubmit, existingData, mode])
+    }, [externalSubmitRef, handleSubmit, existingData, mode, readOnly])
 
     return (
         <>
-            <ToastContainer />
+            {!readOnly && <ToastContainer />}
             <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
-                <h3>Prizes (including medals and awards)</h3>
-                <p>Log all things related to prizes here.</p>
+                <fieldset disabled={readOnly} style={{ border: 'none', padding: 0, margin: 0 }}>
+                    <h3>Prizes (including medals and awards)</h3>
+                    <p>Log all things related to prizes here.</p>
 
-                <div className='form-group'>
-                    <label>Activity title</label>
-                    <input placeholder='Title' {...register('title')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Activity title</label>
+                        <input placeholder='Title' {...register('title')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Prize name</label>
-                    <input placeholder='Prize name' {...register('prizeName')} />
-                    <label>Awarding body</label>
-                    <input placeholder='Awarding body' {...register('awardingBody')} />
-                    <label>Category</label>
-                    <input placeholder='Category' {...register('category')} />
-                    <label>Result</label>
-                    <input placeholder='Result' {...register('result')} />
-                    <label>Value</label>
-                    <input placeholder='Value' type='number' {...register('value')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Prize name</label>
+                        <input placeholder='Prize name' {...register('prizeName')} />
+                        <label>Awarding body</label>
+                        <input placeholder='Awarding body' {...register('awardingBody')} />
+                        <label>Category</label>
+                        <input placeholder='Category' {...register('category')} />
+                        <label>Result</label>
+                        <input placeholder='Result' {...register('result')} />
+                        <label>Value</label>
+                        <input placeholder='Value' type='number' {...register('value')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Description</label>
-                    <textarea placeholder='Description' {...register('description')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Description</label>
+                        <textarea placeholder='Description' {...register('description')} />
+                    </div>
 
-                <div className='form-group form-group-dates'>
-                    <label>Date</label>
-                    <input type='date' {...register('date')} />
-                </div>
+                    <div className='form-group form-group-dates'>
+                        <label>Date</label>
+                        <input type='date' {...register('date')} />
+                    </div>
+                </fieldset>
                 
                 {!hideButtons && (
                     <div className='form-actions'>

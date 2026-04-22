@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from './Navbar';
+import PublicNavbar from './PublicNavbar';
 import BannerBackground from '../Assets/home-banner-background.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
     return (
         <div className='marketing-page home-page'>
-            <Navbar />
+            <PublicNavbar />
             <section className='home-hero-container'>
                 <div className='home-banner-container'>
                     <div className='home-bannerImage-container'>

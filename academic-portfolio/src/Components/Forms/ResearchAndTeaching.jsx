@@ -5,7 +5,7 @@ import { saveActivity } from '../../Services/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
-const ResearchAndTeaching = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
+const ResearchAndTeaching = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef, readOnly = false }) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             title: '',
@@ -22,6 +22,8 @@ const ResearchAndTeaching = ({ onSaved, existingData, hideButtons = false, mode 
     const token = localStorage.getItem('token')
 
     const onSubmit = async (data, status = mode) => {
+        if (readOnly) return
+
         const payload = {
             ...data,
             type: 'research',
@@ -86,50 +88,52 @@ const ResearchAndTeaching = ({ onSaved, existingData, hideButtons = false, mode 
     }, [existingData, reset])
 
     useEffect(() => {
-        if (externalSubmitRef) {
-            externalSubmitRef.current = {
-                save: handleSubmit((data) => onSubmit(data, mode)),
-                publish: handleSubmit((data) => onSubmit(data, 'published'))
-            }
+        if (!externalSubmitRef || readOnly) return
+
+        externalSubmitRef.current = {
+            save: handleSubmit((data) => onSubmit(data, mode)),
+            publish: handleSubmit((data) => onSubmit(data, 'published'))
         }
-    }, [externalSubmitRef, handleSubmit, existingData, mode])
+    }, [externalSubmitRef, handleSubmit, existingData, mode, readOnly])
 
     return (
         <>
-            <ToastContainer />
+            {!readOnly && <ToastContainer />}
             <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
-                <h3>Research and teaching at external organisation</h3>
-                <p>Log all things related to research and teaching at external organisations here.</p>
+                <fieldset disabled={readOnly} style={{ border: 'none', padding: 0, margin: 0 }}>
+                    <h3>Research and teaching at external organisation</h3>
+                    <p>Log all things related to research and teaching at external organisations here.</p>
 
-                <div className='form-group'>
-                    <label>Activity title</label>
-                    <input placeholder='Title' {...register('title')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Activity title</label>
+                        <input placeholder='Title' {...register('title')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Host institution</label>
-                    <input placeholder='Host institution' {...register('hostInstitution')} />
-                    <label>Country</label>
-                    <input placeholder='Country' {...register('country')} />
-                    <label>Role</label>
-                    <input placeholder='Role (PI, Co-I)' {...register('role')} />
-                    <label>Activity type</label>
-                    <input type='radio' name='Research' {...register('activityType')} />
-                    <input type='radio' name='Teaching' {...register('activityType')} />
-                    <input type='radio' name='Both' {...register('activityType')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Host institution</label>
+                        <input placeholder='Host institution' {...register('hostInstitution')} />
+                        <label>Country</label>
+                        <input placeholder='Country' {...register('country')} />
+                        <label>Role</label>
+                        <input placeholder='Role (PI, Co-I)' {...register('role')} />
+                        <label>Activity type</label>
+                        <input type='radio' name='Research' {...register('activityType')} />
+                        <input type='radio' name='Teaching' {...register('activityType')} />
+                        <input type='radio' name='Both' {...register('activityType')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Description</label>
-                    <textarea placeholder='Description' {...register('description')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Description</label>
+                        <textarea placeholder='Description' {...register('description')} />
+                    </div>
 
-                <div className='form-group form-group-dates'>
-                    <label>Start date</label>
-                    <input type='date' {...register('startDate')} />
-                    <label>End date</label>
-                    <input type='date' {...register('endDate')} />
-                </div>
+                    <div className='form-group form-group-dates'>
+                        <label>Start date</label>
+                        <input type='date' {...register('startDate')} />
+                        <label>End date</label>
+                        <input type='date' {...register('endDate')} />
+                    </div>
+                </fieldset>
                 
                 {!hideButtons && (
                     <div className='form-actions'>

@@ -11,7 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../Assets/logo.svg';
 
-const Navbar = () => {
+const PublicNavbar = () => {
 
     const [openMenu, setOpenMenu] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
@@ -19,11 +19,20 @@ const Navbar = () => {
     const [query, setQuery] = useState('')
     const [results, setResults] = useState([])
 
+    /*
     const handleSearch = async (value) => {
         setQuery(value)
 
         const res = await fetch(`http://localhost:5000/api/search?q=${value}`)
         const data = await res.json()
+    }
+    */
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const trimmed = query.trim()
+        if (!trimmed) return
+        navigate(`/search?q=${encodeURIComponent(trimmed)}`)
     }
 
     const menuOptions = [
@@ -50,19 +59,8 @@ const Navbar = () => {
                 
 
                 <div className='navbar-actions'>
-                    <form className='search-form' onSubmit={(e) => {
-                        e.preventDefault();
-                        handleSearch(query);
-                    }}>
-                        <input type='text' placeholder='Search author' value={query} onChange={(e) => handleSearch(e.target.value)} className='search-input'/>
-                        {/*
-                        {results.length === 0 && query && <p>No results</p>}
-                        {results.map(u => (
-                            <Link key={u._id} to={`/public/${u._id}`}>
-                                {u.name}
-                            </Link>
-                        ))}
-                        */}
+                    <form className='search-form' onSubmit={handleSubmit}>
+                        <input type='text' placeholder='Search author' value={query} onChange={(e) => setQuery(e.target.value)} className='search-input'/>
                         
                         <button type='submit' className='search-button'><FontAwesomeIcon icon={faSearch} /></button>
                     </form>
@@ -97,4 +95,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar
+export default PublicNavbar

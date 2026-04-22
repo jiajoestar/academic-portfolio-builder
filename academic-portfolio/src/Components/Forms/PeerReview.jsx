@@ -6,7 +6,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
-const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
+const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef, readOnly = false }) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             title: '',
@@ -20,6 +20,8 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
     const token = localStorage.getItem('token')
 
     const onSubmit = async (data, status = mode) => {
+        if (readOnly) return
+
         const payload = {
             ...data,
             type: 'peer_review',
@@ -76,51 +78,53 @@ const PeerReview = ({ onSaved, existingData, hideButtons = false, mode = 'draft'
     }, [existingData, reset])
 
     useEffect(() => {
-        if (externalSubmitRef) {
-            externalSubmitRef.current = {
-                save: handleSubmit((data) => onSubmit(data, mode)),
-                publish: handleSubmit((data) => onSubmit(data, 'published'))
-            }
+        if (!externalSubmitRef || readOnly) return
+
+        externalSubmitRef.current = {
+            save: handleSubmit((data) => onSubmit(data, mode)),
+            publish: handleSubmit((data) => onSubmit(data, 'published'))
         }
-    }, [externalSubmitRef, handleSubmit, existingData, mode])
+    }, [externalSubmitRef, handleSubmit, existingData, mode, readOnly])
 
     return (
         <>
-            <ToastContainer />
+            {!readOnly && <ToastContainer />}
             <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, mode))}>
-                <h3>Peer review and editorial activity</h3>
-                <p>Log all things related to peer-reviews and editorial actvity here.</p>
+                <fieldset disabled={readOnly} style={{ border: 'none', padding: 0, margin: 0 }}>
+                    <h3>Peer review and editorial activity</h3>
+                    <p>Log all things related to peer-reviews and editorial actvity here.</p>
 
-                <div className='form-group'>
-                    <label>Activity title</label>
-                    <input {...register('title')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Activity title</label>
+                        <input {...register('title')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Review type</label>
-                    <select {...register('reviewType')}>
-                        <option>Funding body peer review</option>
-                        <option>Collaborative review</option>
-                        <option>Post-publication review</option>
-                    </select>
-                </div>
+                    <div className='form-group'>
+                        <label>Review type</label>
+                        <select {...register('reviewType')}>
+                            <option>Funding body peer review</option>
+                            <option>Collaborative review</option>
+                            <option>Post-publication review</option>
+                        </select>
+                    </div>
 
-                <div className='form-group'>
-                    <label>Description</label>
-                    <textarea {...register('description', { required: true })} />
-                </div>
+                    <div className='form-group'>
+                        <label>Description</label>
+                        <textarea {...register('description', { required: true })} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Journal/organisation</label>
-                    <input {...register('journal')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Journal/organisation</label>
+                        <input {...register('journal')} />
+                    </div>
 
-                <div className='form-group form-group-dates'>
-                    <label>Date</label>
-                    
-                    <input type='date' {...register('date')} />
-                    
-                </div>
+                    <div className='form-group form-group-dates'>
+                        <label>Date</label>
+                        
+                        <input type='date' {...register('date')} />
+                        
+                    </div>
+                </fieldset>
 
                 
                 {!hideButtons && (

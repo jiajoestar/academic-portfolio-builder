@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './LoginSignUp.css'
 import { Link, useNavigate, Navigate } from 'react-router-dom';
-import Navbar from '../Home/Navbar';
+import PublicNavbar from '../Home/PublicNavbar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -63,7 +63,7 @@ const Login = () => {
         <>
             <ToastContainer />
                 <div className="login-page">
-                    <Navbar />
+                    <PublicNavbar />
                     <div className="login-container">
                         <div className="login-box">
                             <div className="header">

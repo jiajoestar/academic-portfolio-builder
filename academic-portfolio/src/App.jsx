@@ -30,7 +30,8 @@ function App() {
         <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path='/profile' element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
         <Route path='/settings' element={<ProtectedRoute><Settings /></ProtectedRoute>} />
-        <Route path='/public/:id' element={<PublicProfile />} />
+        <Route path='/users/:id' element={<PublicProfile />} />
+        <Route path='/search' element={<SearchUser />} />
       </Routes>
     </Router>
     </div>

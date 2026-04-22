@@ -3,7 +3,7 @@ import './LoginSignUp.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
-import Navbar from '../Home/Navbar';
+import PublicNavbar from '../Home/PublicNavbar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -58,7 +58,7 @@ const Register = () => {
         <>
             <ToastContainer />
             <div className="login-page">
-                <Navbar />
+                <PublicNavbar />
                 <div className="login-container">
                     <div className="login-box">
                         <div className="header">

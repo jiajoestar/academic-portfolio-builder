@@ -5,7 +5,7 @@ import { saveActivity } from '../../Services/api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
-const CPD = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef }) => {
+const CPD = ({ onSaved, existingData, hideButtons = false, mode = 'draft', externalSubmitRef, readOnly = false }) => {
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             title: '',
@@ -23,6 +23,8 @@ const CPD = ({ onSaved, existingData, hideButtons = false, mode = 'draft', exter
     const token = localStorage.getItem('token')
 
     const onSubmit = async (data, status = mode) => {
+        if (readOnly) return
+
         const payload = {
             ...data,
             type: 'cpd',
@@ -89,62 +91,64 @@ const CPD = ({ onSaved, existingData, hideButtons = false, mode = 'draft', exter
     }, [existingData, reset])
 
     useEffect(() => {
-        if (externalSubmitRef) {
-            externalSubmitRef.current = {
-                save: handleSubmit((data) => onSubmit(data, mode)),
-                publish: handleSubmit((data) => onSubmit(data, 'published'))
-            }
+        if (!externalSubmitRef || readOnly) return
+
+        externalSubmitRef.current = {
+            save: handleSubmit((data) => onSubmit(data, mode)),
+            publish: handleSubmit((data) => onSubmit(data, 'published'))
         }
-    }, [externalSubmitRef, handleSubmit, existingData, mode])
+    }, [externalSubmitRef, handleSubmit, existingData, mode, readOnly])
 
     return (
         <>
-            <ToastContainer />
+            {!readOnly && <ToastContainer />}
             <form className='form-container' onSubmit={handleSubmit((data) => onSubmit(data, 'draft'))}>
-                <h3>CPD delivery/organisation of courses for externals</h3>
-                <p>Log all things related to CPD here.</p>
+                <fieldset disabled={readOnly} style={{ border: 'none', padding: 0, margin: 0 }}>
+                    <h3>CPD delivery/organisation of courses for externals</h3>
+                    <p>Log all things related to CPD here.</p>
 
-                <div className='form-group'>
-                    <label>Activity title</label>
-                    <input placeholder='Title' {...register('title')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Activity title</label>
+                        <input placeholder='Title' {...register('title')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Course name</label>
-                    <input placeholder='Course name' {...register('courseName')} />
-                    <label>Organisation</label>
-                    <input placeholder='Organisation' {...register('organisation')} />
-                    <label>Audience</label>
-                    <input placeholder='Audience' {...register('audience')} />
-                    <label>Location</label>
-                    <input placeholder='Location' {...register('location')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Course name</label>
+                        <input placeholder='Course name' {...register('courseName')} />
+                        <label>Organisation</label>
+                        <input placeholder='Organisation' {...register('organisation')} />
+                        <label>Audience</label>
+                        <input placeholder='Audience' {...register('audience')} />
+                        <label>Location</label>
+                        <input placeholder='Location' {...register('location')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Mode</label>
-                    <select {...register('mode')}>
-                        <option>Online</option>
-                        <option>In person</option>
-                        <option>Hybrid</option>
-                    </select>
-                </div>
+                    <div className='form-group'>
+                        <label>Mode</label>
+                        <select {...register('mode')}>
+                            <option>Online</option>
+                            <option>In person</option>
+                            <option>Hybrid</option>
+                        </select>
+                    </div>
 
-                <div className='form-group'>
-                    <label>Duration</label>
-                    <input placeholder='Duration' {...register('duration')} />
-                    <label>Participant count</label>
-                    <input placeholder='Participant count' {...register('participantCount')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Duration</label>
+                        <input placeholder='Duration' {...register('duration')} />
+                        <label>Participant count</label>
+                        <input placeholder='Participant count' {...register('participantCount')} />
+                    </div>
 
-                <div className='form-group'>
-                    <label>Description</label>
-                    <textarea placeholder='Description' {...register('description')} />
-                </div>
+                    <div className='form-group'>
+                        <label>Description</label>
+                        <textarea placeholder='Description' {...register('description')} />
+                    </div>
 
-                <div className='form-group form-group-dates'>
-                    <label>Date</label>
-                    <input type='date' {...register('date')} />
-                </div>
+                    <div className='form-group form-group-dates'>
+                        <label>Date</label>
+                        <input type='date' {...register('date')} />
+                    </div>
+                </fieldset>
                 
                 {!hideButtons && (
                     <div className='form-actions'>
