@@ -30,6 +30,7 @@ import MediaArticle from '../Forms/MediaArticle';
 import Festival from '../Forms/Festival';
 import Lecture from '../Forms/Lecture';
 import Funding from '../Forms/Funding';
+import Publication from '../Forms/Publication';
 
 const ActivityLog = ({ isOpen, onClose, onSaved }) => {
     const options = [
@@ -85,6 +86,12 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
                 { name: 'External institutions', description: 'Holding external roles' },
                 { name: 'Participation or Organisation for events', description: 'Organising or attending events' },
                 { name: 'Peer review and editorial activity', description: 'Reviewing or editing work' }
+            ]
+        },
+        {
+            header: { name: 'Publications' },
+            values: [
+                { name: 'Publication', description: 'Search and add a publication to your profile' }
             ]
         },
         {
@@ -238,6 +245,7 @@ const ActivityLog = ({ isOpen, onClose, onSaved }) => {
                                 {selectedItem.name === 'Festival/Exhibition' && <Festival onSaved={onSaved} />}
                                 {selectedItem.name === 'Media article or participation' && <MediaArticle onSaved={onSaved} />}
                                 {selectedItem.name === 'Funding' && <Funding onSaved={onSaved} />}
+                                {selectedItem.name === 'Publication' && <Publication onSaved={onSaved} />}
                             </div>
                         ) : (
                             <div className='activity-log-empty-state'>

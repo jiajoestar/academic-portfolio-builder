@@ -32,6 +32,7 @@ import Prizes from '../Forms/Prizes';
 import ResearchAndTeaching from '../Forms/ResearchAndTeaching';
 import SchoolsEngagement from '../Forms/SchoolsEngagement';
 import TalksOrPresentations from '../Forms/TalksOrPresentations';
+import PublicationModal from '../ActivityLog/PublicationModal';
 
 const PublicUserProfile = () => {
     const { id } = useParams()
@@ -41,6 +42,7 @@ const PublicUserProfile = () => {
     const [openSections, setOpenSections] = useState({})
     const submitActionsRef = useRef(null)
     const isLoggedIn = !!localStorage.getItem('token')
+    const [selectedPublication, setSelectedPublication] = useState(null)
 
     useEffect(() => {
         fetchPublicProfile()
@@ -123,6 +125,9 @@ const PublicUserProfile = () => {
             sections[typeKey].push(a)
         }
     })
+
+    const safePublications = Array.isArray(user?.publications) ? user.publications : []
+    sections['Publications'] = safePublications
 
     const renderActivityForm = () => {
         if (!selectedActivity) return null
@@ -244,16 +249,30 @@ const PublicUserProfile = () => {
                                     {items.length === 0 ? (
                                         <p>Nothing to see here yet.</p>
                                     ) : (
-                                        items.map((a) => (
-                                            <div
-                                                key={a._id}
-                                                className='activity-item'
-                                                onClick={() => openActivity(a)}
-                                            >
-                                                <strong>{a.title}</strong>
-                                                <p>{a.description}</p>
-                                            </div>
-                                        ))
+                                        items.map((item) => {
+                                            const isPublication = type === 'Publications'
+                                            
+                                            return (
+                                                <div 
+                                                    key={item._id || item.eid}
+                                                    className='activity-item'
+                                                    onClick={() => {
+                                                        if (isPublication) {
+                                                            setSelectedPublication(item)
+                                                        } else {
+                                                            openActivity(item)
+                                                        }
+                                                    }}
+                                                >
+                                                    <strong>{item.title}</strong>
+                                                    <p>
+                                                        {isPublication
+                                                            ? `${item.journal || 'Unknown jounral'}${item.date ? ` * ${item.date}` : ''}`
+                                                            : item.description}
+                                                    </p>
+                                                </div>
+                                            )
+                                        })
                                     )}
                                 </div>
                             )}
@@ -278,6 +297,8 @@ const PublicUserProfile = () => {
                     </div>
                 </div>
             )}
+
+            <PublicationModal publication={selectedPublication} isOpen={!!selectedPublication} onClose={() => setSelectedPublication(null)} />
         </div>
     )
 }

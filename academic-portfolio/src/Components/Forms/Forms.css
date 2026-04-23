@@ -104,6 +104,77 @@
     border-color: #1d4ed8;
 }
 
+/* publication */
+/* PUBLICATION FORM */
+
+.publication-search-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    align-items: stretch;
+}
+
+.publication-search-row input {
+    flex: 1;
+}
+
+.publication-results {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 10px;
+}
+
+.publication-card {
+    border: 1.5px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 18px;
+    background: #ffffff;
+    transition: 0.2s ease;
+}
+
+.publication-card:hover {
+    border-color: #93c5fd;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.publication-card h4 {
+    margin: 0 0 10px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.4;
+}
+
+.publication-meta {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.publication-empty {
+    font-size: 14px;
+    color: #64748b;
+    margin-top: 12px;
+}
+
+.publication-add-button {
+    margin-top: 12px;
+}
+
+.added-button {
+    border: 1px solid #16a34a;
+    background: #16a34a;
+    color: white;
+    cursor: default;
+}
+
+.added-button:hover {
+    background: #16a34a;
+    border-color: #16a34a;
+}
+
 @media (max-width: 640px) {
     .form-group-dates {
         grid-template-columns: 1fr;

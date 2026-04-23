@@ -32,6 +32,7 @@ import Prizes from '../Forms/Prizes';
 import ResearchAndTeaching from '../Forms/ResearchAndTeaching';
 import SchoolsEngagement from '../Forms/SchoolsEngagement';
 import TalksOrPresentations from '../Forms/TalksOrPresentations';
+import PublicationModal from '../ActivityLog/PublicationModal';
 
 const UserProfile = () => {
     const [user, setUser] = useState(null)
@@ -40,6 +41,7 @@ const UserProfile = () => {
     const [selectedActivity, setSelectedActivity] = useState(null)
     const [showShare, setShowShare] = useState(false)
     const [showConfirm, setShowConfirm] = useState(false)
+    const [selectedPublication, setSelectedPublication] = useState(null)
 
     const navigate = useNavigate()
     const submitActionsRef = useRef(null)
@@ -238,6 +240,9 @@ const UserProfile = () => {
         }
     })
     */
+
+    const safePublications = Array.isArray(user?.publications) ? user.publications : []
+    sections['Publications'] = safePublications
 
     if (!user) return <p>Loading...</p>
 
@@ -565,6 +570,21 @@ const UserProfile = () => {
         }
     }
 
+    const removePublication = async (publicationId) => {
+        try {
+            const token = localStorage.getItem("token")
+
+            await axios.delete(`http://localhost:5000/api/publications/${publicationId}`, {
+            headers: { Authorization: `Bearer ${token}` }
+            })
+
+            setSelectedPublication(null)
+            await fetchProfile()
+        } catch (error) {
+            console.error("Failed to remove publication:", error)
+        }
+    }
+
     return (
         <div className='profile-page'>
             <Navbar />
@@ -646,12 +666,30 @@ const UserProfile = () => {
                                     {items.length === 0 ? (
                                         <p>Nothing to see here yet.</p>
                                     ) : (
-                                        items.map(a => (
-                                            <div key={a._id} className='activity-item' onClick={() => openActivity(a)}>
-                                                <strong>{a.title}</strong>
-                                                <p>{a.description}</p>
-                                            </div>
-                                        ))
+                                        items.map(item => {
+                                            const isPublication = type === 'Publications'
+
+                                            return (
+                                                <div
+                                                    key={item._id || item.eid}
+                                                    className='activity-item'
+                                                    onClick={() => {
+                                                        if (isPublication) {
+                                                            setSelectedPublication(item)
+                                                        } else {
+                                                            openActivity(item)
+                                                        }
+                                                    }}
+                                                >
+                                                    <strong>{isPublication ? item.title : item.title}</strong>
+                                                    <p>
+                                                        {isPublication
+                                                            ? `${item.journal || 'Unknown journal'}${item.date ? ` • ${item.date}` : ''}`
+                                                            : item.description}
+                                                    </p>
+                                                </div>
+                                            )
+                                        })
                                     )}
                                 </div>
                             )}
@@ -686,6 +724,13 @@ const UserProfile = () => {
                     </div>
                 </div>
             )}
+
+            <PublicationModal
+                publication={selectedPublication}
+                isOpen={!!selectedPublication}
+                onClose={() => setSelectedPublication(null)}
+                onRemove={removePublication}
+            />
 
             {showShare && (
                 <div className='modal-overlay'>

@@ -28,17 +28,19 @@ router.get("/search", async (req, res) => {
 })
 
 // public profile by user id - guests can view profiles
-/*
 router.get("/:id/public", async (req, res) => {
     try {
         const user = await User.findById(req.params.id)
-            .select("_id name headline workplace avatar")
+            .select("_id name headline workplace avatar publications")
 
         if (!user) {
             return res.status(404).json({ message: "User not found" })
         }
 
-        const activities = await Activity.find({ user: req.params.id }).sort({ createdAt: -1 })
+        const activities = await Activity.find({
+            userId: req.params.id,
+            status: "published"
+        }).sort({ createdAt: -1 })
 
         res.json({ user, activities })
     } catch (error) {
@@ -46,27 +48,5 @@ router.get("/:id/public", async (req, res) => {
         res.status(500).json({ message: "Server error while fetching profile" })
     }
 })
-*/
-
-router.get("/:id/public", async (req, res) => {
-    try {
-        const user = await User.findById(req.params.id)
-            .select("_id name headline workplace avatar");
-
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        const activities = await Activity.find({
-            userId: req.params.id,
-            status: "published"
-        }).sort({ createdAt: -1 });
-
-        res.json({ user, activities });
-    } catch (error) {
-        console.error("Public profile error:", error);
-        res.status(500).json({ message: "Server error while fetching profile" });
-    }
-});
 
 module.exports = router

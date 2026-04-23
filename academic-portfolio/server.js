@@ -47,6 +47,7 @@ app.use("/api/users", require("./server/routes/userRoutes"))
 // updating activity
 console.log("REGISTERING ACTIVITY ROUTES")
 // app.use("/api/activities", require("./server/routes/activity"))
+app.use("/api/publications", require("./server/routes/publications"))
 
 // test route
 app.get("/", (req, res) => {

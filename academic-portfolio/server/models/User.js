@@ -1,5 +1,24 @@
 const mongoose = require("mongoose")
 
+const publicationSchema = new mongoose.Schema({
+  eid: { type: String, required: true },
+  title: { type: String, required: true },
+  doi: String,
+  journal: String,
+  date: String,
+  citedByCount: Number,
+  creator: String,
+  abstract: String,
+  authors: [
+    {
+      name: String,
+      auid: String
+    }
+  ],
+  sourceType: String,
+  url: String
+}, { _id: true })
+
 const userSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true },
@@ -20,6 +39,7 @@ const userSchema = new mongoose.Schema({
   pinnedActivities: [{ type: mongoose.Schema.Types.ObjectId, ref: "Activity" }],
   resetToken: String,
   resetTokenExpiry: Date,
+  publications: [publicationSchema]
 })
 
 module.exports = mongoose.model("User", userSchema)
