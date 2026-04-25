@@ -26,7 +26,7 @@ const SearchUser = () => {
 
         try {
             setLoading(true)
-            const res = await axios.get(`http://localhost:5000/api/users/search?q=${encodeURIComponent(value)}`)
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/search?q=${encodeURIComponent(value)}`)
             setResults(res.data)
             setSearched(true)
         } catch (err) {

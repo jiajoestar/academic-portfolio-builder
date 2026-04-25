@@ -71,13 +71,13 @@ const MonthlyContributionGrid = ({ activities = [] }) => {
   })
 
   return (
-    <div className="contribution-card">
-      <div className="contribution-top">
+    <div className='contribution-card'>
+      <div className='contribution-top'>
         <h4>Published activity log</h4>
         <span>{monthLabel}</span>
       </div>
 
-      <div className="contribution-grid">
+      <div className='contribution-grid'>
         {days.map((day) => {
           const key = formatKey(day)
           const count = activityMap[key] || 0
@@ -92,7 +92,7 @@ const MonthlyContributionGrid = ({ activities = [] }) => {
         })}
       </div>
 
-      <p className="contribution-caption">
+      <p className='contribution-caption'>
         Blank = no published activity. Darker = more published activity.
       </p>
     </div>

@@ -47,7 +47,7 @@ const Consultancy = ({ onSaved, existingData, hideButtons = false, mode = 'draft
             if (existingData?._id) {
             // UPDATE
             res = await axios.put(
-                `http://localhost:5000/api/activities/${existingData._id}`,
+                `${import.meta.env.VITE_API_URL}/api/activities/${existingData._id}`,
                 payload,
                 { headers: { Authorization: `Bearer ${token}` } }
             )

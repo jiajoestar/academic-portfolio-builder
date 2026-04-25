@@ -87,7 +87,7 @@ const Dashboard = () => {
 
     const handlePublish = async (activity) => {
         const token = localStorage.getItem('token')
-        await axios.put(`http://localhost:5000/api/activities/${activity._id}`,
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/activities/${activity._id}`,
             { status: 'published' },
             { headers: { Authorization: `Bearer ${token}` } }
         )

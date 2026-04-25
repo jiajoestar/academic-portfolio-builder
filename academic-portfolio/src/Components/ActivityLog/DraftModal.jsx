@@ -129,7 +129,7 @@ const DraftModal = ({ draft, isOpen, onClose, onSave, onPublish, onDelete }) => 
     const handleDelete = async () => {
         console.log(draft._id)
         const token = localStorage.getItem('token')
-        await axios.delete(`http://localhost:5000/api/activities/${draft._id}`,
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/activities/${draft._id}`,
             { headers: { Authorization: `Bearer ${token}` } }
         )
 

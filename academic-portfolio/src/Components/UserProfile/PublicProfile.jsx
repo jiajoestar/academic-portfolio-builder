@@ -50,7 +50,7 @@ const PublicUserProfile = () => {
 
     const fetchPublicProfile = async () => {
         try {
-            const res = await axios.get(`http://localhost:5000/api/users/${id}/public`)
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/users/${id}/public`)
             setUser(res.data.user)
             setActivities(res.data.activities || [])
         } catch (error) {

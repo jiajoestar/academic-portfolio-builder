@@ -65,7 +65,7 @@ const UserProfile = () => {
     const fetchProfile = async () => {
         const token = localStorage.getItem('token')
 
-        const res = await axios.get('http://localhost:5000/api/profile', {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/profile`, {
             headers: { Authorization: `Bearer ${token}` }
         })
 
@@ -84,7 +84,7 @@ const UserProfile = () => {
         const token = localStorage.getItem('token')
 
         const res = await axios.put(
-            'http://localhost:5000/api/profile',
+            `${import.meta.env.VITE_API_URL}/api/profile`,
             form,
             { headers: { Authorization: `Bearer ${token}` } }
         )
@@ -125,7 +125,7 @@ const UserProfile = () => {
             details: activityForm.details || {}
         }
 
-        await axios.put(`http://localhost:5000/api/activities/${selectedActivity._id}`,
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/activities/${selectedActivity._id}`,
             payload,
             {
                 headers: { Authorization: `Bearer ${token}` } 
@@ -139,7 +139,7 @@ const UserProfile = () => {
     // delete activity from profile
     const deleteActivity = async () => {
         const token = localStorage.getItem('token')
-        await axios.delete(`http://localhost:5000/api/activities/${selectedActivity._id}`,
+        await axios.delete(`${import.meta.env.VITE_API_URL}/api/activities/${selectedActivity._id}`,
             { headers: { Authorization: `Bearer ${token}` } }
         )
         
@@ -153,7 +153,7 @@ const UserProfile = () => {
         
         const newPinnedValue = !activityForm.pinned
 
-        await axios.put(`http://localhost:5000/api/activities/${selectedActivity._id}`,
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/activities/${selectedActivity._id}`,
             { pinned: newPinnedValue },
             { headers: { Authorization: `Bearer ${token}` } }
         )
@@ -574,7 +574,7 @@ const UserProfile = () => {
         try {
             const token = localStorage.getItem("token")
 
-            await axios.delete(`http://localhost:5000/api/publications/${publicationId}`, {
+            await axios.delete(`${import.meta.env.VITE_API_URL}/api/publications/${publicationId}`, {
             headers: { Authorization: `Bearer ${token}` }
             })
 

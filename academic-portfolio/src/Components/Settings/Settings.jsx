@@ -14,7 +14,7 @@ const Settings = () => {
     const navigate = useNavigate()
 
     const updateEmail = async () => {
-        await fetch('http://localhost:5000/api/auth/update-email', {
+        await fetch(`${import.meta.env.VITE_API_URL}/api/auth/update-email`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const Settings = () => {
     }
 
     const changePassword = async () => {
-        await fetch('http://localhost:5000/api/auth/change-password', {
+        await fetch(`${import.meta.env.VITE_API_URL}/api/auth/change-password`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
