@@ -19,8 +19,8 @@ const app = express()
 const corsOptions = {
     origin: [
         "http://localhost:5173",
-        "https://caseportfolio.onrender.com",
-        "https://academic-portfolio-builder-21jg.vercel.app"
+        //"https://caseportfolio.onrender.com",
+        "https://academic-portfolio-builder-8f3n.vercel.app/"
     ],
 
     credentials: true,
