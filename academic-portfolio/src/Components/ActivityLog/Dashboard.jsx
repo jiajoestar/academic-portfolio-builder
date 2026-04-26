@@ -26,7 +26,7 @@ const Dashboard = () => {
         console.log('sending token:', token)
 
         try {
-            const res = await axios.get('http://localhost:5000/api/profile', {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/profile`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -45,7 +45,7 @@ const Dashboard = () => {
         try {
             const token = localStorage.getItem('token')
 
-            const res = await axios.get('http://localhost:5000/api/activities',
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/activities`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -69,13 +69,13 @@ const Dashboard = () => {
 
     const handleSave = async (activity) => {
         const token = localStorage.getItem('token')
-        await axios.put(`http://localhost:5000/api/activities/${activity._id}`,
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/activities/${activity._id}`,
             { ...activity, status: 'draft' },
             { headers: { Authorization: `Bearer ${token}` } }
         )
         fetchActivities()
 
-        await axios.post(`http://localhost:5000/api/activities`, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/activities`, {
             ...activity,
             status: 'draft'
         }, {
