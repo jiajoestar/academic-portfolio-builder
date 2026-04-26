@@ -21,7 +21,9 @@ const corsOptions = {
         "http://localhost:5173",
         "https://academic-portfolio-builder-8f3n.vercel.app",
         "https://academic-portfolio-builder-8f3n-9hjg3vx3c-jiajoestars-projects.vercel.app",
-        "https://academic-portfolio-builder-8f3n-git-main-jiajoestars-projects.vercel.app"
+        "https://academic-portfolio-builder-8f3n-git-main-jiajoestars-projects.vercel.app",
+        "https://academic-portfolio-builder-git-main-jiajoestars-projects.vercel.app",
+        "https://academic-portfolio-builder-fpni5xz2v-jiajoestars-projects.vercel.app"
     ],
 
     credentials: true,
