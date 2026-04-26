@@ -18,7 +18,7 @@ const Publication = ({ onSaved }) => {
             setResults([])
 
             const res = await fetch(
-                `http://localhost:5000/api/publications/search?q=${encodeURIComponent(query)}`,
+                `${import.meta.env.VITE_API_URL}/api/publications/search?q=${encodeURIComponent(query)}`,
                 {
                 credentials: "include",
                 }
