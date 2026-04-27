@@ -4,9 +4,9 @@
 Case Portfolio is an academic portfolio builder tool I am building for my final year project. It aims to reduce the administrative burden of long, frustrating profile maintenance for academics by using only a few clicks to post an activity to your profile.
 
 # Features
-- Quick Add: select an activity you want to log, and either publish it to your profile or save it as a draft
+- Quick Add: select an activity you want to log, and either publish it to your profile or save it as a draft.
 - Drafts: save activities as drafts so you can come back to them at another time. There is no time limit!
-- Publication imports: add a publication to your profile (thanks to Elsevier's Scopus APIs)
+- Publication imports: add a publication to your profile (thanks to Elsevier's Scopus APIs).
 - Public discovery: search for registered academics and view their public profiles.
 
 and many more to come in the future..!
