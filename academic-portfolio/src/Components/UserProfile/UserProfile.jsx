@@ -734,10 +734,11 @@ const UserProfile = () => {
 
             {showShare && (
                 <div className='modal-overlay'>
-                    <div className='modal'>
+                    <div className='modal share-profile-modal'>
                         <h3>Share your profile</h3>
-                        <input value={shareLink} readOnly />
+                        <input className='share-link-input' value={shareLink} readOnly />
                         <button
+                            className='secondary-button'
                             onClick={async () => {
                                 await navigator.clipboard.writeText(shareLink)
                                 toast.success('Profile link copied')
@@ -745,7 +746,7 @@ const UserProfile = () => {
                         >
                             Copy
                         </button>
-                        <button onClick={() => setShowShare(false)}>Close</button>
+                        <button className='secondary-button ghost-button' onClick={() => setShowShare(false)}>Close</button>
                     </div>
                 </div>
             )}

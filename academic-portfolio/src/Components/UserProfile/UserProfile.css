@@ -229,3 +229,46 @@
     background: #b71c1c;
     border-color: #b71c1c;
 }
+
+.share-profile-modal {
+    width: min(520px, 92vw);
+    height: auto;
+    padding: 28px;
+    border-radius: 24px;
+    text-align: left;
+}
+
+.share-profile-modal h3 {
+    margin: 0 0 8px;
+    font-size: 1.6rem;
+    color: #0f172a;
+}
+
+.share-profile-modal p {
+    margin: 0 0 18px;
+    color: #64748b;
+}
+
+.share-link-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    background: #f8fafc;
+}
+
+.share-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.ghost-button {
+    background: white;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+}
