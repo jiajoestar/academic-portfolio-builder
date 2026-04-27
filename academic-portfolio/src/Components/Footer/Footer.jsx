@@ -21,7 +21,6 @@ const Footer = () => {
                 <div className="footer-column">
                     <span><Link to='/about'>About</Link></span>
                     <span><Link to='/contact'>Contact</Link></span>
-                    <span>Account</span>
                 </div>
                 <div className="footer-column">
                     <span>+44 0000 000000</span>

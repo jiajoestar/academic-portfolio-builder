@@ -1,8 +1,15 @@
 import React from 'react';
 import Footer from '../Footer/Footer';
 import PublicNavbar from '../Home/PublicNavbar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 const Contact = () => {
+
+    const handleSubmit = () => {
+        toast.success('Enquiry sent!')
+    }
+
     return (
         <div className='marketing-page contact-page'>
             <PublicNavbar />
@@ -16,12 +23,13 @@ const Contact = () => {
                         <div className='contact-form'>
                             <textarea className='contact-message' placeholder='Write your message here'/>
                             <input className='contact-email' type='email' placeholder='Email'/>
-                            <button className='secondary-button'>Submit</button>
+                            <button className='secondary-button' onClick={handleSubmit}>Submit</button>
                         </div>
                     </div>
                 </div>
             </section>
             <Footer />
+            <ToastContainer position='top-right' autoClose={3000} />
         </div>
     );
 }
