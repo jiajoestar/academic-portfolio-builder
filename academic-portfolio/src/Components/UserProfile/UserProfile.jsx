@@ -46,7 +46,7 @@ const UserProfile = () => {
     const navigate = useNavigate()
     const submitActionsRef = useRef(null)
 
-    const shareLink = user ? `${window.location.origin}/public/${user._id}` : ``
+    const shareLink = user ? `${window.location.origin}/users/${user._id}` : ``
 
     const [form, setForm] = useState({
         name: '',
@@ -737,7 +737,14 @@ const UserProfile = () => {
                     <div className='modal'>
                         <h3>Share your profile</h3>
                         <input value={shareLink} readOnly />
-                        <button onClick={() => navigator.clipboard.writeText(shareLink)}>Copy</button>
+                        <button
+                            onClick={async () => {
+                                await navigator.clipboard.writeText(shareLink)
+                                toast.success('Profile link copied')
+                            }}
+                        >
+                            Copy
+                        </button>
                         <button onClick={() => setShowShare(false)}>Close</button>
                     </div>
                 </div>
