@@ -182,7 +182,6 @@
     overflow: hidden;
     box-shadow: 0 24px 60px rgba(15, 23, 42, 0.16);
 }
-
 .activity-log-modal-animate {
     animation: scaleIn 0.2s ease-in-out;
 }
@@ -442,6 +441,8 @@
 }
 
 .confirm-modal {
+    position: relative;
+    z-index: 2001;
     max-width: 400px;
     width: 90%;
     height: auto;
@@ -469,6 +470,16 @@
 
 .confirm-actions button:hover {
     background: #f2f2f2;
+}
+
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
 }
 
 /* monthly contribution grid css */

@@ -3,7 +3,7 @@ import './ActivityLog.css'
 
 const ConfirmationModal = ({ message, onConfirm, onCancel }) => {
     return (
-        <div className='overlay'>
+        <div className='confirm-overlay'>
             <div className='modal animate confirm-modal'>
                 <h3>{message}</h3>
 
