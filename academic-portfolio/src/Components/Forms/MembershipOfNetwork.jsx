@@ -43,29 +43,38 @@ const MembershipOfNetwork = ({ onSaved, existingData, hideButtons = false, mode 
             let res
 
             if (existingData?._id) {
-            // UPDATE
-            res = await axios.put(
-                `${import.meta.env.VITE_API_URL}/api/activities/${existingData._id}`,
-                payload,
-                { headers: { Authorization: `Bearer ${token}` } }
-            )
+                // UPDATE
+                res = await axios.put(
+                    `${import.meta.env.VITE_API_URL}/api/activities/${existingData._id}`,
+                    payload,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                )
             } else {
-            // CREATE
-            res = await saveActivity(payload, token)
+                // CREATE
+                res = await saveActivity(payload, token)
             }
             
-            if (onSaved) await onSaved()
             console.log(res)
-            console.log('PAYLOAD:', payload)
+            console.log('PYALOAD:', payload)
             console.log('FORM DATA:', data)
-            toast.success(`Saved as ${status}`)
+
+            toast.success(status === 'published' ? 'Activity published to profile' : 'Draft saved')
+
+            if (onSaved) {
+                try {
+                    await onSaved()
+                } catch (callbackErr) {
+                    console.error('Activity saved, but refresh callback failed:', callbackErr)
+                }
+            }
+
             if (!existingData) reset()
         } catch (err) {
             console.error('Save error:', err)
             console.error('Response data:', err.response?.data)
             console.error('Status:', err.response?.status)
             console.error('Payload:', payload)
-            toast.error(err.response?.data?.message || 'Error saving')
+            toast.error(err.response?.data?.message || status === 'published' ? 'Error publishing activity' : 'Error saving draft')
         }
     }
 
